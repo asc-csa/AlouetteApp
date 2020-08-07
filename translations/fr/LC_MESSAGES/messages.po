@@ -1,0 +1,314 @@
+# French translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-04-20 14:30-0400\n"
+"PO-Revision-Date: 2020-01-20 16:09-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: app.py:925
+msgid "Ionograms Per Month"
+msgstr "Ionogrammes par mois"
+
+#: app.py:927
+msgid "Number of Ionograms"
+msgstr ""
+
+#: app.py:1307
+msgid "Data Visualization (95% Confidence Interval)"
+msgstr ""
+
+#: app.py:1552
+msgid "Alouette I Ionogram Data"
+msgstr "Données Ionogramme de l'Alouette I"
+
+#: app.py:1553
+msgid "Learn More About Alouette"
+msgstr "Pour en Savoir Plus sur Alouette"
+
+#: app.py:1554
+msgid "ionograms selected"
+msgstr "ionogrammes sélectionnés"
+
+#: app.py:1554
+msgid "total of ionograms"
+msgstr "nombre total d'ionogrammes"
+
+#: app.py:1555
+msgid ""
+"Launched in 1962, Alouette I sent signals with different frequencies into"
+" the topmost layer of the atmosphere, known as the ionosphere, and "
+"collected data on the depth these frequencies travelled. The results of "
+"this were sent to ground stations around the world and stored in films as"
+" ionogram images, which have now been digitized. The ionograms Alouette I"
+" provided were used to fuel hundreds of scientific papers at the time. "
+"Although ionosphere data from more recent years is readily available, the"
+" data from Alouette I’s ionograms are the only ones available for this "
+"time period. Barriers for accessing, interpreting and analyzing the data "
+"at a larger scale have prevented this data's usage. "
+msgstr ""
+"Lancée en 1962, Alouette I a envoyé des signaux de différentes fréquences"
+" dans la couche supérieure de l'atmosphère, connue sous le nom "
+"d'ionosphère, et a recueilli des données sur la profondeur de ces "
+"fréquences. Les résultats de ces films ont été envoyés à des stations "
+"terrestres dans le monde entier et stockés dans des films comme, qui ont "
+"maintenant été numérisées. Les ionogrammes Alouette ILes données fournies"
+" ont été utilisées pour alimenter des centaines d'articles scientifiques "
+"à l'époque. Bien que les données sur l'ionosphère des années plus "
+"récentes soient facilement disponibles, le les données des ionogrammes "
+"d'Alouette I sont les seules disponibles pour cela période de temps. "
+"Obstacles à l'accès, à l'interprétation et à l'analyse des données à une "
+"plus grande échelle ont empêché l'utilisation de ces données. "
+
+#: app.py:1556
+msgid ""
+"This application provides users the ability to select, download and "
+"visualize Alouette I's data. Please note that the extracted ionogram "
+"parameters, such as max depth and min frequency, are provided primarily "
+"for demonstration purposes. These values are subject to error, and should"
+" not be directly used in a scientific context."
+msgstr ""
+"Cette application permet aux utilisateurs de sélectionner, télécharger et visualiser les données d'Alouette I. Veuillez noter que les paramètres des ionogrammes extraits, tels que la profondeur maximale et la fréquence minimale, sont fournis principalement à des fins de démonstration. Ces valeurs sont sujettes à erreur et ne doivent pas être utilisées directement dans un contexte scientifique."
+
+#: app.py:1557
+msgid "Select Data"
+msgstr "Sélectionner les Données"
+
+#: app.py:1558
+msgid "Filter by ground station latitude:"
+msgstr "Filtrez par la latitude de la station:"
+
+#: app.py:1559
+msgid "Filter by ground station longitude:"
+msgstr "Filtrer par la longitude de la station:"
+
+#: app.py:1560
+msgid "Filter by date:"
+msgstr "Filtrer par date:"
+
+#: app.py:1561
+msgid "Select ground stations:"
+msgstr "Sélectionnez les stations:"
+
+#: app.py:1562
+msgid "Download Summary Data as CSV"
+msgstr "Télécharger la Synthèse CSV"
+
+#: app.py:1563
+msgid "Download Selected Ionogram Images"
+msgstr "Télécharger les Ionogrammes Sélectionnées"
+
+#: app.py:1564
+msgid "Select x-axis:"
+msgstr "Sélectionnez l'axe des x:"
+
+#: app.py:1565
+msgid "Select y-axis:"
+msgstr "Sélectionnez l'axe des y:"
+
+#: app.py:1566
+msgid "Select statistic:"
+msgstr "Sélectionnez statistique:"
+
+#: app.py:1567
+msgid "Select plotted value:"
+msgstr "Sélectionnez la valeur tracée:"
+
+#: app.py:1569 controls.py:7
+msgid "Resolute Bay, No. W. Territories"
+msgstr "Resolute Bay, Territoires du Nord-Ouest"
+
+#: app.py:1570 controls.py:8
+msgid "Blossom Point, Maryland"
+msgstr "Blossom Point, Maryland"
+
+#: app.py:1571 controls.py:9
+msgid "South Atlantic, Falkland Islands"
+msgstr "Atlantique Sud, îles Malouines"
+
+#: app.py:1572 controls.py:10
+msgid "St. John's, Newfoundland"
+msgstr "St. John's, Terre-Neuve"
+
+#: app.py:1573 controls.py:11
+msgid "Orroral Valley, Australia"
+msgstr "Vallée de l'Orroral, Australie"
+
+#: app.py:1574 controls.py:12
+msgid "Prince Albert, Canada"
+msgstr ""
+
+#: app.py:1575 controls.py:13
+msgid "Ottawa, Canada"
+msgstr ""
+
+#: app.py:1576 controls.py:14
+msgid "Byrd Station, Antartica"
+msgstr "Station Byrd, Antarctique"
+
+#: app.py:1577 controls.py:15
+msgid "Las Palmas, Canary Island"
+msgstr "Las Palmas, île des Canaries"
+
+#: app.py:1578 controls.py:16
+msgid "Winkfield, England"
+msgstr "Winkfield, Angleterre"
+
+#: app.py:1579 controls.py:17
+msgid "Fort Myers, Florida"
+msgstr "Fort Myers, Floride"
+
+#: app.py:1580 controls.py:18
+msgid "Antofagasta, Chile"
+msgstr ""
+
+#: app.py:1581 controls.py:19
+msgid "East Grand Forks, Minnesota"
+msgstr ""
+
+#: app.py:1582 controls.py:20
+msgid "Rosman, No. Carolina"
+msgstr "Rosman, Caroline du Nord"
+
+#: app.py:1583 controls.py:21
+msgid "College, Fairbanks, Alaska"
+msgstr "Collège, Fairbanks, Alaska"
+
+#: app.py:1584 controls.py:22
+msgid "Woomera, Australia"
+msgstr "Woomera, Australie"
+
+#: app.py:1585 controls.py:23
+msgid "Gilmore Creek, Fairbanks, Alaska"
+msgstr ""
+
+#: app.py:1586 controls.py:24
+msgid "Tromso, Norway"
+msgstr "Tromso, Norvège"
+
+#: app.py:1587 controls.py:25
+msgid "University of Alaska, Fairbanks, Alaska"
+msgstr "Université de l'Alaska, Fairbanks, Alaska"
+
+#: app.py:1588 controls.py:26
+msgid "Darwin, Australia"
+msgstr "Darwin, Australie"
+
+#: app.py:1589 controls.py:27
+msgid "Quito, Ecuador"
+msgstr "Quito, Équateur"
+
+#: app.py:1590 controls.py:28
+msgid "South Point, Hawaiian Islands"
+msgstr "South Point, îles hawaïennes"
+
+#: app.py:1591 controls.py:29
+msgid "Lima, Peru"
+msgstr ""
+
+#: app.py:1592 controls.py:30
+msgid "Johannesburg, South Africa"
+msgstr "Johannesburg, Afrique du Sud"
+
+#: app.py:1593 controls.py:31
+msgid "Kano, Nigeria"
+msgstr "Kano Nigéria"
+
+#: app.py:1594 controls.py:32
+msgid "Tananarive, Madagascar"
+msgstr ""
+
+#: app.py:1595 controls.py:33
+msgid "Bretigny, France"
+msgstr ""
+
+#: app.py:1596 controls.py:34
+msgid "Singapore, Malaysia"
+msgstr "Singapour, Malaisie"
+
+#: app.py:1597 controls.py:35
+msgid "Boulder, Colorado"
+msgstr ""
+
+#: app.py:1598 controls.py:36
+msgid "Mojave, California"
+msgstr "Mojave, Californie"
+
+#: app.py:1599 controls.py:37
+msgid "Kauai, Hawaii"
+msgstr ""
+
+#: app.py:1600 controls.py:38
+msgid "Kashima, Japan"
+msgstr "Kashima, Japon"
+
+#: app.py:1603 controls.py:46
+msgid "Date"
+msgstr ""
+
+#: app.py:1604 controls.py:47
+msgid "Latitude"
+msgstr ""
+
+#: app.py:1604 controls.py:48
+msgid "Longitude"
+msgstr ""
+
+#: app.py:1607 app.py:1611 controls.py:51
+msgid "Minimum Frequency"
+msgstr "Fréquence Minimale"
+
+#: app.py:1608 app.py:1612 controls.py:52
+msgid "Maximum Depth"
+msgstr "Profondeur Maximale"
+
+#: app.py:1615
+msgid "Mean"
+msgstr "Moyenne"
+
+#: app.py:1616
+msgid "Median"
+msgstr "Médianes"
+
+#~ msgid "timestamp"
+#~ msgstr ""
+
+#~ msgid "lat"
+#~ msgstr ""
+
+#~ msgid "lon"
+#~ msgstr ""
+
+#~ msgid "fmin"
+#~ msgstr ""
+
+#~ msgid "max_depth"
+#~ msgstr ""
+
+#~ msgid "ionograms selected \\/ total of ionograms"
+#~ msgstr "ionogrammes sélectionnés / nombre total d'ionogrammes"
+
+#~ msgid "ionograms selected / total of ionograms"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This application provides users the "
+#~ "ability to select, download and "
+#~ "visualize Alouette I's data."
+#~ msgstr ""
+#~ "Cette application permet aux utilisateurs "
+#~ "de sélectionner, télécharger evisualiser les"
+#~ " données d'Alouette I."
+
