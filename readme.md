@@ -1,5 +1,5 @@
 
-![ialouette satellite](alouette.jpeg)
+![alouette satellite](alouette.jpg)
 
 - [En Français](#Application-pour-filtrer,-télécharger-et-visualiser-les-données-Alouette-I)
 - [In English](#application-to-filter--download-and-visualize-alouette-i-data)
@@ -12,11 +12,11 @@
 Le satellite [Alouette-I](https://www.asc-csa.gc.ca/fra/satellites/alouette.asp) a été le premier satellite canadien lancé dans l'espace. L'objectif 
 de son expérience principale était de comprendre la structure de la haute ionosphère. Les données de l'Alouette I sont constitués de centaines de milliers d'ionogrammes dont une proportion sont maintenant stockés numériquement sous forme de fichiers d'images.
 
-![ionogramme](ionogram.png)
+![ionogram](ionogram.png)
 
 Ce projet est une application qui permet aux utilisateurs de filtrer les ionogrammes sur de multiples paramètres et télécharger soit les données extraites des ionogrammes sélectionnés sous forme de CSV, soit les images des ionogrammes eux-mêmes. L'application permet également aux utilisateurs de visualiser un résumé des données des ionogrammes qu'ils ont sélectionnés, à la fois sur une carte et un graphique linéaire, évitant ainsi le téléchargement des données pour des aperçus simples. 
 
-![app interface](appinterface.png)
+![interface de l'application](appinterface.png)
 
 
 ## Démarrage rapide
@@ -78,7 +78,11 @@ Traduit avec www.DeepL.com/Translator (version gratuite)
 The [Alouette-I satellite](https://www.asc-csa.gc.ca/eng/satellites/alouette.asp) was the first Canadian satellite launched into space. The goal of its main experiment was to understand the structure of the upper ionosphere. The data from the Alouette I 
 satellite consists of hundreds of thousands of ionograms with a proportion now stored digitally as image files.
 
+![ionogramme](ionogram.png)
+
 This project is an application that allows users to filter through ionograms on multiple parameters and download either the selected ionograms’ extracted features as a CSV or the ionogram images  themselves. The application also allows users to visualize a summary of the data from their selected ionograms on both a map and a line chart, forgoing the need for downloading the data for simple insights. 
+
+![app interface](appinterface_fr.png)
 
 
 ## Quick start
