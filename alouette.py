@@ -19,12 +19,13 @@ from zipfile import ZipFile
 import os
 import flask
 from io import StringIO
-from flask_babel import _
+from flask_babel import _ ,Babel
 from flask import session, redirect, url_for, request
-from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+from alouette_app.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
 
-# Dropdown options
-from controls import *
+
+
+
 
 
 # get relative data folder
@@ -35,9 +36,73 @@ IONOGRAM_PATH = 'U:/Downloads'  # Directory to Ionogram images for testing
 # IONOGRAM_PATH = '/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images on server
 
 # load data and transform as needed
-df = pd.read_csv('data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
+#dtypes = {'': 'int', 'file_name': 'str', 'max_depth': 'float', 'decimal_value': 'str'}
+df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 df['timestamp'] = pd.to_datetime(df['timestamp'])  # converts the timestamp to date_time objects
 
+
+# Dropdown options
+#======================================================================================
+# Controls for webapp
+station_name_options = [
+    {'label': _('Resolute Bay, No. W. Territories'), 'value': 'Resolute Bay, No. W. Territories'},
+    {'label': _('Blossom Point, Maryland'), 'value': 'Blossom Point, Maryland'},
+    {'label': _('South Atlantic, Falkland Islands'), 'value': 'South Atlantic, Falkland Islands'},
+    {'label': _("St. John's, Newfoundland"), 'value': "St. John's, Newfoundland"},
+    {'label': _('Orroral Valley, Australia'), 'value': 'Orroral Valley, Australia'},
+    {'label': _('Prince Albert, Canada'), 'value': 'Prince Albert, Canada'},
+    {'label': _('Ottawa, Canada'), 'value': 'Ottawa, Canada'},
+    {'label': _('Byrd Station, Antartica'), 'value': 'Byrd Station, Antartica'},
+    {'label': _('Las Palmas, Canary Island'), 'value': 'Las Palmas, Canary Island'},
+    {'label': _('Winkfield, England'), 'value': 'Winkfield, England'},
+    {'label': _('Fort Myers, Florida'), 'value': 'Fort Myers, Florida'},
+    {'label': _('Antofagasta, Chile'), 'value': 'Antofagasta, Chile'},
+    {'label': _('East Grand Forks, Minnesota'), 'value': 'East Grand Forks, Minnesota'},
+    {'label': _('Rosman, No. Carolina'), 'value': 'Rosman, No. Carolina'},
+    {'label': _('College, Fairbanks, Alaska'), 'value': 'College, Fairbanks, Alaska'},
+    {'label': _('Woomera, Australia'), 'value': 'Woomera, Australia'},
+    {'label': _('Gilmore Creek, Fairbanks, Alaska'), 'value': 'Gilmore Creek, Fairbanks, Alaska'},
+    {'label': _('Tromso, Norway'), 'value': 'Tromso, Norway'},
+    {'label': _('University of Alaska, Fairbanks, Alaska'), 'value': 'University of Alaska, Fairbanks, Alaska'},
+    {'label': _('Darwin, Australia'), 'value': 'Darwin, Australia'},
+    {'label': _('Quito, Ecuador'), 'value': 'Quito, Ecuador'},
+    {'label': _('South Point, Hawaiian Islands'), 'value': 'South Point, Hawaiian Islands'},
+    {'label': _('Lima, Peru'), 'value': 'Lima, Peru'},
+    {'label': _('Johannesburg, South Africa'), 'value': 'Johannesburg, South Africa'},
+    {'label': _('Kano, Nigeria'), 'value': 'Kano, Nigeria'},
+    {'label': _('Tananarive, Madagascar'), 'value': 'Tananarive, Madagascar'},
+    {'label': _('Bretigny, France'), 'value': 'Bretigny, France'},
+    {'label': _('Singapore, Malaysia'), 'value': 'Singapore, Malaysia'},
+    {'label': _('Boulder, Colorado'), 'value': 'Boulder, Colorado'},
+    {'label': _('Mojave, California'), 'value': 'Mojave, California'},
+    {'label': _('Kauai, Hawaii'), 'value': 'Kauai, Hawaii'},
+    {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}]
+
+# Getting only the values of the station names
+station_values = []
+for station in station_name_options:
+    station_values.append(station['value'])
+
+x_axis_options = [
+    {'label': _('Date'), 'value': ('timestamp')},
+    {'label': _('Latitude'), 'value': ('lat')},
+    {'label': _('Longitude'), 'value': ('lon')}]
+
+y_axis_options = [
+    {'label': _('Minimum Frequency'), 'value': ('fmin')},
+    {'label': _('Maximum Depth'), 'value': ('max_depth')}]
+
+year_dict = {}
+for year in range(1962,1974):
+    year_dict[year] = str(year)
+lat_dict = {}
+for lat in range(-90, 90+1, 15):
+    lat_dict[lat] = str(lat)
+lon_dict = {}
+for lon in range(-180, 180+1, 30):
+    lon_dict[lon] = str(lon)
+
+#======================================================================================
 
 def coords_to_float(coord):
     """Convert a latitude or longitude coordinate from a string to a float, taking into account N, E, S, W.
@@ -75,14 +140,16 @@ external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/fav
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js'
+    'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
+    'https://cdn.plot.ly/plotly-locale-de-latest.js'
 ]
 
 app = dash.Dash(
     __name__,
+    requests_pathname_prefix='/alouette/',
+    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
     external_stylesheets=external_stylesheets,
     external_scripts=external_scripts,
-    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
 )
 
 server = app.server
@@ -149,7 +216,7 @@ def build_header():
                         ),
                         html.A(
                             html.Button('FR', id='language-button', className="dash_button"),
-                            href='/language/fr', id='language-link'
+                            href='/alouette/language/fr', id='language-link'
                         ),
                     ],
                     className="four columns",
@@ -1652,9 +1719,9 @@ def update_language_button(x):
 
     language = session['language']
     if language == 'fr':
-        return 'EN', '/language/en'
+        return 'EN', '/alouette/language/en'
     else:
-        return 'FR', '/language/fr'
+        return 'FR', '/alouette/language/fr'
 
 
 @babel.localeselector
@@ -1680,9 +1747,9 @@ def set_language(language=None):
     return redirect(url_for('/'))
 
 
-# Main
-if __name__ == '__main__':
-    app.run_server(debug=True)  # For development/testing
+# # Main
+# if __name__ == '__main__':
+#     app.run_server(debug=True)  # For development/testing
     # app.run_server(debug=False, host='0.0.0.0', port=8888)  # For the server
 
 
