@@ -26,7 +26,7 @@ Les commandes suivantes peuvent être exécutées plus facilement dans un enviro
 Pour démarrer l'application :
 
         pip install -r requirements.txt
-        python app.py
+        python alouette.py
 
 Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
 
@@ -93,7 +93,7 @@ The following commands can be done more easily if in a virtual environment (like
 For starting the application:
 
         pip install -r requirements.txt
-        python app.py
+        python alouette.py
 
 Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
 
