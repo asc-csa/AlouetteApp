@@ -25,6 +25,8 @@ Les commandes suivantes peuvent être exécutées plus facilement dans un enviro
 
 Pour démarrer l'application :
 
+- Créer un dossier nommé "data" et y ajouter le fichier "final_alouette_data.csv"
+
         pip install -r requirements.txt
         python alouette.py
 
@@ -91,6 +93,7 @@ The following commands can be done more easily if in a virtual environment (like
 
 
 For starting the application:
+- Create a folder named "data" and add the file "final_alouette_data.csv"
 
         pip install -r requirements.txt
         python alouette.py
