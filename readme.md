@@ -59,10 +59,12 @@ Des instructions d'installation distinctes pour la version de production de l'ap
 
 
 
-
 ## En-tête/pied de page
 
 - Le code de l'en-tête/du pied de page du gouvernement est enregistré dans un fichier séparé (header_footer.py), et est directement injecté dans l'application du tiret.
+
+## Version
+Ceci est la v0.1 de l'application Alouette. 
 
 ## Traductions
 
@@ -136,7 +138,8 @@ Separate installation instructions for the production version of the app are pro
 The current and previous roadmaps can be found on livelink for reference:
 [http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader]([http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader])
 
-
+## Version
+This is v0.1 of the Alouette app. 
 
 ## Authors | Auteurs
  - Hansen Liu
