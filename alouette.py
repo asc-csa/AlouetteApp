@@ -228,7 +228,7 @@ def build_header():
                 ),
                 html.Div(
                     [
-                        html.H3(
+                        html.H1(
                             "",
                             style={"margin-bottom": "10px", "margin-left": "15%"},
                             id="page-title"),
@@ -305,7 +305,13 @@ def build_filtering():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(id="selector_map")],
+                            [dcc.Graph(
+                                id="selector_map",
+                                config={
+                                    "displaylogo": False,
+                                    "displayModeBar" : False
+                                },
+                            )],
                         ),
                         html.Div(
                             [
@@ -317,6 +323,7 @@ def build_filtering():
                                     dcc.Dropdown(
                                         id="ground_station_list",
                                         options=[],
+                                        placeholder=_("Sélectionner | Select"),
                                         multi=True,
                                         value=station_values,
                                         className="dcc_control",
@@ -415,7 +422,12 @@ def build_filtering():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(id="count_graph")],
+                            [dcc.Graph(id="count_graph",
+                                       config={
+                                           "displaylogo": False,
+                                           "displayModeBar": False
+                                       }
+                                       )],
                             id="countGraphContainer",
                         ),
                         html.Div(
@@ -492,7 +504,12 @@ def build_stats():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(id="viz_chart")],
+                            [dcc.Graph(id="viz_chart",
+                                       config={
+                                           "displaylogo": False,
+                                           "displayModeBar": False
+                                       }
+                                       )],
                             id="vizChartContainer",
                             #className="pretty_container",
                         ),
@@ -548,7 +565,12 @@ def build_stats():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(id="viz_map")],
+                            [dcc.Graph(id="viz_map",
+                                       config={
+                                           "displaylogo": False,
+                                           "displayModeBar": False
+                                       }
+                                       )],
                             id="vizGraphContainer",
                         ),
                     ],
@@ -1011,7 +1033,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
             mode="markers",
             x=g.index,
             y=g['file_name'] / 2,
-            name="All Ionograms",
+            name=_("All Ionograms"),
             opacity=0,
             hoverinfo="skip",
         ),
@@ -1019,7 +1041,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
             type="bar",
             x=g.index,
             y=g['file_name'],
-            name="All Ionograms",
+            name=_("All Ionograms"),
             marker=dict(color="rgb(18, 99, 168)"),
         ),
     ]
@@ -1165,10 +1187,10 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                     + "<br>No. of Ionograms: "
+                     + _("<br>No. of Ionograms: ")
                      + str(val)
-                     + "<br>lat: " + str(lat[i])
-                     + "<br>lon: " + str(lon[i])
+                     + _("<br>Latitude: ") + str(lat[i]) + "°"
+                     + _("<br>Longitude: ") + str(lon[i]) + "°"
             )
             stations.append(station)
 
@@ -1249,7 +1271,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     ],
 )
 def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
-    """Create and update the chart for visualizing selected iongograms based on varying x and y-axis selection.
+    """Create and update the chart for visualizing selected ionograms based on varying x and y-axis selection.
 
     Displays the mean value from the selected x-axis with a calculated 95% confidence interval, displaying the
     boundaries with a lighter coloured ribbon.
@@ -1377,7 +1399,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         dict(
             fill="tonexty",
             mode="none",
-            name="95% Confidence Interval",
+            name=_("95% Confidence Interval"),
             type="scatter",
             x=bins,
             y=ci_lower_limits,
@@ -1392,13 +1414,26 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             mode="lines+markers",
             x=bins,
             y=estimated_means,
-            name="Estimated Mean",
+            name=_("Estimated Mean"),
             line={'color': 'rgb(18,99,168)'},
             marker={'size': 2.5},
             connectgaps=False,
             showlegend=True,
         ),
     ]
+    #Set x-axis label dynamically
+    if x_axis_selection == 'lat':
+        x_label = _("Latitude")
+    elif x_axis_selection == 'lon':
+        x_label = _("Longitude")
+    elif x_axis_selection == 'timestamp':
+        x_label = _("Date")
+
+    # Set y-axis label dynamically
+    if y_axis_selection == 'max_depth':
+        y_label = _("Maximum Depth [km]")
+    elif y_axis_selection == 'fmin':
+        y_label = _("Minimum Frequency [MHz]")
 
     layout = dict(
         autosize=True,
@@ -1407,8 +1442,8 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         paper_bgcolor="#F9F9F9",
         # legend=dict(font=dict(size=10), orientation="h"),
         title=_("Data Visualization (95% Confidence Interval)"),
-        xaxis={"title": x_axis_selection, "automargin": True},
-        yaxis={"title": y_axis_selection, "automargin": True},
+        xaxis={"title": x_label, "automargin": True},
+        yaxis={"title": y_label, "automargin": True},
         height=500,
         transition={'duration': 500},
     )
@@ -1505,8 +1540,18 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         station_names = df_stations["station_name"].tolist()
         if stat_selection == 'mean':
             stat_values = df_stations["mean"].tolist()
+            stat_label = _("Mean")
         elif stat_selection == 'median':
             stat_values = df_stations["median"].tolist()
+            stat_label = _("Median")
+
+        #Set labels for frequency/depth
+        if var_selection == 'fmin':
+            var_label = _("Minimum Frequency")
+            var_unit = "MHz"
+        elif var_selection == 'max_depth':
+            var_label = _("Maximum Depth")
+            var_unit = "km"
 
         # Count mapping from aggregated data
         stat_metric_data = {}
@@ -1557,10 +1602,10 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                + "<br>" + stat_selection + " " + var_selection + ":"
-                + str(round(val, 2))
-                + "<br>lat: " + str(lat[i])
-                + "<br>lon: " + str(lon[i])
+                + "<br>" + stat_label + ", " + var_label + ": "
+                + str(round(val, 2)) + " " + var_unit + " "
+                + _("<br>Latitude: ") + str(lat[i]) + "°"
+                + _("<br>Longitude: ") + str(lon[i]) + "°"
             )
             stations.append(station)
 
@@ -1657,7 +1702,7 @@ def translate_static(x):
     return [
                 _("Alouette I Ionogram Data"),
                 _("Learn More About Alouette"),
-                _("ionograms selected") + " / " + _("total of ionograms"),
+                _("Ionograms Selected") + " / " + _("Total Number of Ionograms"),
                 _("Launched in 1962, Alouette I sent signals with different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth these frequencies travelled. The results of this were sent to ground stations around the world and stored in films as ionogram images, which have now been digitized. The ionograms Alouette I provided were used to fuel hundreds of scientific papers at the time. Although ionosphere data from more recent years is readily available, the data from Alouette I’s ionograms are the only ones available for this time period. Barriers for accessing, interpreting and analyzing the data at a larger scale have prevented this data's usage. "),
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the extracted ionogram parameters, such as max depth and min frequency, are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Select Data"),
@@ -1668,10 +1713,10 @@ def translate_static(x):
                 _("Select ground stations:"),
                 _('Download Summary Data as CSV'),
                 _('Download Selected Ionogram Images'),
-                _("Graph showing the number of ionograms captured during each month. The X-axis presents the date and the Y-axis presents the number of ionograms."),
+                _("Graph showing the number of ionograms captured during each month. The X-axis indicates the date and the Y-axis indicates the number of ionograms."),
                 _("Select x-axis:"),
                 _("Select y-axis:"),
-                _("Graph visualizing the mean maximum depth over time. The variables can be changed using the dropdown. By default the X-axis represents time while the Y-axis represents mean maximum depth (Km)."),
+                _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Explore the data by selecting different variables in the drop-down menu on the right."),
                 _("Select statistic:"),
                 _("Select plotted value:"),
                 [  # Ground_station_options
@@ -1720,14 +1765,13 @@ def translate_static(x):
                     {'label': _('Minimum Frequency'), 'value': 'fmin'},
                     {'label': _('Maximum Depth'), 'value': 'max_depth'}
                 ],
-                _("Map showing mean maximum depth at each ground station. Each station is represented by a circle, the size of which depends on the mean maximum depth."),
+                _("Graph showing either the mean minimum frequency or mean maximum depth values as a function of either date, longitude, or latitude. Explore the data by selecting different variables in the drop-down menu on the right."),
                 [  # stat_selection
                     {'label': _('Mean'), 'value': 'mean'},
                     {'label': _('Median'), 'value': 'median'}
                 ],
 
     ]
-
 # Translate the header and the footer by injecting raw HTML
 @app.callback(
     [

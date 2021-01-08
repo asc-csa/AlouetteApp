@@ -1,51 +1,245 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-20 14:30-0400\n"
+"POT-Creation-Date: 2021-01-08 10:19-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.7.0\n"
+"Generated-By: Babel 2.8.0\n"
 
-#: app.py:925
+#: alouette.py:96 alouette.py:1723 controls.py:7
+msgid "Resolute Bay, No. W. Territories"
+msgstr ""
+
+#: alouette.py:97 alouette.py:1724 controls.py:8
+msgid "Blossom Point, Maryland"
+msgstr ""
+
+#: alouette.py:98 alouette.py:1725 controls.py:9
+msgid "South Atlantic, Falkland Islands"
+msgstr ""
+
+#: alouette.py:99 alouette.py:1726 controls.py:10
+msgid "St. John's, Newfoundland"
+msgstr ""
+
+#: alouette.py:100 alouette.py:1727 controls.py:11
+msgid "Orroral Valley, Australia"
+msgstr ""
+
+#: alouette.py:101 alouette.py:1728 controls.py:12
+msgid "Prince Albert, Canada"
+msgstr ""
+
+#: alouette.py:102 alouette.py:1729 controls.py:13
+msgid "Ottawa, Canada"
+msgstr ""
+
+#: alouette.py:103 alouette.py:1730 controls.py:14
+msgid "Byrd Station, Antartica"
+msgstr ""
+
+#: alouette.py:104 alouette.py:1731 controls.py:15
+msgid "Las Palmas, Canary Island"
+msgstr ""
+
+#: alouette.py:105 alouette.py:1732 controls.py:16
+msgid "Winkfield, England"
+msgstr ""
+
+#: alouette.py:106 alouette.py:1733 controls.py:17
+msgid "Fort Myers, Florida"
+msgstr ""
+
+#: alouette.py:107 alouette.py:1734 controls.py:18
+msgid "Antofagasta, Chile"
+msgstr ""
+
+#: alouette.py:108 alouette.py:1735 controls.py:19
+msgid "East Grand Forks, Minnesota"
+msgstr ""
+
+#: alouette.py:109 alouette.py:1736 controls.py:20
+msgid "Rosman, No. Carolina"
+msgstr ""
+
+#: alouette.py:110 alouette.py:1737 controls.py:21
+msgid "College, Fairbanks, Alaska"
+msgstr ""
+
+#: alouette.py:111 alouette.py:1738 controls.py:22
+msgid "Woomera, Australia"
+msgstr ""
+
+#: alouette.py:112 alouette.py:1739 controls.py:23
+msgid "Gilmore Creek, Fairbanks, Alaska"
+msgstr ""
+
+#: alouette.py:113 alouette.py:1740 controls.py:24
+msgid "Tromso, Norway"
+msgstr ""
+
+#: alouette.py:114 alouette.py:1741 controls.py:25
+msgid "University of Alaska, Fairbanks, Alaska"
+msgstr ""
+
+#: alouette.py:115 alouette.py:1742 controls.py:26
+msgid "Darwin, Australia"
+msgstr ""
+
+#: alouette.py:116 alouette.py:1743 controls.py:27
+msgid "Quito, Ecuador"
+msgstr ""
+
+#: alouette.py:117 alouette.py:1744 controls.py:28
+msgid "South Point, Hawaiian Islands"
+msgstr ""
+
+#: alouette.py:118 alouette.py:1745 controls.py:29
+msgid "Lima, Peru"
+msgstr ""
+
+#: alouette.py:119 alouette.py:1746 controls.py:30
+msgid "Johannesburg, South Africa"
+msgstr ""
+
+#: alouette.py:120 alouette.py:1747 controls.py:31
+msgid "Kano, Nigeria"
+msgstr ""
+
+#: alouette.py:121 alouette.py:1748 controls.py:32
+msgid "Tananarive, Madagascar"
+msgstr ""
+
+#: alouette.py:122 alouette.py:1749 controls.py:33
+msgid "Bretigny, France"
+msgstr ""
+
+#: alouette.py:123 alouette.py:1750 controls.py:34
+msgid "Singapore, Malaysia"
+msgstr ""
+
+#: alouette.py:124 alouette.py:1751 controls.py:35
+msgid "Boulder, Colorado"
+msgstr ""
+
+#: alouette.py:125 alouette.py:1752 controls.py:36
+msgid "Mojave, California"
+msgstr ""
+
+#: alouette.py:126 alouette.py:1753 controls.py:37
+msgid "Kauai, Hawaii"
+msgstr ""
+
+#: alouette.py:127 alouette.py:1754 controls.py:38
+msgid "Kashima, Japan"
+msgstr ""
+
+#: alouette.py:135 alouette.py:1430 alouette.py:1757 controls.py:46
+msgid "Date"
+msgstr ""
+
+#: alouette.py:136 alouette.py:1426 alouette.py:1758 controls.py:47
+msgid "Latitude"
+msgstr ""
+
+#: alouette.py:137 alouette.py:1428 alouette.py:1758 controls.py:48
+msgid "Longitude"
+msgstr ""
+
+#: alouette.py:140 alouette.py:1550 alouette.py:1761 alouette.py:1765
+#: controls.py:51
+msgid "Minimum Frequency"
+msgstr ""
+
+#: alouette.py:141 alouette.py:1553 alouette.py:1762 alouette.py:1766
+#: controls.py:52
+msgid "Maximum Depth"
+msgstr ""
+
+#: alouette.py:326
+msgid "Sélectionner | Select"
+msgstr ""
+
+#: alouette.py:1036 alouette.py:1044
+msgid "All Ionograms"
+msgstr ""
+
+#: alouette.py:1049
 msgid "Ionograms Per Month"
 msgstr ""
 
-#: app.py:927
+#: alouette.py:1051
 msgid "Number of Ionograms"
 msgstr ""
 
-#: app.py:1307
+#: alouette.py:1190
+msgid "<br>No. of Ionograms: "
+msgstr ""
+
+#: alouette.py:1192 alouette.py:1607
+msgid "<br>Latitude: "
+msgstr ""
+
+#: alouette.py:1193 alouette.py:1608
+msgid "<br>Longitude: "
+msgstr ""
+
+#: alouette.py:1402
+msgid "95% Confidence Interval"
+msgstr ""
+
+#: alouette.py:1417
+msgid "Estimated Mean"
+msgstr ""
+
+#: alouette.py:1434
+msgid "Maximum Depth [km]"
+msgstr ""
+
+#: alouette.py:1436
+msgid "Minimum Frequency [MHz]"
+msgstr ""
+
+#: alouette.py:1444
 msgid "Data Visualization (95% Confidence Interval)"
 msgstr ""
 
-#: app.py:1552
+#: alouette.py:1543 alouette.py:1770
+msgid "Mean"
+msgstr ""
+
+#: alouette.py:1546 alouette.py:1771
+msgid "Median"
+msgstr ""
+
+#: alouette.py:1703
 msgid "Alouette I Ionogram Data"
 msgstr ""
 
-#: app.py:1553
+#: alouette.py:1704
 msgid "Learn More About Alouette"
 msgstr ""
 
-#: app.py:1554
-msgid "ionograms selected"
+#: alouette.py:1705
+msgid "Ionograms Selected"
 msgstr ""
 
-#: app.py:1554
-msgid "total of ionograms"
+#: alouette.py:1705
+msgid "Total Number of Ionograms"
 msgstr ""
 
-#: app.py:1555
+#: alouette.py:1706
 msgid ""
 "Launched in 1962, Alouette I sent signals with different frequencies into"
 " the topmost layer of the atmosphere, known as the ionosphere, and "
@@ -59,7 +253,7 @@ msgid ""
 "at a larger scale have prevented this data's usage. "
 msgstr ""
 
-#: app.py:1556
+#: alouette.py:1707
 msgid ""
 "This application provides users the ability to select, download and "
 "visualize Alouette I's data. Please note that the extracted ionogram "
@@ -68,203 +262,77 @@ msgid ""
 " not be directly used in a scientific context."
 msgstr ""
 
-#: app.py:1557
+#: alouette.py:1708
 msgid "Select Data"
 msgstr ""
 
-#: app.py:1558
+#: alouette.py:1709
 msgid "Filter by ground station latitude:"
 msgstr ""
 
-#: app.py:1559
+#: alouette.py:1710
 msgid "Filter by ground station longitude:"
 msgstr ""
 
-#: app.py:1560
+#: alouette.py:1711
+msgid ""
+"Map of the world showing ground stations. Each station is represented by "
+"a circle, the size of which depends on the number of ionograms at each "
+"station."
+msgstr ""
+
+#: alouette.py:1712
 msgid "Filter by date:"
 msgstr ""
 
-#: app.py:1561
+#: alouette.py:1713
 msgid "Select ground stations:"
 msgstr ""
 
-#: app.py:1562
+#: alouette.py:1714
 msgid "Download Summary Data as CSV"
 msgstr ""
 
-#: app.py:1563
+#: alouette.py:1715
 msgid "Download Selected Ionogram Images"
 msgstr ""
 
-#: app.py:1564
+#: alouette.py:1716
+msgid ""
+"Graph showing the number of ionograms captured during each month. The "
+"X-axis indicates the date and the Y-axis indicates the number of "
+"ionograms."
+msgstr ""
+
+#: alouette.py:1717
 msgid "Select x-axis:"
 msgstr ""
 
-#: app.py:1565
+#: alouette.py:1718
 msgid "Select y-axis:"
 msgstr ""
 
-#: app.py:1566
+#: alouette.py:1719
+msgid ""
+"Map showing either minimum frequency or maximum depth values at each "
+"ground station. Each station is represented by a circle, the size of "
+"which depends on either the mean or median values of the variables "
+"selected. Explore the data by selecting different variables in the drop-"
+"down menu on the right."
+msgstr ""
+
+#: alouette.py:1720
 msgid "Select statistic:"
 msgstr ""
 
-#: app.py:1567
+#: alouette.py:1721
 msgid "Select plotted value:"
 msgstr ""
 
-#: app.py:1569 controls.py:7
-msgid "Resolute Bay, No. W. Territories"
-msgstr ""
-
-#: app.py:1570 controls.py:8
-msgid "Blossom Point, Maryland"
-msgstr ""
-
-#: app.py:1571 controls.py:9
-msgid "South Atlantic, Falkland Islands"
-msgstr ""
-
-#: app.py:1572 controls.py:10
-msgid "St. John's, Newfoundland"
-msgstr ""
-
-#: app.py:1573 controls.py:11
-msgid "Orroral Valley, Australia"
-msgstr ""
-
-#: app.py:1574 controls.py:12
-msgid "Prince Albert, Canada"
-msgstr ""
-
-#: app.py:1575 controls.py:13
-msgid "Ottawa, Canada"
-msgstr ""
-
-#: app.py:1576 controls.py:14
-msgid "Byrd Station, Antartica"
-msgstr ""
-
-#: app.py:1577 controls.py:15
-msgid "Las Palmas, Canary Island"
-msgstr ""
-
-#: app.py:1578 controls.py:16
-msgid "Winkfield, England"
-msgstr ""
-
-#: app.py:1579 controls.py:17
-msgid "Fort Myers, Florida"
-msgstr ""
-
-#: app.py:1580 controls.py:18
-msgid "Antofagasta, Chile"
-msgstr ""
-
-#: app.py:1581 controls.py:19
-msgid "East Grand Forks, Minnesota"
-msgstr ""
-
-#: app.py:1582 controls.py:20
-msgid "Rosman, No. Carolina"
-msgstr ""
-
-#: app.py:1583 controls.py:21
-msgid "College, Fairbanks, Alaska"
-msgstr ""
-
-#: app.py:1584 controls.py:22
-msgid "Woomera, Australia"
-msgstr ""
-
-#: app.py:1585 controls.py:23
-msgid "Gilmore Creek, Fairbanks, Alaska"
-msgstr ""
-
-#: app.py:1586 controls.py:24
-msgid "Tromso, Norway"
-msgstr ""
-
-#: app.py:1587 controls.py:25
-msgid "University of Alaska, Fairbanks, Alaska"
-msgstr ""
-
-#: app.py:1588 controls.py:26
-msgid "Darwin, Australia"
-msgstr ""
-
-#: app.py:1589 controls.py:27
-msgid "Quito, Ecuador"
-msgstr ""
-
-#: app.py:1590 controls.py:28
-msgid "South Point, Hawaiian Islands"
-msgstr ""
-
-#: app.py:1591 controls.py:29
-msgid "Lima, Peru"
-msgstr ""
-
-#: app.py:1592 controls.py:30
-msgid "Johannesburg, South Africa"
-msgstr ""
-
-#: app.py:1593 controls.py:31
-msgid "Kano, Nigeria"
-msgstr ""
-
-#: app.py:1594 controls.py:32
-msgid "Tananarive, Madagascar"
-msgstr ""
-
-#: app.py:1595 controls.py:33
-msgid "Bretigny, France"
-msgstr ""
-
-#: app.py:1596 controls.py:34
-msgid "Singapore, Malaysia"
-msgstr ""
-
-#: app.py:1597 controls.py:35
-msgid "Boulder, Colorado"
-msgstr ""
-
-#: app.py:1598 controls.py:36
-msgid "Mojave, California"
-msgstr ""
-
-#: app.py:1599 controls.py:37
-msgid "Kauai, Hawaii"
-msgstr ""
-
-#: app.py:1600 controls.py:38
-msgid "Kashima, Japan"
-msgstr ""
-
-#: app.py:1603 controls.py:46
-msgid "Date"
-msgstr ""
-
-#: app.py:1604 controls.py:47
-msgid "Latitude"
-msgstr ""
-
-#: app.py:1604 controls.py:48
-msgid "Longitude"
-msgstr ""
-
-#: app.py:1607 app.py:1611 controls.py:51
-msgid "Minimum Frequency"
-msgstr ""
-
-#: app.py:1608 app.py:1612 controls.py:52
-msgid "Maximum Depth"
-msgstr ""
-
-#: app.py:1615
-msgid "Mean"
-msgstr ""
-
-#: app.py:1616
-msgid "Median"
+#: alouette.py:1768
+msgid ""
+"Graph showing either the mean minimum frequency or mean maximum depth "
+"values as a function of either date, longitude, or latitude. Explore the "
+"data by selecting different variables in the drop-down menu on the right."
 msgstr ""
 
