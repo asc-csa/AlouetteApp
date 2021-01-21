@@ -279,6 +279,11 @@ def build_filtering():
                                  html.H6(id="description"),
                                  html.P(id="description-1"),
                                  html.P(id="description-2"),
+                                 html.A(
+                                    html.P(id="github-link"),
+                                    href = "https://github.com/asc-csa/AlouetteApp",
+                                    title = "ASC-CSA Github"
+                                    )
                             ],
                             id="description_div",
                         ),
@@ -1674,6 +1679,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("ionograms-ratio", "children"),
         Output("description-1", "children"),
         Output("description-2", "children"),
+        Output("github-link", "children"),
         Output("select-data", "children"),
         Output("latitude-text", "children"),
         Output("longitude-text", "children"),
@@ -1705,6 +1711,7 @@ def translate_static(x):
                 _("Ionograms Selected") + " / " + _("Total Number of Ionograms"),
                 _("Launched in 1962, Alouette I sent signals with different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth these frequencies travelled. The results of this were sent to ground stations around the world and stored in films as ionogram images, which have now been digitized. The ionograms Alouette I provided were used to fuel hundreds of scientific papers at the time. Although ionosphere data from more recent years is readily available, the data from Alouette I’s ionograms are the only ones available for this time period. Barriers for accessing, interpreting and analyzing the data at a larger scale have prevented this data's usage. "),
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the extracted ionogram parameters, such as max depth and min frequency, are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
+                _("Visit our Github page to learn more about the code used to make this application."),
                 _("Select Data"),
                 _("Filter by ground station latitude:"),
                 _("Filter by ground station longitude:"),
