@@ -43,23 +43,23 @@ if __name__ == '__main__':
      from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
 
 
-    
+
      df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-  
+
      app = dash.Dash(__name__,meta_tags=[{"name": "viewport", "content": "width=device-width"}],external_stylesheets=external_stylesheets,external_scripts=external_scripts,)
      app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
      server = app.server
      server.config['SECRET_KEY'] = '78b81502f7e89045fe634e85d02f42c5'  # Setting up secret key to access flask session
      babel = Babel(server)  # Hook flask-babel to the app
 
-  
-    
+
+
 
 else :
     prefixe="/alouette"
     from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-    
+
     app = dash.Dash(
     __name__,
     requests_pathname_prefix='/alouette/',
@@ -180,7 +180,7 @@ def coords_to_float(coord):
 
 
 df['timestamp'] = pd.to_datetime(df['timestamp'])  # converts the timestamp to date_time objects
- 
+
 df['lat'] = df.apply(lambda x: coords_to_float(x['lat']), axis=1)
 df['lon'] = df.apply(lambda x: coords_to_float(x['lon']), axis=1)
 
@@ -669,13 +669,13 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
 
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -736,13 +736,13 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
 
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -783,13 +783,13 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     ----------
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -832,7 +832,7 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    link = '/dash/downloadImages?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}'\
+    link = prefixe+'/dash/downloadImages?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}'\
         .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     return link
@@ -902,7 +902,7 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    link = '/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
+    link = prefixe+'/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
             .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     return link
@@ -927,13 +927,13 @@ def download_csv():
 
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -996,13 +996,13 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -1089,13 +1089,13 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
 
     lat_min : double
         Minimum value of the latitude stored as a double.
-        
+
     lat_max : double
         Maximum value of the latitude stored as a double.
-        
+
     lon_min : double
         Minimum value of the longitude stored as a double.
-        
+
     lon_max : double
         Maximum value of the longitude stored as a double.
 
@@ -1836,5 +1836,3 @@ def set_language(language=None):
 
 if __name__ == '__main__':
        app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
-       
-
