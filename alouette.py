@@ -82,7 +82,7 @@ else :
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
 
-IONOGRAM_PATH = 'U:/Downloads'  # Directory to Ionogram images for testing
+IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
 # IONOGRAM_PATH = '/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images on server
 
 # load data and transform as needed
@@ -877,11 +877,26 @@ def download_images():
         # Making the output csv from the filtered df
         csv_buffer = StringIO()
         dff.to_csv(csv_buffer, index=False)
-        zf.writestr('Metadata_of_selected_ionograms.csv', csv_buffer.getvalue())
+        try:
+            language = session['language']
+        except KeyError:
+            language = 'en'
+        if language == 'fr':
+            fn = "Metadata_des_ionogrammes_séléctionnés.csv"
+        else:
+            fn = 'Metadata_of_selected_ionograms.csv'
+        zf.writestr(fn, csv_buffer.getvalue())
 
     memory_file.seek(0)
-
-    return flask.send_file(memory_file, attachment_filename='Ionograms.zip', as_attachment=True)
+    try:
+        language = session['language']
+    except KeyError:
+        language = 'en'
+    if language == 'fr':
+        fn = "Ionogrammes.zip"
+    else:
+        fn = "Ionograms.zip"
+    return flask.send_file(memory_file, attachment_filename=fn, as_attachment=True)
 
 
 
@@ -968,7 +983,14 @@ def download_csv():
     csv_buffer = StringIO()
     dff.to_csv(csv_buffer, index=False)
     output = make_response(csv_buffer.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
+    try:
+        language = session['language']
+    except KeyError:
+        language = 'en'
+    if language == 'fr':
+        output.headers["Content-Disposition"] = "attachment; filename=résumé_données.csv"
+    else:
+        output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
     output.headers["Content-type"] = "text/csv"
 
     return output
@@ -1777,7 +1799,6 @@ def translate_static(x):
                     {'label': _('Mean'), 'value': 'mean'},
                     {'label': _('Median'), 'value': 'median'}
                 ],
-
     ]
 # Translate the header and the footer by injecting raw HTML
 @app.callback(
