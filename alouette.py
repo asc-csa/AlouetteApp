@@ -1834,8 +1834,10 @@ def translate_header_footer(x):
 def update_language_button(x):
     """Updates the button to switch languages
     """
-
-    language = session['language']
+    try:
+        language = session['language']
+    except KeyError:
+        language = None
     if language == 'fr':
         return 'EN', prefixe+'/language/en'
     else:
