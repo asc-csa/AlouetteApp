@@ -1358,8 +1358,8 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     if x_axis_selection == 'timestamp':
         dff.index = dff["timestamp"]
 
-        index_month = dt.date(dff.index.min().year, dff.index.min().month, 1)
-        end_month = dt.date(dff.index.max().year, dff.index.max().month, 1)
+        index_month = dt.date(int(dff.index.min().year), int(dff.index.min().month), 1)
+        end_month = dt.date(int(dff.index.max().year), int(dff.index.max().month), 1)
 
         while index_month <= end_month:
             index_month_data = dff[(dff['timestamp'] > pd.Timestamp(index_month))
