@@ -266,7 +266,7 @@ def build_filtering():
             [
                 html.Div(
                     [
-                        html.H3(id="ionograms_text"),
+                        html.H3(id="ionograms_text",style = {"margin-top": "3.5em"}),
                         html.P(id="ionograms-ratio")
                     ],
                     id="info-container",
@@ -277,7 +277,6 @@ def build_filtering():
                     [
                         html.Div(
                             [
-                                 html.H6(id="description"),
                                  html.P(id="description-1"),
                                  html.P(id="description-2"),
                                  html.A(
@@ -381,9 +380,6 @@ def build_filtering():
                                                 style={"margin-left": "5px"}
                                             )
                                         ]),
-                                        html.H5(
-                                            "", style={"margin-top": "30px"}
-                                        ),
                                     ],
                                     className="one-half column"
                                 ),
@@ -436,13 +432,10 @@ def build_filtering():
                                     ],
                                     className="one-half column"
                                 ),
-                                html.H5(
-                                    "", style={"margin-top": "10px"}
-                                ),
                             ],
                             id="map-options",
                         ),
-                    html.P(id="Map_description-1"),
+                    html.P(id="Map_description-1",style={"margin-top": "2em"}),
                     ],
 
                     id="left-column-1",
@@ -490,9 +483,6 @@ def build_filtering():
                                     ),
                                     html.Div(id='output-container-date-picker-range')
                                 ]),
-                                html.H5(
-                                    "", style={"margin-top": "30px", "margin-bottom": "25px"}
-                                ),
                                 html.Div(
                                     [
                                         html.A(
@@ -512,7 +502,7 @@ def build_filtering():
                             ],
                             id="cross-filter-options",
                         ),
-                    html.Div ([html.P(id="Graph_description-1")]),
+                    html.Div ([html.P(id="Graph_description-1", style = {"margin-top":"2.8em"})]),
                     html.Div ([html.B(id="Download_limit")]),
                     ],
                     id="right-column-1",
