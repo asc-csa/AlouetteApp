@@ -82,7 +82,8 @@ else :
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
 
-IONOGRAM_PATH = 'U:/Downloads'  # Directory to Ionogram images for testing
+IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
+MAX_IONOGRAM = 100
 # IONOGRAM_PATH = '/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images on server
 
 # load data and transform as needed
@@ -348,26 +349,38 @@ def build_filtering():
                                         #     className="dcc_control",
                                         #     marks=lat_dict,
                                         # ),
-                                        dcc.Input(
-                                            id="lat_min",
-                                            type='number',
-                                            value=-90.0,
-                                            placeholder="Min Latitude",
-                                            min=-90.0,
-                                            max=90.0,
-                                            step=5,
-                                            style={"margin-left": "5px"}
-                                        ),
-                                        dcc.Input(
-                                            id="lat_max",
-                                            type='number',
-                                            value=90.0,
-                                            placeholder="Max Latitude",
-                                            min=-90.0,
-                                            max=90.0,
-                                            step=5,
-                                            style={"margin-left": "5px"}
-                                        ),
+                                        html.Div([
+                                            html.Label(
+                                                id="lat_min-text",
+                                                htmlFor = "lat_min",
+                                                hidden = True
+                                            ),
+                                            dcc.Input(
+                                                id="lat_min",
+                                                type='number',
+                                                value=-90.0,
+                                                placeholder="Min Latitude",
+                                                min=-90.0,
+                                                max=90.0,
+                                                step=5,
+                                                style={"margin-left": "5px"}
+                                            ),
+                                            html.Label(
+                                                id="lat_max-text",
+                                                htmlFor = "lat_max",
+                                                hidden = True
+                                            ),
+                                            dcc.Input(
+                                                id="lat_max",
+                                                type='number',
+                                                value=90.0,
+                                                placeholder="Max Latitude",
+                                                min=-90.0,
+                                                max=90.0,
+                                                step=5,
+                                                style={"margin-left": "5px"}
+                                            )
+                                        ]),
                                         html.H5(
                                             "", style={"margin-top": "30px"}
                                         ),
@@ -388,26 +401,38 @@ def build_filtering():
                                         #     className="dcc_control",
                                         #     marks=lon_dict,
                                         # ),
-                                        dcc.Input(
-                                            id="lon_min",
-                                            type='number',
-                                            value=-90.0,
-                                            placeholder="Min Longitude",
-                                            min=-90.0,
-                                            max=90.0,
-                                            step=5,
-                                            style={"margin-left": "5px"}
-                                        ),
-                                        dcc.Input(
-                                            id="lon_max",
-                                            type='number',
-                                            value=90.0,
-                                            placeholder="Max Longitude",
-                                            min=-90.0,
-                                            max=90.0,
-                                            step=5,
-                                            style={"margin-left": "5px"}
-                                        ),
+                                        html.Div([
+                                            html.Label(
+                                                id = "lon_min-text",
+                                                htmlFor = "lon_min",
+                                                hidden = True
+                                            ),
+                                            dcc.Input(
+                                                id="lon_min",
+                                                type='number',
+                                                value=-90.0,
+                                                placeholder="Min Longitude",
+                                                min=-90.0,
+                                                max=90.0,
+                                                step=5,
+                                                style={"margin-left": "5px"}
+                                            ),
+                                            html.Label(
+                                                id = "lon_max-text",
+                                                htmlFor = "lon_max",
+                                                hidden = True
+                                            ),
+                                            dcc.Input(
+                                                id="lon_max",
+                                                type='number',
+                                                value=90.0,
+                                                placeholder="Max Longitude",
+                                                min=-90.0,
+                                                max=90.0,
+                                                step=5,
+                                                style={"margin-left": "5px"}
+                                            )
+                                        ]),
                                     ],
                                     className="one-half column"
                                 ),
@@ -488,6 +513,7 @@ def build_filtering():
                             id="cross-filter-options",
                         ),
                     html.Div ([html.P(id="Graph_description-1")]),
+                    html.Div ([html.B(id="Download_limit")]),
                     ],
                     id="right-column-1",
                     style={"flex-grow": 1},
@@ -867,7 +893,7 @@ def download_images():
 
     # Store the zip in memory
     memory_file = BytesIO()
-    max_download = 100  # Temporary limit on number of ionograms that can be downloaded
+    max_download = MAX_IONOGRAM  # Temporary limit on number of ionograms that can be downloaded
     with ZipFile(memory_file, 'w') as zf:
         for index, row in dff.iterrows():
             if os.path.exists(row['file_path']) and max_download > 0:
@@ -877,11 +903,26 @@ def download_images():
         # Making the output csv from the filtered df
         csv_buffer = StringIO()
         dff.to_csv(csv_buffer, index=False)
-        zf.writestr('Metadata_of_selected_ionograms.csv', csv_buffer.getvalue())
+        try:
+            language = session['language']
+        except KeyError:
+            language = 'en'
+        if language == 'fr':
+            fn = "Metadata_des_ionogrammes_séléctionnés.csv"
+        else:
+            fn = 'Metadata_of_selected_ionograms.csv'
+        zf.writestr(fn, csv_buffer.getvalue())
 
     memory_file.seek(0)
-
-    return flask.send_file(memory_file, attachment_filename='Ionograms.zip', as_attachment=True)
+    try:
+        language = session['language']
+    except KeyError:
+        language = 'en'
+    if language == 'fr':
+        fn = "Ionogrammes.zip"
+    else:
+        fn = "Ionograms.zip"
+    return flask.send_file(memory_file, attachment_filename=fn, as_attachment=True)
 
 
 
@@ -968,7 +1009,14 @@ def download_csv():
     csv_buffer = StringIO()
     dff.to_csv(csv_buffer, index=False)
     output = make_response(csv_buffer.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
+    try:
+        language = session['language']
+    except KeyError:
+        language = 'en'
+    if language == 'fr':
+        output.headers["Content-Disposition"] = "attachment; filename=résumé_données.csv"
+    else:
+        output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
     output.headers["Content-type"] = "text/csv"
 
     return output
@@ -1334,8 +1382,8 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     if x_axis_selection == 'timestamp':
         dff.index = dff["timestamp"]
 
-        index_month = dt.date(dff.index.min().year, dff.index.min().month, 1)
-        end_month = dt.date(dff.index.max().year, dff.index.max().month, 1)
+        index_month = dt.date(int(dff.index.min().year), int(dff.index.min().month), 1)
+        end_month = dt.date(int(dff.index.max().year), int(dff.index.max().month), 1)
 
         while index_month <= end_month:
             index_month_data = dff[(dff['timestamp'] > pd.Timestamp(index_month))
@@ -1682,13 +1730,18 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("github-link", "children"),
         Output("select-data", "children"),
         Output("latitude-text", "children"),
+        Output("lat_min-text", "children"),
+        Output("lat_max-text", "children"),
         Output("longitude-text", "children"),
+        Output("lon_min-text", "children"),
+        Output("lon_max-text", "children"),
         Output("Map_description-1", "children"),
         Output("yearslider-text", "children"),
         Output("groundstations-text", "children"),
         Output("download-button-1", "children"),
         Output("download-button-2", "children"),
         Output("Graph_description-1", "children"),
+        Output("Download_limit", "children"),
         Output("x-axis-selection-text", "children"),
         Output("y-axis-selection-text", "children"),
         Output("Graph_description-2", "children"),
@@ -1714,13 +1767,18 @@ def translate_static(x):
                 _("Visit our Github page to learn more about the code used to make this application."),
                 _("Select Data"),
                 _("Filter by ground station latitude:"),
+                _("Minimum latitude"),
+                _("Maximum latitude"),
                 _("Filter by ground station longitude:"),
+                _("Minimum longitude"),
+                _("Maximum longitude"),
                 _("Map of the world showing ground stations. Each station is represented by a circle, the size of which depends on the number of ionograms at each station."),
                 _("Filter by date:"),
                 _("Select ground stations:"),
                 _('Download Summary Data as CSV'),
                 _('Download Selected Ionogram Images'),
                 _("Graph showing the number of ionograms captured during each month. The X-axis indicates the date and the Y-axis indicates the number of ionograms."),
+                _("The ionogram images download is currently limited to ")+str(MAX_IONOGRAM)+_(" images at a time."),
                 _("Select x-axis:"),
                 _("Select y-axis:"),
                 _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Explore the data by selecting different variables in the drop-down menu on the right."),
@@ -1777,7 +1835,6 @@ def translate_static(x):
                     {'label': _('Mean'), 'value': 'mean'},
                     {'label': _('Median'), 'value': 'median'}
                 ],
-
     ]
 # Translate the header and the footer by injecting raw HTML
 @app.callback(
@@ -1809,8 +1866,10 @@ def translate_header_footer(x):
 def update_language_button(x):
     """Updates the button to switch languages
     """
-
-    language = session['language']
+    try:
+        language = session['language']
+    except KeyError:
+        language = None
     if language == 'fr':
         return 'EN', prefixe+'/language/en'
     else:
@@ -1828,7 +1887,8 @@ def get_locale():
         language = None
     if language is not None:
         return language
-    return 'en'
+    else:
+        return 'en'
 
 
 @app.server.route('/language/<language>')
