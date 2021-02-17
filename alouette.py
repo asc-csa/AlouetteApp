@@ -3,6 +3,7 @@ import dash
 import pathlib
 import copy
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 import dash_dangerously_set_inner_html
 import plotly.graph_objs as go
@@ -11,7 +12,7 @@ import datetime as dt
 from scipy.stats import sem, t
 from scipy import mean
 from dateutil.relativedelta import relativedelta
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import locale
 import urllib.parse
 
@@ -334,6 +335,9 @@ def build_filtering():
                                         className="dcc_control",
                                     ),
                                 ),
+                                html.Div([
+                                    dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                ]),
                                 html.Div(
                                     [
                                         html.P(
@@ -406,10 +410,10 @@ def build_filtering():
                                             dcc.Input(
                                                 id="lon_min",
                                                 type='number',
-                                                value=-90.0,
+                                                value=-180.0,
                                                 placeholder="Min Longitude",
-                                                min=-90.0,
-                                                max=90.0,
+                                                min=-180.0,
+                                                max=180.0,
                                                 step=5,
                                                 style={"margin-left": "5px"}
                                             ),
@@ -421,10 +425,10 @@ def build_filtering():
                                             dcc.Input(
                                                 id="lon_max",
                                                 type='number',
-                                                value=90.0,
+                                                value=180.0,
                                                 placeholder="Max Longitude",
-                                                min=-90.0,
-                                                max=90.0,
+                                                min=-180.0,
+                                                max=180.0,
                                                 step=5,
                                                 style={"margin-left": "5px"}
                                             )
@@ -455,6 +459,9 @@ def build_filtering():
                         ),
                         html.Div(
                             [
+                                html.Div([
+                                    dbc.Alert(color="secondary", id="date_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                ]),
                                 html.P(
                                     id="yearslider-text",
                                     className="control_label",
@@ -718,7 +725,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
             (dff["lat"] >= lat_min)
             & (dff["lat"] <= lat_max)
                ]
-    if (lon_min != -90) or (lon_max != 90):
+    if (lon_min != -180) or (lon_max != 180):
         dff = dff[
             (dff["lon"] >= lon_min)
             & (dff["lon"] <= lon_max)
@@ -830,6 +837,43 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     else:
         return [] # if we have not selected any stations, keep the selection box empty
 
+@app.callback(
+    Output("pos_alert", "is_open"),
+    [   Input("lat_min", "value"),
+        Input("lat_max", "value"),
+        Input("lon_min", "value"),
+        Input("lon_max", "value"),
+    ],
+    [
+        State("pos_alert", "is_open")
+    ],
+)
+def pos_validation(lat_min,lat_max,lon_min,lon_max, is_open):
+    try:
+        s = not ((lat_min < lat_max) and (lat_min >= -90) and (lat_max <= 90) and (lon_min < lon_max) and (lon_min >= -180) and (lon_max <= 180))
+    except TypeError:
+        s = True
+    return s
+
+@app.callback(
+    Output("date_alert", "is_open"),
+    [   Input("date_picker_range", "start_date"),
+        Input("date_picker_range", "end_date")
+    ],
+    [
+        State("date_alert", "is_open")
+    ],
+)
+def date_validation(start_date, end_date, is_open):
+    try:
+        start = dt.datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%S')
+        end = dt.datetime.strptime(end_date, '%Y-%m-%dT%H:%M:%S')
+    except ValueError:
+        start = dt.datetime.strptime(start_date, '%Y-%m-%d')
+        end = dt.datetime.strptime(end_date, '%Y-%m-%d')
+    MIN_DATE=dt.datetime(1962, 9, 29)
+    MAX_DATE=dt.datetime(1972, 12, 31)
+    return not ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
 
 # Selectors -> Image download link
 @app.callback(
@@ -1719,6 +1763,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("description-2", "children"),
         Output("github-link", "children"),
         Output("select-data", "children"),
+        Output("pos_alert", "children"),
+        Output("date_alert", "children"),
         Output("latitude-text", "children"),
         Output("lat_min-text", "children"),
         Output("lat_max-text", "children"),
@@ -1756,6 +1802,8 @@ def translate_static(x):
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the extracted ionogram parameters, such as max depth and min frequency, are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Visit our Github page to learn more about the code used to make this application."),
                 _("Select Data"),
+                _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                _("Invalid dates provided. Dates must be between 09/29/1962 (Sep. 29th 1962) and 12/31/1972 (Dec. 31st 1972)."),
                 _("Filter by ground station latitude:"),
                 _("Minimum latitude"),
                 _("Maximum latitude"),
