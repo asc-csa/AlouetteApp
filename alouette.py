@@ -485,6 +485,7 @@ def build_filtering():
                                             end_date=dt.datetime(1972, 12, 31),
                                             start_date_placeholder_text='Select start date',
                                             end_date_placeholder_text='Select end date',
+                                            display_format="DD/MM/Y",
                                             style={"margin-top": "5px"}
                                         ),
                                     ),
@@ -1803,7 +1804,11 @@ def translate_static(x):
                 _("Visit our Github page to learn more about the code used to make this application."),
                 _("Select Data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+<<<<<<< Updated upstream
                 _("Invalid dates provided. Dates must be between 09/29/1962 (Sep. 29th 1962) and 12/31/1972 (Dec. 31st 1972)."),
+=======
+                _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+>>>>>>> Stashed changes
                 _("Filter by ground station latitude:"),
                 _("Minimum latitude"),
                 _("Maximum latitude"),
