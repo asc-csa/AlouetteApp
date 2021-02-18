@@ -267,7 +267,7 @@ def build_filtering():
             [
                 html.Div(
                     [
-                        html.H3(id="ionograms_text",style = {"margin-top": "3.5em"}),
+                        html.H2(id="ionograms_text",style = {"margin-top": "3.5em"}),
                         html.P(id="ionograms-ratio")
                     ],
                     id="info-container",
