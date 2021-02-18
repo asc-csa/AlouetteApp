@@ -325,16 +325,18 @@ def build_filtering():
                                     id="groundstations-text",
                                     className="control_label",
                                 ),
-                                html.Label(
-                                    dcc.Dropdown(
-                                        id="ground_station_list",
-                                        options=[],
-                                        placeholder=_("Sélectionner | Select"),
-                                        multi=True,
-                                        value=station_values,
-                                        className="dcc_control",
+                                html.Div([
+                                    html.Label(
+                                        dcc.Dropdown(
+                                            id="ground_station_list",
+                                            options=[],
+                                            placeholder=_("Sélectionner | Select"),
+                                            multi=True,
+                                            value=station_values,
+                                            className="dcc_control",
+                                        ),
                                     ),
-                                ),
+                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
                                     dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
                                 ]),
@@ -384,7 +386,7 @@ def build_filtering():
                                                 style={"margin-left": "5px"}
                                             )
                                         ]),
-                                    ],
+                                    html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
                                     className="one-half column"
                                 ),
                                 html.Div(
@@ -433,7 +435,7 @@ def build_filtering():
                                                 style={"margin-left": "5px"}
                                             )
                                         ]),
-                                    ],
+                                    html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
                                     className="one-half column"
                                 ),
                             ],
@@ -489,8 +491,8 @@ def build_filtering():
                                             style={"margin-top": "5px"}
                                         ),
                                     ),
-                                    html.Div(id='output-container-date-picker-range')
-                                ]),
+                                    html.Div(id='output-container-date-picker-range'),
+                                html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
                                 html.Div(
                                     [
                                         html.A(
@@ -504,7 +506,8 @@ def build_filtering():
                                             html.Button(id='download-button-2',  n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
                                             id='download-link-2',
                                             style={"margin-left": "5px"},
-                                        )
+                                        ),
+                                        html.Span(children=html.P(id="download_selection"),className="wb-inv")
                                     ],
                                 ),
                             ],
@@ -1766,6 +1769,11 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("select-data", "children"),
         Output("pos_alert", "children"),
         Output("date_alert", "children"),
+        Output("ground_station_selection", "children"),
+        Output("lat_selection", "children"),
+        Output("lon_selection", "children"),
+        Output("date_selection", "children"),
+        Output("download_selection", "children"),
         Output("latitude-text", "children"),
         Output("lat_min-text", "children"),
         Output("lat_max-text", "children"),
@@ -1805,6 +1813,11 @@ def translate_static(x):
                 _("Select Data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                _("Selection of the ground stations"),
+                _("Selection of the range of latitude "),
+                _("Selection of the range of longitude"),
+                _("Date selection"),
+                _("Download the selected dataset"),
                 _("Filter by ground station latitude:"),
                 _("Minimum latitude"),
                 _("Maximum latitude"),
