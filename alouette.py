@@ -2,6 +2,7 @@
 import dash
 import pathlib
 import copy
+import configparser
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
@@ -37,12 +38,18 @@ external_scripts = [
     'https://cdn.plot.ly/plotly-locale-de-latest.js'
 ]
 
+def get_config_dict():
+    config = configparser.RawConfigParser()
+    config.read('config.cfg')
+    if not hasattr(get_config_dict, 'config_dict'):
+        get_config_dict.config_dict = dict(config.items('TOKENS'))
+    return get_config_dict.config_dict
 
 if __name__ == '__main__':
      prefixe=""
 #     app.run_server(debug=True)  # For development/testing
      from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
-
+     tokens = get_config_dict()
 
 
      df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
@@ -50,7 +57,7 @@ if __name__ == '__main__':
      app = dash.Dash(__name__,meta_tags=[{"name": "viewport", "content": "width=device-width"}],external_stylesheets=external_stylesheets,external_scripts=external_scripts,)
      app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
      server = app.server
-     server.config['SECRET_KEY'] = '78b81502f7e89045fe634e85d02f42c5'  # Setting up secret key to access flask session
+     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
      babel = Babel(server)  # Hook flask-babel to the app
 
 
@@ -60,7 +67,7 @@ else :
     prefixe="/alouette"
     from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-
+    tokens = get_config_dict()
     app = dash.Dash(
     __name__,
     requests_pathname_prefix='/alouette/',
@@ -70,7 +77,7 @@ else :
 )
     app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
     server = app.server
-    server.config['SECRET_KEY'] = '78b81502f7e89045fe634e85d02f42c5'  # Setting up secret key to access flask session
+    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
     babel = Babel(server)  # Hook flask-babel to the app
 
 
@@ -187,7 +194,7 @@ df['lat'] = df.apply(lambda x: coords_to_float(x['lat']), axis=1)
 df['lon'] = df.apply(lambda x: coords_to_float(x['lon']), axis=1)
 
 # Create global chart template
-mapbox_access_token = "pk.eyJ1IjoiamFja2x1byIsImEiOiJjajNlcnh3MzEwMHZtMzNueGw3NWw5ZXF5In0.fk8k06T96Ml9CLGgKmk81w"
+mapbox_access_token = tokens['mapbox_token']
 
 layout = dict(
     autosize=True,
