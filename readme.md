@@ -25,7 +25,7 @@ Les commandes suivantes peuvent être exécutées plus facilement dans un enviro
 
 Pour démarrer l'application :
 
-- Créer un dossier nommé "data" et y ajouter le fichier "final_alouette_data.csv"
+- Créer un dossier nommé "data" et y ajouter le fichier "final_alouette_data.csv". Vous devrez aussi ajouter le fichier "config.cfg" dans le même dossier que "alouette.py". Vous trouverez ce fichier sur [Livelink](http://livelink/livelink/llisapi.dll?func=ll&objId=36908608&objAction=browse&viewType=1).
 
         pip install -r requirements.txt
         python alouette.py
@@ -95,7 +95,7 @@ The following commands can be done more easily if in a virtual environment (like
 
 
 For starting the application:
-- Create a folder named "data" and add the file "final_alouette_data.csv"
+- Create a folder named "data" and add the file "final_alouette_data.csv". You will also have to add the "config.cfg" file to the same folder as the "alouette.py" file.You can find this file on [Livelink](http://livelink/livelink/llisapi.dll?func=ll&objId=36908608&objAction=browse&viewType=1).
 
         pip install -r requirements.txt
         python alouette.py
