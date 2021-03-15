@@ -24,18 +24,59 @@ from io import StringIO
 from flask_babel import _ ,Babel
 from flask import session, redirect, url_for, request
 
+# get relative data folder
+PATH = pathlib.Path(__file__).parent
+DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
+ASSET_PATH = PATH.joinpath("public").resolve()  # path to "assets" folder
 
+scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 
-external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
-                        'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-                        'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
-                        'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+# external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
+#                         'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+#                         'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
+#                         'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+
+# external_stylesheets = [
+#     # 'assets/gc_theme/GCWeb/assets/favicon.ico',
+#     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+#     # 'assets/gc_theme/GCWeb/css/theme.min.css',
+#     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
+#     ]  # Link to external CSS
+
+external_stylesheets = [
+    'assets/gc_theme_cdn/assets/favicon.ico',
+    'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    'assets/gc_theme_cdn/css/theme.min.css',
+    # 'assets/gc_theme/wet-boew/css/noscript.min.css',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
+    ]  # Link to external CSS
+
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'assets/scripts.js'
+# ]
+
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'assets/gc_theme/wet-boew/js/wet-boew.min.js',
+#     'assets/gc_theme/GCWeb/js/theme.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'assets/scripts.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
+# ]
 
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
-    'https://cdn.plot.ly/plotly-locale-de-latest.js'
+    'assets/gc_theme_cdn/js/theme.min.js',
+    'https://cdn.plot.ly/plotly-locale-de-latest.js',
+    'assets/scripts.js',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
 ]
 
 def get_config_dict():
@@ -46,19 +87,23 @@ def get_config_dict():
     return get_config_dict.config_dict
 
 if __name__ == '__main__':
-     prefixe=""
-#     app.run_server(debug=True)  # For development/testing
-     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
-     tokens = get_config_dict()
+    prefixe=""
+#   app.run_server(debug=True)  # For development/testing
+    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    tokens = get_config_dict()
 
+    df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
-     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-
-     app = dash.Dash(__name__,meta_tags=[{"name": "viewport", "content": "width=device-width"}],external_stylesheets=external_stylesheets,external_scripts=external_scripts,)
-     app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
-     server = app.server
-     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
-     babel = Babel(server)  # Hook flask-babel to the app
+    app = dash.Dash(
+    __name__,
+    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+    external_stylesheets=external_stylesheets,
+    external_scripts=external_scripts,
+    )
+    app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
+    server = app.server
+    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
+    babel = Babel(server)  # Hook flask-babel to the app
 
 
 
@@ -80,15 +125,6 @@ else :
     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
     babel = Babel(server)  # Hook flask-babel to the app
 
-
-
-
-
-
-
-# get relative data folder
-PATH = pathlib.Path(__file__).parent
-DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
 
 IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
 MAX_IONOGRAM = 100
