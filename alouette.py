@@ -48,6 +48,7 @@ external_stylesheets = [
     'assets/gc_theme_cdn/assets/favicon.ico',
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
     'assets/gc_theme_cdn/css/theme.min.css',
+    'assets/custom.css'
     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
     ]  # Link to external CSS
@@ -378,6 +379,7 @@ def build_filtering():
                                             value=station_values,
                                             className="dcc_control",
                                         ),
+                                        className="drop_down",
                                     ),
                                     html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
@@ -608,6 +610,7 @@ def build_stats():
                                         value='timestamp',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                                 html.P(
                                     id="y-axis-selection-text",
@@ -621,6 +624,7 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                             ],
                             #className="pretty_container",
@@ -671,6 +675,7 @@ def build_stats():
                                         value='mean',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                                 html.P(
                                     id="stat-y-axis-text",
@@ -684,6 +689,7 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                             ],
                             #className="pretty_container",
