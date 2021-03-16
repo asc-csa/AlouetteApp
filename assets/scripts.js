@@ -1,3 +1,5 @@
+const expected_canvas_count = 8;
+
 $(document).ready(function(){
     var canvas_check = setInterval(checkForCanvases, 3000);
 
@@ -38,7 +40,11 @@ $(document).ready(function(){
             canvases.each(function(){
                 canvasDimensionsAdjustment(this);
             });
-            clearInterval(canvas_check);
+            if(canvases.size() >= expected_canvas_count){
+                clearInterval(canvas_check);
+                console.log('stopped checking for canvases');
+            }
+            
             return true;
         }
         return false;
