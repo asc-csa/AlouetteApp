@@ -24,18 +24,60 @@ from io import StringIO
 from flask_babel import _ ,Babel
 from flask import session, redirect, url_for, request
 
+# get relative data folder
+PATH = pathlib.Path(__file__).parent
+DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
+ASSET_PATH = PATH.joinpath("public").resolve()  # path to "assets" folder
 
+scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 
-external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
-                        'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-                        'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
-                        'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+# external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
+#                         'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+#                         'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
+#                         'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+
+# external_stylesheets = [
+#     # 'assets/gc_theme/GCWeb/assets/favicon.ico',
+#     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+#     # 'assets/gc_theme/GCWeb/css/theme.min.css',
+#     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
+#     ]  # Link to external CSS
+
+external_stylesheets = [
+    'assets/gc_theme_cdn/assets/favicon.ico',
+    'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    'assets/gc_theme_cdn/css/theme.min.css',
+    'assets/custom.css'
+    # 'assets/gc_theme/wet-boew/css/noscript.min.css',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
+    ]  # Link to external CSS
+
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'assets/scripts.js'
+# ]
+
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'assets/gc_theme/wet-boew/js/wet-boew.min.js',
+#     'assets/gc_theme/GCWeb/js/theme.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'assets/scripts.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
+# ]
 
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
-    'https://cdn.plot.ly/plotly-locale-de-latest.js'
+    'assets/gc_theme_cdn/js/theme.min.js',
+    'https://cdn.plot.ly/plotly-locale-de-latest.js',
+    'assets/scripts.js',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
 ]
 
 def get_config_dict():
@@ -46,19 +88,23 @@ def get_config_dict():
     return get_config_dict.config_dict
 
 if __name__ == '__main__':
-     prefixe=""
-#     app.run_server(debug=True)  # For development/testing
-     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
-     tokens = get_config_dict()
+    prefixe=""
+#   app.run_server(debug=True)  # For development/testing
+    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    tokens = get_config_dict()
 
+    df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
-     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-
-     app = dash.Dash(__name__,meta_tags=[{"name": "viewport", "content": "width=device-width"}],external_stylesheets=external_stylesheets,external_scripts=external_scripts,)
-     app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
-     server = app.server
-     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
-     babel = Babel(server)  # Hook flask-babel to the app
+    app = dash.Dash(
+    __name__,
+    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+    external_stylesheets=external_stylesheets,
+    external_scripts=external_scripts,
+    )
+    app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
+    server = app.server
+    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
+    babel = Babel(server)  # Hook flask-babel to the app
 
 
 
@@ -80,15 +126,6 @@ else :
     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
     babel = Babel(server)  # Hook flask-babel to the app
 
-
-
-
-
-
-
-# get relative data folder
-PATH = pathlib.Path(__file__).parent
-DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
 
 IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
 MAX_IONOGRAM = 100
@@ -286,12 +323,8 @@ def build_filtering():
                         html.Div(
                             [
                                  html.P(id="description-1"),
-                                 html.P(id="description-2"),
-                                 html.A(
-                                    html.P(id="github-link"),
-                                    href = "https://github.com/asc-csa/AlouetteApp",
-                                    title = "ASC-CSA Github"
-                                    )
+                                 dcc.Markdown(id="description-2"),
+                                 dcc.Markdown(id="github-link")
                             ],
                             id="description_div",
                         ),
@@ -342,6 +375,7 @@ def build_filtering():
                                             value=station_values,
                                             className="dcc_control",
                                         ),
+                                        className="drop_down",
                                     ),
                                     html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
@@ -572,6 +606,7 @@ def build_stats():
                                         value='timestamp',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                                 html.P(
                                     id="y-axis-selection-text",
@@ -585,6 +620,7 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                             ],
                             #className="pretty_container",
@@ -635,6 +671,7 @@ def build_stats():
                                         value='mean',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                                 html.P(
                                     id="stat-y-axis-text",
@@ -648,6 +685,7 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
+                                    className="drop_down"
                                 ),
                             ],
                             #className="pretty_container",
@@ -681,6 +719,7 @@ app.layout = html.Div(
             ],
             id="mainContainer",
             style={"display": "flex", "flex-direction": "column", "margin": "auto", "width":"75%"},
+            role='main',
         ),
         html.Div([""], id='gc-footer'),
         html.Div(id='none2', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
@@ -1815,8 +1854,8 @@ def translate_static(x):
                 _("Learn More About Alouette"),
                 _("Ionograms Selected") + " / " + _("Total Number of Ionograms"),
                 _("Launched in 1962, Alouette I sent signals with different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth these frequencies travelled. The results of this were sent to ground stations around the world and stored in films as ionogram images, which have now been digitized. The ionograms Alouette I provided were used to fuel hundreds of scientific papers at the time. Although ionosphere data from more recent years is readily available, the data from Alouette I’s ionograms are the only ones available for this time period. Barriers for accessing, interpreting and analyzing the data at a larger scale have prevented this data's usage. "),
-                _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the extracted ionogram parameters, such as max depth and min frequency, are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
-                _("Visit our Github page to learn more about the code used to make this application."),
+                _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted ionogram ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
+                _("Visit our GitHub page to learn more about the [code used to make this application](https://github.com/asc-csa/AlouetteApp) and the [code used to extract metadata and parameters from the ionogram images](https://github.com/asc-csa/Alouette_extract)."),
                 _("Select Data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
