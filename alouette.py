@@ -523,18 +523,19 @@ def build_filtering():
                                 # ),
                                 html.Div([
                                     html.Label(
-                                        dcc.DatePickerRange(
-                                            id='date_picker_range',
-                                            min_date_allowed=dt.datetime(1962, 9, 29),
-                                            max_date_allowed=dt.datetime(1972, 12, 31),
-                                            #initial_visible_month=dt.datetime(1962, 9, 29),
-                                            start_date=dt.datetime(1962, 9, 29),
-                                            end_date=dt.datetime(1972, 12, 31),
-                                            start_date_placeholder_text='Select start date',
-                                            end_date_placeholder_text='Select end date',
-                                            display_format="DD/MM/Y",
-                                            style={"margin-top": "5px"}
-                                        ),
+                                        htmlFor='date_picker_range'
+                                    ),
+                                    dcc.DatePickerRange(
+                                        id='date_picker_range',
+                                        min_date_allowed=dt.datetime(1962, 9, 29),
+                                        max_date_allowed=dt.datetime(1972, 12, 31),
+                                        #initial_visible_month=dt.datetime(1962, 9, 29),
+                                        start_date=dt.datetime(1962, 9, 29),
+                                        end_date=dt.datetime(1972, 12, 31),
+                                        start_date_placeholder_text='Select start date',
+                                        end_date_placeholder_text='Select end date',
+                                        display_format="DD/MM/Y",
+                                        style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
                                 html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
