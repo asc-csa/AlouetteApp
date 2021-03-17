@@ -351,154 +351,106 @@ def build_filtering():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(
-                                id="selector_map",
-                                config={
-                                    "displaylogo": False,
-                                    "displayModeBar" : False
-                                },
-                            )],
-                        ),
-                        html.Div(
                             [
-                                html.P(
-                                    id="groundstations-text",
-                                    className="control_label",
-                                ),
-                                html.Div([
-                                    html.Label(
-                                        dcc.Dropdown(
-                                            id="ground_station_list",
-                                            options=[],
-                                            placeholder=_("Sélectionner | Select"),
-                                            multi=True,
-                                            value=station_values,
-                                            className="dcc_control",
-                                        ),
-                                        className="drop_down",
+                            html.Div(
+                                [
+                                    html.P(
+                                        id="latitude-text",
+                                        className="control_label",
                                     ),
-                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
-                                html.Div([
-                                    dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
-                                ]),
-                                html.Div(
-                                    [
-                                        html.P(
-                                            id="latitude-text",
-                                            className="control_label",
+                                    # dcc.RangeSlider(
+                                    #     id="lat_slider",
+                                    #     min=-90.0,
+                                    #     max=90.0,
+                                    #     value=[-90.0, 90.0],
+                                    #     className="dcc_control",
+                                    #     marks=lat_dict,
+                                    # ),
+                                    html.Div([
+                                        html.Label(
+                                            id="lat_min-text",
+                                            htmlFor = "lat_min",
+                                            hidden = True
                                         ),
-                                        # dcc.RangeSlider(
-                                        #     id="lat_slider",
-                                        #     min=-90.0,
-                                        #     max=90.0,
-                                        #     value=[-90.0, 90.0],
-                                        #     className="dcc_control",
-                                        #     marks=lat_dict,
-                                        # ),
-                                        html.Div([
-                                            html.Label(
-                                                id="lat_min-text",
-                                                htmlFor = "lat_min",
-                                                hidden = True
-                                            ),
-                                            dcc.Input(
-                                                id="lat_min",
-                                                type='number',
-                                                value=-90.0,
-                                                placeholder="Min Latitude",
-                                                min=-90.0,
-                                                max=90.0,
-                                                step=5,
-                                                style={"margin-left": "5px"}
-                                            ),
-                                            html.Label(
-                                                id="lat_max-text",
-                                                htmlFor = "lat_max",
-                                                hidden = True
-                                            ),
-                                            dcc.Input(
-                                                id="lat_max",
-                                                type='number',
-                                                value=90.0,
-                                                placeholder="Max Latitude",
-                                                min=-90.0,
-                                                max=90.0,
-                                                step=5,
-                                                style={"margin-left": "5px"}
-                                            )
-                                        ]),
-                                    html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
-                                    className="one-half column"
-                                ),
-                                html.Div(
-                                    [
-                                        html.P(
-                                            id="longitude-text",
-                                            className="control_label",
+                                        dcc.Input(
+                                            id="lat_min",
+                                            type='number',
+                                            value=-90.0,
+                                            placeholder="Min Latitude",
+                                            min=-90.0,
+                                            max=90.0,
+                                            step=5,
                                         ),
-                                        # dcc.RangeSlider(
-                                        #     id="lon_slider",
-                                        #     min=-180.0,
-                                        #     max=180.0,
-                                        #     value=[-180.0, 180.0],
-                                        #     className="dcc_control",
-                                        #     marks=lon_dict,
-                                        # ),
-                                        html.Div([
-                                            html.Label(
-                                                id = "lon_min-text",
-                                                htmlFor = "lon_min",
-                                                hidden = True
-                                            ),
-                                            dcc.Input(
-                                                id="lon_min",
-                                                type='number',
-                                                value=-180.0,
-                                                placeholder="Min Longitude",
-                                                min=-180.0,
-                                                max=180.0,
-                                                step=5,
-                                                style={"margin-left": "5px"}
-                                            ),
-                                            html.Label(
-                                                id = "lon_max-text",
-                                                htmlFor = "lon_max",
-                                                hidden = True
-                                            ),
-                                            dcc.Input(
-                                                id="lon_max",
-                                                type='number',
-                                                value=180.0,
-                                                placeholder="Max Longitude",
-                                                min=-180.0,
-                                                max=180.0,
-                                                step=5,
-                                                style={"margin-left": "5px"}
-                                            )
-                                        ]),
-                                    html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
-                                    className="one-half column"
-                                ),
+                                        html.Label(
+                                            id="lat_max-text",
+                                            htmlFor = "lat_max",
+                                            hidden = True
+                                        ),
+                                        dcc.Input(
+                                            id="lat_max",
+                                            type='number',
+                                            value=90.0,
+                                            placeholder="Max Latitude",
+                                            min=-90.0,
+                                            max=90.0,
+                                            step=5,
+                                            style={"margin-left": "5px"}
+                                        )
+                                    ]),
+                                html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
+                                className="col-md-6"
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        id="longitude-text",
+                                        className="control_label",
+                                    ),
+                                    # dcc.RangeSlider(
+                                    #     id="lon_slider",
+                                    #     min=-180.0,
+                                    #     max=180.0,
+                                    #     value=[-180.0, 180.0],
+                                    #     className="dcc_control",
+                                    #     marks=lon_dict,
+                                    # ),
+                                    html.Div([
+                                        html.Label(
+                                            id = "lon_min-text",
+                                            htmlFor = "lon_min",
+                                            hidden = True
+                                        ),
+                                        dcc.Input(
+                                            id="lon_min",
+                                            type='number',
+                                            value=-180.0,
+                                            placeholder="Min Longitude",
+                                            min=-180.0,
+                                            max=180.0,
+                                            step=5,
+                                            style={"margin-left": "5px"}
+                                        ),
+                                        html.Label(
+                                            id = "lon_max-text",
+                                            htmlFor = "lon_max",
+                                            hidden = True
+                                        ),
+                                        dcc.Input(
+                                            id="lon_max",
+                                            type='number',
+                                            value=180.0,
+                                            placeholder="Max Longitude",
+                                            min=-180.0,
+                                            max=180.0,
+                                            step=5,
+                                            style={"margin-left": "5px"}
+                                        )
+                                    ]),
+                                html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
+                                className="col-md-6"
+                            ),
                             ],
-                            id="map-options",
-                        ),
-                    html.P(id="Map_description-1",style={"margin-top": "2em"}),
-                    ],
-
-                    id="left-column-1",
-                    style={"flex-grow": 1},
-                    className="six columns",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [dcc.Graph(id="count_graph",
-                                       config={
-                                           "displaylogo": False,
-                                           "displayModeBar": False
-                                       }
-                                       )],
-                            id="countGraphContainer",
+                            className='row'
                         ),
                         html.Div(
                             [
@@ -534,35 +486,105 @@ def build_filtering():
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
                                 html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
-                                html.Div(
-                                    [
-                                        html.A(
-                                            html.Button(id='download-button-1', n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
-                                            id='download-link-1',
-                                            # download='rawdata.csv',
-                                            href="",
-                                            target="_blank",
-                                        ),
-                                        html.A(
-                                            html.Button(id='download-button-2',  n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
-                                            id='download-link-2',
-                                            style={"margin-left": "5px"},
-                                        ),
-                                        html.Span(children=html.P(id="download_selection"),className="wb-inv")
-                                    ],
-                                ),
                             ],
                             id="cross-filter-options",
+                            className="",
                         ),
-                    html.Div ([html.P(id="Graph_description-1", style = {"margin-top":"2.8em"})]),
-                    html.Div ([html.B(id="Download_limit")]),
+                        html.Div(
+                            [
+                                html.P(
+                                    id="groundstations-text",
+                                    className="control_label",
+                                ),
+                                html.Div([
+                                    html.Label(
+                                        dcc.Dropdown(
+                                            id="ground_station_list",
+                                            options=[],
+                                            placeholder=_("Sélectionner | Select"),
+                                            multi=True,
+                                            value=station_values,
+                                            className="dcc_control"
+                                        ),
+                                        className="drop_down",
+                                    ),
+                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
+                                html.Div([
+                                    dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                ]),
+                                
+                            ],
+                            id="map-options",
+                            className="",
+                        ),
+                        html.Div(
+                            [
+                                html.A(
+                                    html.Button(id='download-button-1', n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
+                                    id='download-link-1',
+                                    # download='rawdata.csv',
+                                    href="",
+                                    target="_blank",
+                                ),
+                                html.A(
+                                    html.Button(id='download-button-2',  n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
+                                    id='download-link-2',
+                                    style={"margin-left": "5px"},
+                                ),
+                                html.Span(children=html.P(id="download_selection"),className="wb-inv"),
+                                html.Div ([html.B(id="Download_limit")]),
+                            ],
+                        ),
                     ],
-                    id="right-column-1",
-                    style={"flex-grow": 1},
-                    className="six columns",
+                    className="map-filters"
+                ),
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.Div(
+                                    [dcc.Graph(
+                                        id="selector_map",
+                                        className="csa-graph",
+                                        config={
+                                            "displaylogo": False,
+                                            "displayModeBar" : False
+                                        },
+                                    )],
+                                ),
+                            html.P(id="Map_description-1"),
+                            ],
+
+                            id="left-column-1",
+                            style={"flex-grow": 1},
+                            className="col-md-6",
+                        ),
+                        html.Div(
+                            [
+                                html.Div(
+                                    [
+                                        dcc.Graph(
+                                            id="count_graph",
+                                            className="csa-graph",
+                                            config={
+                                                "displaylogo": False,
+                                                "displayModeBar": False
+                                            }
+                                        )
+                                    ],
+                                    id="countGraphContainer",
+                                ),
+                            html.Div ([html.P(id="Graph_description-1")]),
+                            ],
+                            id="right-column-1",
+                            style={"flex-grow": 1},
+                            className="col-md-6",
+                        ),
+                    ],
+                    className="row"
                 ),
             ],
-            className="row flex-display pretty_container twelve columns",
+            className="pretty_container twelve columns",
             style={"justify-content": "space-evenly"}
         ),
 
