@@ -1060,9 +1060,21 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    link = prefixe+'/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
-            .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    # link = '/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
+    #         .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    values = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'lat_min': lat_min,
+        'lat_max': lat_max,
+        'lon_min': lon_min,
+        'lon_max': lon_max,
+        'ground_stations': ground_stations
+    }
 
+    link = prefixe + '/dash/downloadCSV?' + urllib.parse.urlencode(values)
+    print('download link')
+    print(link)
     return link
 
 from flask import make_response
