@@ -577,22 +577,6 @@ def build_stats():
                 html.Div(
                     [
                         html.Div(
-                            [dcc.Graph(id="viz_chart",
-                                       config={
-                                           "displaylogo": False,
-                                           "displayModeBar": False
-                                       }
-                                       )],
-                            id="vizChartContainer",
-                            #className="pretty_container",
-                        ),
-                    ],
-                    id="left-column-3",
-                    className="nine columns",
-                ),
-                html.Div(
-                    [
-                        html.Div(
                             [
                                 html.P(
                                     id="x-axis-selection-text",
@@ -631,27 +615,28 @@ def build_stats():
                     id="right-column-3",
                     className="three columns",
                 ),
+                html.Div(
+                    [
+                        html.Div(
+                            [dcc.Graph(id="viz_chart",
+                                       config={
+                                           "displaylogo": False,
+                                           "displayModeBar": False
+                                       }
+                                       )],
+                            id="vizChartContainer",
+                            #className="pretty_container",
+                        ),
+                    ],
+                    id="left-column-3",
+                    className="nine columns",
+                ),
             ],
             className="row flex-display pretty_container",
             #style={"height": "500px"},
         ),
         html.Div(
             [
-                html.Div(
-                    [
-                        html.Div(
-                            [dcc.Graph(id="viz_map",
-                                       config={
-                                           "displaylogo": False,
-                                           "displayModeBar": False
-                                       }
-                                       )],
-                            id="vizGraphContainer",
-                        ),
-                    ],
-                    id="left-column-4",
-                    className="nine columns",
-                ),
                 html.Div(
                     [
                         html.Div(
@@ -695,6 +680,21 @@ def build_stats():
                     ],
                     id="right-column-4",
                     className="three columns",
+                ),
+                html.Div(
+                    [
+                        html.Div(
+                            [dcc.Graph(id="viz_map",
+                                       config={
+                                           "displaylogo": False,
+                                           "displayModeBar": False
+                                       }
+                                       )],
+                            id="vizGraphContainer",
+                        ),
+                    ],
+                    id="left-column-4",
+                    className="nine columns",
                 ),
             ],
             className="row flex-display pretty_container",
