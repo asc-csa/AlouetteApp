@@ -476,24 +476,14 @@ there.
 }
 
 
-#learn-more-button {
+.header-btn {
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
   text-transform: none;
   float: right;
   margin-right: 10px;
-  margin-top: 30px;
-}
-
-#language-button {
-  text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-transform: none;
-  float: right;
-  margin-right: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 /* Larger than desktop */
@@ -731,14 +721,23 @@ td.CalendarDay {
   -webkit-animation-delay: 1s;
 }
 
-#Map_description-1 {
+.csa-graph, .map-filters{
+  margin-bottom: 15px;
+}
+
+#ground_station_list > div.dcc_control{
+  padding-left: 0;
+}
+
+
+/* #Map_description-1 {
   float: left;
 }
 
 #Graph_description-1 {
   float: left;
   margin: 15px 0px 0px;
-}
+} */
 
 #Graph_description-2, #Map_description-2{
 float: left;
