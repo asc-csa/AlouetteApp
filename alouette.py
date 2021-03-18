@@ -616,9 +616,10 @@ def build_stats():
                                         options=x_axis_options,
                                         multi=False,
                                         value='timestamp',
-                                        className="dcc_control",
+                                        className="dcc_control"
                                     ),
-                                    className="drop_down"
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                                 html.P(
                                     id="y-axis-selection-text",
@@ -632,7 +633,8 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
-                                    className="drop_down"
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                             ],
                             #className="pretty_container",
@@ -684,7 +686,8 @@ def build_stats():
                                         value='mean',
                                         className="dcc_control",
                                     ),
-                                    className="drop_down"
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                                 html.P(
                                     id="stat-y-axis-text",
@@ -698,7 +701,8 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
-                                    className="drop_down"
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                             ],
                             #className="pretty_container",
