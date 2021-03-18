@@ -285,12 +285,15 @@ def build_header():
                 html.Div(
                     [
                         html.A(
-                            html.Button("", id="learn-more-button", className="dash_button"),
+                            id="learn-more-button",
+                            className="btn btn-primary header-btn",
                             href="http://www.asc-csa.gc.ca/eng/satellites/alouette.asp"
                         ),
                         html.A(
-                            html.Button('FR', id='language-button', className="dash_button"),
-                            href='/alouette/language/fr', id='language-link'
+                            html.Span('FR', id='language-button'),
+                            href='/alouette/language/fr',
+                            id='language-link',
+                            className="btn btn-primary header-btn"
                         ),
                     ],
                     className="four columns",
@@ -520,16 +523,18 @@ def build_filtering():
                         html.Div(
                             [
                                 html.A(
-                                    html.Button(id='download-button-1', n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
+                                    html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
                                     id='download-link-1',
                                     # download='rawdata.csv',
                                     href="",
                                     target="_blank",
+                                    className="btn btn-primary"
                                 ),
                                 html.A(
-                                    html.Button(id='download-button-2',  n_clicks=0, className="dash_button", style={'padding': '0px 10px'}),
+                                    html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
                                     id='download-link-2',
                                     style={"margin-left": "5px"},
+                                    className="btn btn-primary"
                                 ),
                                 html.Span(children=html.P(id="download_selection"),className="wb-inv"),
                                 html.Div ([html.B(id="Download_limit")]),

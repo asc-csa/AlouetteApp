@@ -476,24 +476,14 @@ there.
 }
 
 
-#learn-more-button {
+.header-btn {
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
   text-transform: none;
   float: right;
   margin-right: 10px;
-  margin-top: 30px;
-}
-
-#language-button {
-  text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-transform: none;
-  float: right;
-  margin-right: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 /* Larger than desktop */
