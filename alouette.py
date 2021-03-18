@@ -322,20 +322,9 @@ def build_filtering():
                     [
                         html.Div(
                             [
-                                 html.P(id="description-1"),
-                                 html.P(id="description-2"),
-                                 html.P(
-                                     [
-                                        html.A(
-                                        html.P(id="github-link"),
-                                        href = "https://github.com/asc-csa/AlouetteApp",
-                                        title = "ASC-CSA Github"
-                                        )
-                                     ]
-                                 )
-                                 dcc.Markdown(id="description-1"),
-                                 dcc.Markdown(id="description-2"),
-                                 dcc.Markdown(id="github-link")
+                                dcc.Markdown(id="description-1"),
+                                dcc.Markdown(id="description-2"),
+                                dcc.Markdown(id="github-link")
                             ],
                             id="description_div",
                         ),
