@@ -496,20 +496,23 @@ def build_filtering():
                         ),
                         html.Div(
                             [
-                                html.P(
-                                    id="groundstations-text",
-                                    className="control_label",
-                                ),
                                 html.Div([
-                                    html.Label(
-                                        dcc.Dropdown(
-                                            id="ground_station_list",
-                                            options=[],
-                                            placeholder=_("Sélectionner | Select"),
-                                            multi=True,
-                                            value=station_values,
-                                            className="dcc_control"
-                                        ),
+                                    html.Span(
+                                        [
+                                            html.Label(
+                                                id="groundstations-text",
+                                                htmlFor="ground_station_list",
+                                                className="control_label",
+                                            ),
+                                            dcc.Dropdown(
+                                                id="ground_station_list",
+                                                options=[],
+                                                placeholder=_("Sélectionner | Select"),
+                                                multi=True,
+                                                value=station_values,
+                                                className="dcc_control"
+                                            ),
+                                        ],
                                         className="drop_down",
                                     ),
                                     html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
@@ -606,25 +609,31 @@ def build_stats():
                     [
                         html.Div(
                             [
-                                html.P(
-                                    id="x-axis-selection-text",
-                                    className="control_label",
+                                html.Span(
+                                    [
+                                        html.Label(
+                                            htmlFor='x_axis_selection_1',
+                                            id="x-axis-selection-text",
+                                            className="control_label",
+                                        ),
+                                        dcc.Dropdown(
+                                            id="x_axis_selection_1",
+                                            options=x_axis_options,
+                                            multi=False,
+                                            value='timestamp',
+                                            className="dcc_control"
+                                        ),
+                                    ],
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
-                                html.Label(
-                                    dcc.Dropdown(
-                                        id="x_axis_selection_1",
-                                        options=x_axis_options,
-                                        multi=False,
-                                        value='timestamp',
-                                        className="dcc_control",
+                                html.Span(
+                                    [
+                                    html.Label(
+                                        htmlFor='y_axis_selection_1',
+                                        id="y-axis-selection-text",
+                                        className="control_label",
                                     ),
-                                    className="drop_down"
-                                ),
-                                html.P(
-                                    id="y-axis-selection-text",
-                                    className="control_label",
-                                ),
-                                html.Label(
                                     dcc.Dropdown(
                                         id="y_axis_selection_1",
                                         options=y_axis_options,
@@ -632,7 +641,9 @@ def build_stats():
                                         value='max_depth',
                                         className="dcc_control",
                                     ),
-                                    className="drop_down"
+                                    ],
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                             ],
                             #className="pretty_container",
@@ -669,36 +680,44 @@ def build_stats():
                     [
                         html.Div(
                             [
-                                html.P(
-                                    id="stat-selection-text",
-                                    className="control_label",
+                                html.Span(
+                                    [
+                                        html.Label(
+                                            htmlFor="stat_selection",
+                                            id="stat-selection-text",
+                                            className="control_label",
+                                        ),
+                                        dcc.Dropdown(
+                                            id="stat_selection",
+                                            options=[
+                                                {'label': 'Mean', 'value': 'mean'},
+                                                {'label': 'Median', 'value': 'median'}
+                                            ],
+                                            multi=False,
+                                            value='mean',
+                                            className="dcc_control",
+                                        ),
+                                    ],
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
-                                html.Label(
-                                    dcc.Dropdown(
-                                        id="stat_selection",
-                                        options=[
-                                            {'label': 'Mean', 'value': 'mean'},
-                                            {'label': 'Median', 'value': 'median'}
-                                        ],
-                                        multi=False,
-                                        value='mean',
-                                        className="dcc_control",
-                                    ),
-                                    className="drop_down"
-                                ),
-                                html.P(
-                                    id="stat-y-axis-text",
-                                    className="control_label",
-                                ),
-                                html.Label(
-                                    dcc.Dropdown(
-                                        id="y_axis_selection_2",
-                                        options=y_axis_options,
-                                        multi=False,
-                                        value='max_depth',
-                                        className="dcc_control",
-                                    ),
-                                    className="drop_down"
+                                html.Span(
+                                    [
+                                        html.Label(
+                                            htmlFor="y_axis_selection_2",
+                                            id="stat-y-axis-text",
+                                            className="control_label",
+                                        ),
+                                        dcc.Dropdown(
+                                            id="y_axis_selection_2",
+                                            options=y_axis_options,
+                                            multi=False,
+                                            value='max_depth',
+                                            className="dcc_control",
+                                        ),
+                                    ],
+                                    className="drop_down",
+                                    role="listbox"
                                 ),
                             ],
                             #className="pretty_container",
@@ -1060,9 +1079,21 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    link = prefixe+'/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
-            .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    # link = '/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
+    #         .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    values = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'lat_min': lat_min,
+        'lat_max': lat_max,
+        'lon_min': lon_min,
+        'lon_max': lon_max,
+        'ground_stations': ground_stations
+    }
 
+    link = prefixe + '/dash/downloadCSV?' + urllib.parse.urlencode(values)
+    print('download link')
+    print(link)
     return link
 
 from flask import make_response
