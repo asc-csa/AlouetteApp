@@ -485,7 +485,7 @@ def build_filtering():
                                         end_date=dt.datetime(1972, 12, 31),
                                         start_date_placeholder_text='Select start date',
                                         end_date_placeholder_text='Select end date',
-                                        display_format="DD/MM/Y",
+                                        display_format="Y/MM/DD",
                                         style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
