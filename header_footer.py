@@ -1,6 +1,5 @@
 # Raw header and footer code copied from GC websites. This html is injected into the webapp using dash-dangerously-set-inner-html
 
-
 gc_header_en ='''
 <html class="no-js" lang="en" dir="ltr">
 <header>

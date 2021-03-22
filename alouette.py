@@ -91,6 +91,7 @@ if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    from analytics import analytics_code
     tokens = get_config_dict()
 
     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
@@ -112,6 +113,7 @@ if __name__ == '__main__':
 else :
     prefixe="/alouette"
     from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    from applications.alouette.analytics import analytics_code
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = dash.Dash(
@@ -121,10 +123,32 @@ else :
     external_stylesheets=external_stylesheets,
     external_scripts=external_scripts,
 )
-    app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
-    server = app.server
-    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
-    babel = Babel(server)  # Hook flask-babel to the app
+app.index_string = '''
+    <!DOCTYPE html>
+    <html>
+        <head>
+            '''+ analytics_code +'''
+            {%metas%}
+            <title>{%title%}</title>
+            {%favicon%}
+            {%css%}
+        </head>
+        <body>
+            {%app_entry%}
+            <footer>
+                {%config%}
+                {%scripts%}
+                {%renderer%}
+            </footer>
+            <div>My Custom footer</div>
+        </body>
+    </html>
+    '''
+app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
+server = app.server
+server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
+babel = Babel(server)  # Hook flask-babel to the app
+
 
 
 IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
@@ -750,6 +774,12 @@ def build_stats():
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
     ])
 
+#add to header
+app.head = [
+    html.P(
+        'Hello World'
+    )
+]
 
 # Create app layout
 app.layout = html.Div(
