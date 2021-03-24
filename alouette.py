@@ -79,7 +79,7 @@ scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 #     ]  # Link to external CSS
 
 external_stylesheets = [
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
+    # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
     'assets/custom.css'
@@ -89,11 +89,11 @@ external_stylesheets = [
 
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
-    'https://cdn.plot.ly/plotly-locale-de-latest.js',
-    'assets/scripts.js',
     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js'
+    'https://cdn.plot.ly/plotly-locale-de-latest.js',
+    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
+    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
+    'assets/scripts.js',
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
 ]
