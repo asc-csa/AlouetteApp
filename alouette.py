@@ -24,6 +24,37 @@ from io import StringIO
 from flask_babel import _ ,Babel
 from flask import session, redirect, url_for, request
 
+class CustomDash(dash.Dash):
+    def interpolate_index(self, **kwargs):
+        # Inspect the arguments by printing them
+        print(kwargs)
+        return '''
+        <!DOCTYPE html>
+        <html lang='en'>
+            <head>
+                {metas}
+                {favicon}
+                <title>My App</title>
+                {css}
+            </head>
+            <body>
+                {app_entry}
+                <footer>
+                    {config}
+                    {scripts}
+                    {renderer}
+                </footer>
+            </body>
+        </html>
+        '''.format(
+            app_entry=kwargs['app_entry'],
+            config=kwargs['config'],
+            scripts=kwargs['scripts'],
+            renderer=kwargs['renderer'],
+            metas = kwargs['metas'],
+            favicon = kwargs['favicon'],
+            css = kwargs['css'])
+
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
@@ -53,24 +84,6 @@ external_stylesheets = [
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
     ]  # Link to external CSS
 
-# external_scripts = [
-#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/js/theme.min.js',
-#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
-#     'assets/scripts.js'
-# ]
-
-# external_scripts = [
-#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-#     'assets/gc_theme/wet-boew/js/wet-boew.min.js',
-#     'assets/gc_theme/GCWeb/js/theme.min.js',
-#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
-#     'assets/scripts.js',
-#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
-#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
-# ]
-
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
     'assets/gc_theme_cdn/js/theme.min.js',
@@ -90,12 +103,13 @@ def get_config_dict():
 if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
-    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, gc_head_en, html_tag_attr
+    from analytics import analytics_code
     tokens = get_config_dict()
 
     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
-    app = dash.Dash(
+    app = CustomDash(
     __name__,
     meta_tags=[{"name": "viewport", "content": "width=device-width"}],
     external_stylesheets=external_stylesheets,
@@ -111,20 +125,27 @@ if __name__ == '__main__':
 
 else :
     prefixe="/alouette"
-    from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr
+    from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, gc_head_en, html_tag_attr
+    from applications.alouette.analytics import analytics_code
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
-    app = dash.Dash(
-    __name__,
-    requests_pathname_prefix='/alouette/',
-    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
-    external_stylesheets=external_stylesheets,
-    external_scripts=external_scripts,
-)
+    app = CustomDash(
+        __name__,
+        requests_pathname_prefix='/alouette/',
+        meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+        external_stylesheets=external_stylesheets,
+        external_scripts=external_scripts,
+    )
     app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
     server = app.server
     server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
     babel = Babel(server)  # Hook flask-babel to the app
+
+# try:
+#     language = session['language']
+# except KeyError:
+#     language = 'en'
+
 
 
 IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
@@ -134,6 +155,7 @@ MAX_IONOGRAM = 100
 # load data and transform as needed
 #dtypes = {'': 'int', 'file_name': 'str', 'max_depth': 'float', 'decimal_value': 'str'}
 
+# print(session['language'])
 
 # Dropdown options
 #======================================================================================
@@ -183,8 +205,8 @@ x_axis_options = [
     {'label': _('Longitude'), 'value': ('lon')}]
 
 y_axis_options = [
-    {'label': _('Minimum Frequency'), 'value': ('fmin')},
-    {'label': _('Maximum Depth'), 'value': ('max_depth')}]
+    {'label': _('Minimum frequency'), 'value': ('fmin')},
+    {'label': _('Maximum depth'), 'value': ('max_depth')}]
 
 year_dict = {}
 for year in range(1962,1974):
@@ -750,7 +772,28 @@ def build_stats():
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
     ])
 
-
+# app.index_string = '''
+#     <!DOCTYPE html>
+#     <html ''' + html_tag_attr( 'en' ) + '''>
+#         <head>
+#             '''+ analytics_code +'''
+#             '''+ gc_head_en +'''
+#             {%metas%}
+#             <title>{%title%}</title>
+#             {%favicon%}
+#             {%css%}
+#         </head>
+#         <body vocab="http://schema.org/"  resource="#wb-webpage" typeof="WebPage">
+#             <h1>Hello World</h1>
+#             {%app_entry%}
+#             <footer>
+#                 {%config%}
+#                 {%scripts%}
+#                 {%renderer%}
+#             </footer>
+#         </body>
+#     </html>
+#     '''
 # Create app layout
 app.layout = html.Div(
     [
@@ -1250,7 +1293,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
         ),
     ]
 
-    layout_count["title"] = _("Ionograms Per Month")
+    layout_count["title"] = _("Ionograms per month")
     layout_count["xaxis"] = {"title": "Date", "automargin": True}
     layout_count["yaxis"] = {"title": _("Number of Ionograms"), "automargin": True}
     layout_count["dragmode"] = "select"
@@ -1618,7 +1661,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             mode="lines+markers",
             x=bins,
             y=estimated_means,
-            name=_("Estimated Mean"),
+            name=_("Estimated Mman"),
             line={'color': 'rgb(18,99,168)'},
             marker={'size': 2.5},
             connectgaps=False,
@@ -1635,9 +1678,9 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
 
     # Set y-axis label dynamically
     if y_axis_selection == 'max_depth':
-        y_label = _("Maximum Depth [km]")
+        y_label = _("Maximum depth [km]")
     elif y_axis_selection == 'fmin':
-        y_label = _("Minimum Frequency [MHz]")
+        y_label = _("Minimum frequency [MHz]")
 
     layout = dict(
         autosize=True,
@@ -1645,7 +1688,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         plot_bgcolor="#F9F9F9",
         paper_bgcolor="#F9F9F9",
         # legend=dict(font=dict(size=10), orientation="h"),
-        title=_("Data Visualization (95% Confidence Interval)"),
+        title=_("Data visualization (95 percent confidence interval)"),
         xaxis={"title": x_label, "automargin": True},
         yaxis={"title": y_label, "automargin": True},
         height=500,
@@ -1754,7 +1797,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
             var_label = _("Minimum Frequency")
             var_unit = "MHz"
         elif var_selection == 'max_depth':
-            var_label = _("Maximum Depth")
+            var_label = _("Maximum depth")
             var_unit = "km"
 
         # Count mapping from aggregated data
@@ -1917,13 +1960,13 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 def translate_static(x):
     print('Translating...')
     return [
-                _("Alouette I Ionogram Data"),
-                _("Learn More About Alouette"),
-                _("Ionograms Selected") + " / " + _("Total Number of Ionograms"),
+                _("Alouette I ionogram data"),
+                _("Learn more about Alouette"),
+                _("Ionograms selected") + " / " + _("Total number of ionograms"),
                 _("Launched in 1962, Alouette I sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized. These data were used to fuel hundreds of scientific papers at the time. Although ionosphere data derived from inversions and this dataset are readily available, the raw data from Alouette I’s ionograms allow for further studies due to scientific advancements since they were acquired. In the past, accessing this data was difficult, which limited its use, interpretation, and analysis on a larger scale."),
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Visit our GitHub page to learn more about the [code used to make this application](https://github.com/asc-csa/AlouetteApp) and the [code used to extract metadata and parameters from the ionogram images](https://github.com/asc-csa/Alouette_extract). The dataset can also be accessed in [CSA's Open Government Portal](https://data.asc-csa.gc.ca/en/dataset/221c1c75-4c42-4286-a4ce-ca6c3027b7fe)"),
-                _("Select Data"),
+                _("Select data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
                 _("Selection of the ground stations"),
@@ -1940,8 +1983,8 @@ def translate_static(x):
                 _("Map of the world showing ground stations. Each station is represented by a circle, the size of which depends on the number of ionograms at each station."),
                 _("Filter by date:"),
                 _("Select ground stations:"),
-                _('Download Summary Data as CSV'),
-                _('Download Selected Ionogram Images'),
+                _('Download summary data as CSV'),
+                _('Download selected ionogram images'),
                 _("Graph showing the number of ionograms captured during each month. The X-axis indicates the date and the Y-axis indicates the number of ionograms."),
                 _("The ionogram images download is currently limited to ")+str(MAX_IONOGRAM)+_(" images at a time."),
                 _("Select x-axis:"),
@@ -1989,11 +2032,11 @@ def translate_static(x):
                 ],
                 [  # y_axis_options
                     {'label': _('Minimum Frequency'), 'value': 'fmin'},
-                    {'label': _('Maximum Depth'), 'value': 'max_depth'}
+                    {'label': _('Maximum depth'), 'value': 'max_depth'}
                 ],
                 [  # y_axis_selection_2
-                    {'label': _('Minimum Frequency'), 'value': 'fmin'},
-                    {'label': _('Maximum Depth'), 'value': 'max_depth'}
+                    {'label': _('Minimum frequency'), 'value': 'fmin'},
+                    {'label': _('Maximum depth'), 'value': 'max_depth'}
                 ],
                 _("Graph showing either the mean minimum frequency or mean maximum depth values as a function of either date, longitude, or latitude. Explore the data by selecting different variables in the drop-down menu on the right."),
                 [  # stat_selection
@@ -2067,4 +2110,7 @@ def set_language(language=None):
 
 
 if __name__ == '__main__':
-       app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
+    app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
+
+print('Loading complete.')
+
