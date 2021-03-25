@@ -637,7 +637,7 @@ def build_stats():
                         html.Div ([html.P(id="Map_description-2")]),
                         html.Div(
                             [
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor='x_axis_selection_1',
@@ -652,10 +652,11 @@ def build_stats():
                                             className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
-                                html.Span(
+                                html.Div(
                                     [
                                     html.Label(
                                         htmlFor='y_axis_selection_1',
@@ -670,11 +671,12 @@ def build_stats():
                                         className="dcc_control",
                                     ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
                             ],
-                            #className="pretty_container",
+                            className="row",
                             id="viz-chart-options",
                         ),
                     ],
@@ -709,7 +711,7 @@ def build_stats():
                         html.Div ([html.P(id="Graph_description-2")]),
                         html.Div(
                             [
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor="stat_selection",
@@ -724,13 +726,14 @@ def build_stats():
                                             ],
                                             multi=False,
                                             value='mean',
-                                            className="dcc_control",
+                                            className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor="y_axis_selection_2",
@@ -742,14 +745,15 @@ def build_stats():
                                             options=y_axis_options,
                                             multi=False,
                                             value='max_depth',
-                                            className="dcc_control",
+                                            className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
                             ],
-                            #className="pretty_container",
+                            className="row",
                             id="map-viz-options",
                         ),
                     ],
