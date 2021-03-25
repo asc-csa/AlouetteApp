@@ -634,6 +634,7 @@ def build_stats():
             [
                 html.Div(
                     [
+                        html.Div ([html.P(id="Map_description-2")]),
                         html.Div(
                             [
                                 html.Span(
@@ -676,10 +677,10 @@ def build_stats():
                             #className="pretty_container",
                             id="viz-chart-options",
                         ),
-                        html.Div ([html.P(id="Map_description-2")]),
                     ],
                     id="right-column-3",
-                    className="three columns",
+                    className="row",
+                    style={"margin-bottom": "20px"}
                 ),
                 html.Div(
                     [
@@ -695,16 +696,17 @@ def build_stats():
                         ),
                     ],
                     id="left-column-3",
-                    className="nine columns",
+                    className="row",
                 ),
             ],
-            className="row flex-display pretty_container",
+            className="row pretty_container",
             #style={"height": "500px"},
         ),
         html.Div(
             [
                 html.Div(
                     [
+                        html.Div ([html.P(id="Graph_description-2")]),
                         html.Div(
                             [
                                 html.Span(
@@ -750,10 +752,10 @@ def build_stats():
                             #className="pretty_container",
                             id="map-viz-options",
                         ),
-                        html.Div ([html.P(id="Graph_description-2")]),
                     ],
                     id="right-column-4",
-                    className="three columns",
+                    className="row",
+                    style={"margin-bottom": "20px"}
                 ),
                 html.Div(
                     [
@@ -768,10 +770,10 @@ def build_stats():
                         ),
                     ],
                     id="left-column-4",
-                    className="nine columns",
+                    className="row",
                 ),
             ],
-            className="row flex-display pretty_container",
+            className="row pretty_container",
             #style={"height": "500px"},
         ),
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
