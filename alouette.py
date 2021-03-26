@@ -1191,6 +1191,11 @@ def download_csv():
         CSV file based on the applied filters
     """
 
+    try:
+        language = session['language']
+    except KeyError:
+        language = 'en'
+
     start_date = dt.datetime.strptime(flask.request.args.get('start_date').split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(flask.request.args.get('end_date').split('T')[0], '%Y-%m-%d')
 
@@ -1204,16 +1209,44 @@ def download_csv():
 
     dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations)
 
+    if language == 'fr':
+        dff.columns = [ 
+            'ID',
+            'Nom du fichier',
+            'Fréquence minimale',
+            'Profondeur maximale',
+            'Nom du sous-répertoire',
+            'Numéro du satellite',
+            'Numéro du station au sol',
+            'Horodatage',
+            'Nom du station au sol',
+            'Code du station au sol',
+            'Latitude',
+            'Longitude'
+        ]
+    else:
+        dff.columns = [ 
+            'ID',
+            'File name',
+            'Minimum frequency',
+            'Maximum depth',
+            'Subdirectory name',
+            'Satellite number',
+            'Ground station number',
+            'Timestamp',
+            'Ground station name',
+            'Ground station code',
+            'Latitude',
+            'Longitude'
+        ]
+
     # Making the output csv from the filtered df
     csv_buffer = StringIO()
     dff.to_csv(csv_buffer, index=False)
     output = make_response(csv_buffer.getvalue())
-    try:
-        language = session['language']
-    except KeyError:
-        language = 'en'
     if language == 'fr':
         output.headers["Content-Disposition"] = "attachment; filename=résumé_données.csv"
+        filter_dataframe
     else:
         output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
     output.headers["Content-type"] = "text/csv"
