@@ -634,9 +634,10 @@ def build_stats():
             [
                 html.Div(
                     [
+                        html.Div ([html.P(id="Map_description-2")]),
                         html.Div(
                             [
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor='x_axis_selection_1',
@@ -651,10 +652,11 @@ def build_stats():
                                             className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
-                                html.Span(
+                                html.Div(
                                     [
                                     html.Label(
                                         htmlFor='y_axis_selection_1',
@@ -669,17 +671,18 @@ def build_stats():
                                         className="dcc_control",
                                     ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
                             ],
-                            #className="pretty_container",
+                            className="row",
                             id="viz-chart-options",
                         ),
-                        html.Div ([html.P(id="Map_description-2")]),
                     ],
                     id="right-column-3",
-                    className="three columns",
+                    className="row",
+                    style={"margin-bottom": "20px"}
                 ),
                 html.Div(
                     [
@@ -695,19 +698,20 @@ def build_stats():
                         ),
                     ],
                     id="left-column-3",
-                    className="nine columns",
+                    className="row",
                 ),
             ],
-            className="row flex-display pretty_container",
+            className="row pretty_container",
             #style={"height": "500px"},
         ),
         html.Div(
             [
                 html.Div(
                     [
+                        html.Div ([html.P(id="Graph_description-2")]),
                         html.Div(
                             [
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor="stat_selection",
@@ -722,13 +726,14 @@ def build_stats():
                                             ],
                                             multi=False,
                                             value='mean',
-                                            className="dcc_control",
+                                            className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
-                                html.Span(
+                                html.Div(
                                     [
                                         html.Label(
                                             htmlFor="y_axis_selection_2",
@@ -740,20 +745,21 @@ def build_stats():
                                             options=y_axis_options,
                                             multi=False,
                                             value='max_depth',
-                                            className="dcc_control",
+                                            className="dcc_control"
                                         ),
                                     ],
-                                    className="drop_down",
-                                    role="listbox"
+                                    className="drop_down col-md-6",
+                                    role="listbox",
+                                    style={'max-width': '400px'}
                                 ),
                             ],
-                            #className="pretty_container",
+                            className="row",
                             id="map-viz-options",
                         ),
-                        html.Div ([html.P(id="Graph_description-2")]),
                     ],
                     id="right-column-4",
-                    className="three columns",
+                    className="row",
+                    style={"margin-bottom": "20px"}
                 ),
                 html.Div(
                     [
@@ -768,10 +774,10 @@ def build_stats():
                         ),
                     ],
                     id="left-column-4",
-                    className="nine columns",
+                    className="row",
                 ),
             ],
-            className="row flex-display pretty_container",
+            className="row pretty_container",
             #style={"height": "500px"},
         ),
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
