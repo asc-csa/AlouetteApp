@@ -34,7 +34,9 @@ class CustomDash(dash.Dash):
             <head>
                 {metas}
                 {favicon}
-                <title>My App</title>
+                <title>
+                {title}
+                </title>
                 {css}
             </head>
             <body>
@@ -53,7 +55,8 @@ class CustomDash(dash.Dash):
             renderer=kwargs['renderer'],
             metas = kwargs['metas'],
             favicon = kwargs['favicon'],
-            css = kwargs['css'])
+            css = kwargs['css'],
+            title = kwargs['title'])
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -76,9 +79,9 @@ scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 #     ]  # Link to external CSS
 
 external_stylesheets = [
-    'assets/gc_theme_cdn/assets/favicon.ico',
+    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-    'assets/gc_theme_cdn/css/theme.min.css',
+    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
     'assets/custom.css'
     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
@@ -86,9 +89,11 @@ external_stylesheets = [
 
 external_scripts = [
     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'assets/gc_theme_cdn/js/theme.min.js',
+    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
     'https://cdn.plot.ly/plotly-locale-de-latest.js',
     'assets/scripts.js',
+    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
+    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js'
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
 ]
