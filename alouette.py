@@ -1705,7 +1705,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             mode="lines+markers",
             x=bins,
             y=estimated_means,
-            name=_("Estimated Mman"),
+            name=_("Estimated Mean"),
             line={'color': 'rgb(18,99,168)'},
             marker={'size': 2.5},
             connectgaps=False,
@@ -2075,7 +2075,7 @@ def translate_static(x):
                     {'label': _('Latitude'), 'value': 'lat'}, {'label': _('Longitude'), 'value': 'lon'}
                 ],
                 [  # y_axis_options
-                    {'label': _('Minimum Frequency'), 'value': 'fmin'},
+                    {'label': _('Minimum frequency'), 'value': 'fmin'},
                     {'label': _('Maximum depth'), 'value': 'max_depth'}
                 ],
                 [  # y_axis_selection_2
