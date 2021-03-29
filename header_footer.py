@@ -508,7 +508,7 @@ gc_footer_en = '''
 <a href="#wb-cont">Top of page <span class="glyphicon glyphicon-chevron-up"></span></a>
 </div>
 <div class="col-xs-6 col-md-3 col-lg-2 text-right">
-<img src="../GCWeb/assets/wmms-blk.svg" alt="Symbol of the Government of Canada">
+<img src="assets/gc_theme_cdn/assets/wmms-blk.svg" alt="Symbol of the Government of Canada">
 </div>
 </div>
 </div>
