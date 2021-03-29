@@ -743,3 +743,7 @@ td.CalendarDay {
 float: left;
 margin: 15px 10px 0px;
 }
+
+.Select--multi .Select-value-label {
+  max-width: calc( 100% - 20px );
+}
