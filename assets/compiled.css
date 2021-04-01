@@ -573,6 +573,10 @@ there.
   display: flex;
 }
 
+.justify-space-between{
+  justify-content: space-between;
+}
+
 .container-display {
   display: flex;
 }
