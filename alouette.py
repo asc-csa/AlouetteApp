@@ -491,8 +491,10 @@ def build_filtering():
                                             step=5,
                                             style={"margin-left": "5px"}
                                         )
-                                    ]),
-                                html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
+                                    ]
+                                ),
+                                html.Div(children=html.P(id="lat_selection"),className="wb-inv")
+                                ],
                                 className="col-md-6"
                             ),
                             html.Div(
@@ -541,7 +543,7 @@ def build_filtering():
                                             style={"margin-left": "5px"}
                                         )
                                     ]),
-                                html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
+                                html.Div(children=html.P(id="lon_selection"),className="wb-inv")],
                                 className="col-md-6"
                             ),
                             ],
@@ -581,7 +583,7 @@ def build_filtering():
                                         style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
-                                html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
+                                html.Div(children=html.P(id="date_selection"),className="wb-inv")]),
                             ],
                             id="cross-filter-options",
                             className="",
@@ -589,7 +591,7 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    html.Span(
+                                    html.Div(
                                         [
                                             html.Label(
                                                 id="groundstations-text",
@@ -607,7 +609,7 @@ def build_filtering():
                                         ],
                                         className="drop_down",
                                     ),
-                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
+                                    html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
                                     dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
                                 ]),
@@ -632,7 +634,7 @@ def build_filtering():
                                     style={"margin-left": "5px"},
                                     className="btn btn-primary"
                                 ),
-                                html.Span(children=html.P(id="download_selection"),className="wb-inv"),
+                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
                                 html.Div ([html.B(id="Download_limit")]),
                             ],
                         ),
