@@ -2056,6 +2056,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("Graph_description-2", "children"),
         Output("stat-selection-text", "children"),
         Output("stat-y-axis-text", "children"),
+        Output("date_picker_range", "start_date_placeholder_text"),
+        Output("date_picker_range", "end_date_placeholder_text"),
         Output("ground_station_list", "options"),
         Output("x_axis_selection_1", "options"),
         Output("y_axis_selection_1", "options"),
@@ -2098,6 +2100,8 @@ def translate_static(x):
                 _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Explore the data by selecting different variables in the drop-down menu on the right."),
                 _("Select statistic:"),
                 _("Select plotted value:"),
+                _("Select start date"),
+                _("Select end date"),
                 [  # Ground_station_options
                     {'label': _('Resolute Bay, No. W. Territories'), 'value': 'Resolute Bay, No. W. Territories'},
                     {'label': _('Blossom Point, Maryland'), 'value': 'Blossom Point, Maryland'},
