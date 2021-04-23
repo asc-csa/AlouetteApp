@@ -567,9 +567,6 @@ def build_filtering():
                                 #     marks=year_dict
                                 # ),
                                 html.Div([
-                                    html.Label(
-                                        htmlFor='date_picker_range'
-                                    ),
                                     dcc.DatePickerRange(
                                         id='date_picker_range',
                                         min_date_allowed=dt.datetime(1962, 9, 29),
