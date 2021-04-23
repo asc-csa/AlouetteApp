@@ -451,9 +451,9 @@ gc_header_en = '''
 <div class='global-header'>
 <nav>
   <ul id="wb-tphp" class="wb-init wb-disable-inited">
-	  <li class="wb-slc"><a class="wb-sl" href="#wb-cont">Skip to main content</a></li>
-	  <li class="wb-slc"><a class="wb-sl" href="#wb-info">Skip to "About government"</a></li>
-    <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Switch to basic HTML version</a></li>
+	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Skip to main content</a></li>
+	  <!-- <li class="wb-slc"><a class="wb-sl" href="#wb-info">Skip to "About government"</a></li>
+    <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Switch to basic HTML version</a></li> -->
   </ul>
 </nav>
 <header>
@@ -1022,11 +1022,13 @@ gc_menu_items_fr='''
 
 gc_header_fr = '''
 <div class='global-header'>
-<nav><ul id="wb-tphp" class="wb-init wb-disable-inited">
-	<li class="wb-slc"><a class="wb-sl" href="#wb-cont">Passer au contenu principal</a></li>
-	<li class="wb-slc"><a class="wb-sl" href="#wb-info">Passer à « Au sujet du gouvernement »</a></li>
-	
-<li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Passer à la version HTML simplifiée</a></li></ul></nav>
+<nav>
+  <ul id="wb-tphp" class="wb-init wb-disable-inited">
+	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Passer au contenu principal</a></li>
+	  <!--<li class="wb-slc"><a class="wb-sl" href="#wb-info">Passer à « Au sujet du gouvernement »</a></li>
+    <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Passer à la version HTML simplifiée</a></li>-->
+  </ul>
+</nav>
 <header>
 	<div id="wb-bnr" class="container">
 		<div class="row">
