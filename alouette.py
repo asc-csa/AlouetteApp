@@ -491,8 +491,10 @@ def build_filtering():
                                             step=5,
                                             style={"margin-left": "5px"}
                                         )
-                                    ]),
-                                html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
+                                    ]
+                                ),
+                                html.Div(children=html.P(id="lat_selection"),className="wb-inv")
+                                ],
                                 className="col-md-6"
                             ),
                             html.Div(
@@ -541,7 +543,7 @@ def build_filtering():
                                             style={"margin-left": "5px"}
                                         )
                                     ]),
-                                html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
+                                html.Div(children=html.P(id="lon_selection"),className="wb-inv")],
                                 className="col-md-6"
                             ),
                             ],
@@ -581,7 +583,7 @@ def build_filtering():
                                         style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
-                                html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
+                                html.Div(children=html.P(id="date_selection"),className="wb-inv")]),
                             ],
                             id="cross-filter-options",
                             className="",
@@ -589,11 +591,11 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    html.Span(
+                                    html.Div(
                                         [
                                             html.Label(
                                                 id="groundstations-text",
-                                                htmlFor="ground_station_list",
+                                                htmlFor="ground_station_list_dropdown",
                                                 className="control_label",
                                             ),
                                             dcc.Dropdown(
@@ -602,12 +604,15 @@ def build_filtering():
                                                 placeholder=_("Sélectionner | Select"),
                                                 multi=True,
                                                 value=station_values,
-                                                className="dcc_control"
+                                                className="dcc_control",
+                                                label = 'Label test'
                                             ),
                                         ],
-                                        className="drop_down",
+                                        className="drop_down col-md-6",
+                                        role="listbox",
+                                        **{'aria-label': 'Select plotted value'}
                                     ),
-                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
+                                    html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
                                     dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
                                 ]),
@@ -632,7 +637,7 @@ def build_filtering():
                                     style={"margin-left": "5px"},
                                     className="btn btn-primary"
                                 ),
-                                html.Span(children=html.P(id="download_selection"),className="wb-inv"),
+                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
                                 html.Div ([html.B(id="Download_limit")]),
                             ],
                         ),
@@ -705,7 +710,7 @@ def build_stats():
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor='x_axis_selection_1',
+                                            htmlFor='x_axis_selection_1_dropdown',
                                             id="x-axis-selection-text",
                                             className="control_label",
                                         ),
@@ -714,17 +719,19 @@ def build_stats():
                                             options=x_axis_options,
                                             multi=False,
                                             value='timestamp',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select x-axis'}
                                 ),
                                 html.Div(
                                     [
                                     html.Label(
-                                        htmlFor='y_axis_selection_1',
+                                        htmlFor='y_axis_selection_1_dropdown',
                                         id="y-axis-selection-text",
                                         className="control_label",
                                     ),
@@ -734,11 +741,13 @@ def build_stats():
                                         multi=False,
                                         value='max_depth',
                                         className="dcc_control",
+                                        label = 'Label test'
                                     ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select y-axis'}
                                 ),
                             ],
                             className="row",
@@ -779,7 +788,7 @@ def build_stats():
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor="stat_selection",
+                                            htmlFor="stat_selection_dropdown",
                                             id="stat-selection-text",
                                             className="control_label",
                                         ),
@@ -791,17 +800,19 @@ def build_stats():
                                             ],
                                             multi=False,
                                             value='mean',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select Statistic'}
                                 ),
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor="y_axis_selection_2",
+                                            htmlFor="y_axis_selection_2_dropdown",
                                             id="stat-y-axis-text",
                                             className="control_label",
                                         ),
@@ -810,12 +821,14 @@ def build_stats():
                                             options=y_axis_options,
                                             multi=False,
                                             value='max_depth',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select plotted value'}
                                 ),
                             ],
                             className="row",
