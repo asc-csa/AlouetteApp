@@ -25,27 +25,59 @@ from flask_babel import _ ,Babel
 from flask import session, redirect, url_for, request
 
 class CustomDash(dash.Dash):
+
+    analytics_code = ''
+    lang = ''
+    header = ''
+    footer = ''
+    meta_html = ''
+    app_header = ''
+
+    def set_analytics(self, code):
+        self.analytics_code = code
+
+    def set_lang(self, lang):
+        self.lang = lang
+
+    def set_header(self, header):
+        self.header = header
+
+    def set_footer(self, footer):
+        self.footer = footer
+
+    def set_meta_tags(self, meta_html):
+        self.meta_html = meta_html
+
+    def set_app_header(self, header):
+        self.app_header = header
+
     def interpolate_index(self, **kwargs):
         # Inspect the arguments by printing them
-        print(kwargs)
         return '''
         <!DOCTYPE html>
-        <html lang='en'>
+        <html lang='{lang}'>
             <head>
+                {analytics}
                 {metas}
                 {favicon}
                 <title>
                 {title}
                 </title>
                 {css}
+                {meta}
             </head>
             <body>
+                {header}
+                {app_header}
                 {app_entry}
-                <footer>
+                <div class="global-footer">
+                    <footer id="wb-info">
+                    {footer}
                     {config}
                     {scripts}
                     {renderer}
-                </footer>
+                    </footer>
+                </div>
             </body>
         </html>
         '''.format(
@@ -56,7 +88,14 @@ class CustomDash(dash.Dash):
             metas = kwargs['metas'],
             favicon = kwargs['favicon'],
             css = kwargs['css'],
-            title = kwargs['title'])
+            title = kwargs['title'],
+            analytics = self.analytics_code,
+            meta = self.meta_html,
+            lang = self.lang,
+            header = self.header,
+            footer = self.footer,
+            app_header = self.app_header
+            )
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -65,38 +104,48 @@ ASSET_PATH = PATH.joinpath("public").resolve()  # path to "assets" folder
 
 scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 
-# external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
-#                         'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-#                         'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
-#                         'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+external_stylesheets = [
+    'https://canada.ca/etc/designs/canada/wet-boew/css/wet-boew.min.css',
+    'https://canada.ca/etc/designs/canada/wet-boew/css/theme.min.css',
+    'https://use.fontawesome.com/releases/v5.8.1/css/all.css'
+    # 'assets/gc_theme_cdn/assets/favicon.ico',
+    # 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    # 'assets/gc_theme_cdn/css/theme.min.css',
+    # 'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css'
+]  # Link to external CSS
+
+external_scripts = [
+    # 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+    # 'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
+    # 'assets/gc_theme_cdn/js/theme.min.js',
+    # 'https://cdn.plot.ly/plotly-locale-de-latest.js',
+    '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+    'https://canada.ca/etc/designs/canada/wet-boew/js/wet-boew.min.js',
+    'https://canada.ca/etc/designs/canada/wet-boew/js/theme.min.js',
+    'assets/scripts.js'
+
+
+]
 
 # external_stylesheets = [
-#     # 'assets/gc_theme/GCWeb/assets/favicon.ico',
+#     # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
 #     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-#     # 'assets/gc_theme/GCWeb/css/theme.min.css',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
+#     'assets/custom.css'
 #     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
 #     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
 #     ]  # Link to external CSS
 
-external_stylesheets = [
-    # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
-    'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
-    'assets/custom.css'
-    # 'assets/gc_theme/wet-boew/css/noscript.min.css',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
-    ]  # Link to external CSS
-
-external_scripts = [
-    'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
-    'https://cdn.plot.ly/plotly-locale-de-latest.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
-    'assets/scripts.js',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
-]
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
+#     'assets/scripts.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
+# ]
 
 def get_config_dict():
     config = configparser.RawConfigParser()
@@ -105,11 +154,16 @@ def get_config_dict():
         get_config_dict.config_dict = dict(config.items('TOKENS'))
     return get_config_dict.config_dict
 
+def generate_meta_tag(name, content):
+    return "<meta name=\"" + name + "\" content=\"" + content + "\">"
+
 if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
-    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, gc_head_en, html_tag_attr
+    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
     from analytics import analytics_code
+    from .config import Config
+    app_config = Config()
     tokens = get_config_dict()
 
     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
@@ -120,18 +174,13 @@ if __name__ == '__main__':
     external_stylesheets=external_stylesheets,
     external_scripts=external_scripts,
     )
-    app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
-    server = app.server
-    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
-    babel = Babel(server)  # Hook flask-babel to the app
-
-
-
 
 else :
     prefixe="/alouette"
-    from applications.alouette.header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, gc_head_en, html_tag_attr
-    from applications.alouette.analytics import analytics_code
+    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en
+    from .analytics import analytics_code
+    from .config import Config
+    app_config = Config()
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = CustomDash(
@@ -141,10 +190,36 @@ else :
         external_stylesheets=external_stylesheets,
         external_scripts=external_scripts,
     )
-    app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
-    server = app.server
-    server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
-    babel = Babel(server)  # Hook flask-babel to the app
+
+meta_html = ''
+if app_config.DEFAULT_LANGUAGE == 'en':
+    app.set_header(gc_header_en)
+    app.set_footer(gc_footer_en)
+    meta_html += generate_meta_tag(
+        'description',
+        'Explore the composition of the Earth’s atmosphere with data from the SCISAT satellite! SCISAT has been monitoring the atmospheric concentrations of ozone and 70 other gases since 2003.'
+        )
+    meta_html += generate_meta_tag('keywords', '')
+    app.title="SCISAT : data exploration application for atmospheric composition"
+    app.set_app_header(app_title_en)
+else:
+    app.set_header(gc_header_fr)
+    app.set_footer(gc_footer_fr)
+    meta_html += generate_meta_tag(
+        'description',
+        "Explorez la composition de l’atmosphère terrestre avec les données du satellite SCISAT! SCISAT surveille les concentrations atmosphériques d'ozone et de 70 gaz supplémentaires depuis 2003."
+        )
+    meta_html += generate_meta_tag('keywords', '')
+    app.title="SCISAT : application d’exploration des données de composition atmosphérique"
+    # app.set_app_header(app_title_fr)
+
+app.set_meta_tags(meta_html)
+app.set_analytics(analytics_code)
+app.set_lang(app_config.DEFAULT_LANGUAGE)   
+app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
+server = app.server
+server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
+babel = Babel(server)  # Hook flask-babel to the app
 
 # try:
 #     language = session['language']
@@ -279,59 +354,59 @@ layout = dict(
 )
 
 
-# Builds the layout for the header
-def build_header():
-    return html.Div(
-            [
-                html.Div([], className="one column"),
-                html.Div(
-                    [
-                        html.Img(
-                            src=app.get_asset_url("csa-logo.png"),
-                            id="csa-image",
-                            style={
-                                "height": "60px",
-                                "width": "auto",
-                                "margin": "25px",
-                            },
-                            alt="CSA Logo"
-                        )
-                    ],
-                    className="one column",
-                ),
-                html.Div(
-                    [
-                        html.H1(
-                            "",
-                            style={"margin-bottom": "10px", "margin-left": "15%"},
-                            id="page-title"),
-                    ],
-                    className="six columns",
-                    id="title",
-                ),
-                html.Div(
-                    [
-                        html.A(
-                            id="learn-more-button",
-                            className="btn btn-primary header-btn",
-                            href="http://www.asc-csa.gc.ca/eng/satellites/alouette.asp"
-                        ),
-                        html.A(
-                            html.Span('FR', id='language-button'),
-                            href='/alouette/language/fr',
-                            id='language-link',
-                            className="btn btn-primary header-btn"
-                        ),
-                    ],
-                    className="four columns",
-                    id="button-div",
-                    style={"text-align": "center"}
-                ),
-            ],
-            id="header",
-            className="row flex-display",
-            style={"margin-bottom": "25px"},
-        )
+# # Builds the layout for the header
+# def build_header():
+#     return html.Div(
+#             [
+#                 html.Div([], className="one column"),
+#                 html.Div(
+#                     [
+#                         html.Img(
+#                             src=app.get_asset_url("csa-logo.png"),
+#                             id="csa-image",
+#                             style={
+#                                 "height": "60px",
+#                                 "width": "auto",
+#                                 "margin": "25px",
+#                             },
+#                             alt="CSA Logo"
+#                         )
+#                     ],
+#                     className="one column",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.H1(
+#                             "",
+#                             style={"margin-bottom": "10px", "margin-left": "15%"},
+#                             id="page-title"),
+#                     ],
+#                     className="six columns",
+#                     id="title",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.A(
+#                             id="learn-more-button",
+#                             className="btn btn-primary header-btn",
+#                             href="http://www.asc-csa.gc.ca/eng/satellites/alouette.asp"
+#                         ),
+#                         html.A(
+#                             html.Span('FR', id='language-button'),
+#                             href='/alouette/language/fr',
+#                             id='language-link',
+#                             className="btn btn-primary header-btn"
+#                         ),
+#                     ],
+#                     className="four columns",
+#                     id="button-div",
+#                     style={"text-align": "center"}
+#                 ),
+#             ],
+#             id="header",
+#             className="row flex-display",
+#             style={"margin-bottom": "25px"},
+#         )
 
 
 # Builds the layout and components for the inputs to filter the data, as well as the ionograms/month graph and the ground stations map
@@ -426,8 +501,10 @@ def build_filtering():
                                             step=5,
                                             style={"margin-left": "5px"}
                                         )
-                                    ]),
-                                html.Span(children=html.P(id="lat_selection"),className="wb-inv")],
+                                    ]
+                                ),
+                                html.Div(children=html.P(id="lat_selection"),className="wb-inv")
+                                ],
                                 className="col-md-6"
                             ),
                             html.Div(
@@ -476,7 +553,7 @@ def build_filtering():
                                             style={"margin-left": "5px"}
                                         )
                                     ]),
-                                html.Span(children=html.P(id="lon_selection"),className="wb-inv")],
+                                html.Div(children=html.P(id="lon_selection"),className="wb-inv")],
                                 className="col-md-6"
                             ),
                             ],
@@ -500,9 +577,6 @@ def build_filtering():
                                 #     marks=year_dict
                                 # ),
                                 html.Div([
-                                    html.Label(
-                                        htmlFor='date_picker_range'
-                                    ),
                                     dcc.DatePickerRange(
                                         id='date_picker_range',
                                         min_date_allowed=dt.datetime(1962, 9, 29),
@@ -516,7 +590,7 @@ def build_filtering():
                                         style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
-                                html.Span(children=html.P(id="date_selection"),className="wb-inv")]),
+                                html.Div(children=html.P(id="date_selection"),className="wb-inv")]),
                             ],
                             id="cross-filter-options",
                             className="",
@@ -524,11 +598,11 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    html.Span(
+                                    html.Div(
                                         [
                                             html.Label(
                                                 id="groundstations-text",
-                                                htmlFor="ground_station_list",
+                                                htmlFor="ground_station_list_dropdown",
                                                 className="control_label",
                                             ),
                                             dcc.Dropdown(
@@ -537,14 +611,23 @@ def build_filtering():
                                                 placeholder=_("Sélectionner | Select"),
                                                 multi=True,
                                                 value=station_values,
-                                                className="dcc_control"
+                                                className="dcc_control",
+                                                label = 'Label test'
                                             ),
                                         ],
-                                        className="drop_down",
+                                        className="drop_down col-md-6",
+                                        role="listbox",
+                                        **{'aria-label': 'Select plotted value'}
                                     ),
-                                    html.Span(children=html.P(id="ground_station_selection"),className="wb-inv")]),
+                                    html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
-                                    dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                    dbc.Alert(
+                                        color="secondary",
+                                        id="pos_alert",
+                                        is_open=False,
+                                        fade=False,
+                                        style={"margin-top":"0.5em"}
+                                    ),
                                 ]),
 
                             ],
@@ -567,7 +650,7 @@ def build_filtering():
                                     style={"margin-left": "5px"},
                                     className="btn btn-primary"
                                 ),
-                                html.Span(children=html.P(id="download_selection"),className="wb-inv"),
+                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
                                 html.Div ([html.B(id="Download_limit")]),
                             ],
                         ),
@@ -640,7 +723,7 @@ def build_stats():
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor='x_axis_selection_1',
+                                            htmlFor='x_axis_selection_1_dropdown',
                                             id="x-axis-selection-text",
                                             className="control_label",
                                         ),
@@ -649,17 +732,19 @@ def build_stats():
                                             options=x_axis_options,
                                             multi=False,
                                             value='timestamp',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select x-axis'}
                                 ),
                                 html.Div(
                                     [
                                     html.Label(
-                                        htmlFor='y_axis_selection_1',
+                                        htmlFor='y_axis_selection_1_dropdown',
                                         id="y-axis-selection-text",
                                         className="control_label",
                                     ),
@@ -669,11 +754,13 @@ def build_stats():
                                         multi=False,
                                         value='max_depth',
                                         className="dcc_control",
+                                        label = 'Label test'
                                     ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select y-axis'}
                                 ),
                             ],
                             className="row",
@@ -714,7 +801,7 @@ def build_stats():
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor="stat_selection",
+                                            htmlFor="stat_selection_dropdown",
                                             id="stat-selection-text",
                                             className="control_label",
                                         ),
@@ -726,17 +813,19 @@ def build_stats():
                                             ],
                                             multi=False,
                                             value='mean',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select Statistic'}
                                 ),
                                 html.Div(
                                     [
                                         html.Label(
-                                            htmlFor="y_axis_selection_2",
+                                            htmlFor="y_axis_selection_2_dropdown",
                                             id="stat-y-axis-text",
                                             className="control_label",
                                         ),
@@ -745,12 +834,14 @@ def build_stats():
                                             options=y_axis_options,
                                             multi=False,
                                             value='max_depth',
-                                            className="dcc_control"
+                                            className="dcc_control",
+                                            label = 'Label test'
                                         ),
                                     ],
                                     className="drop_down col-md-6",
                                     role="listbox",
-                                    style={'max-width': '400px'}
+                                    style={'max-width': '400px'},
+                                    **{'aria-label': 'Select plotted value'}
                                 ),
                             ],
                             className="row",
@@ -814,7 +905,7 @@ app.layout = html.Div(
                 dcc.Store(id="aggregate_data"),
                 html.Div(id="output-clientside"),  # empty Div to trigger javascript file for graph resizing
 
-                build_header(),
+                # build_header(),
                 build_filtering(),
                 build_stats(),
             ],
@@ -1098,10 +1189,7 @@ def download_images():
         # Making the output csv from the filtered df
         csv_buffer = StringIO()
         dff.to_csv(csv_buffer, index=False)
-        try:
-            language = session['language']
-        except KeyError:
-            language = 'en'
+        language = app_config.DEFAULT_LANGUAGE
         if language == 'fr':
             fn = "Metadata_des_ionogrammes_séléctionnés.csv"
         else:
@@ -1109,10 +1197,7 @@ def download_images():
         zf.writestr(fn, csv_buffer.getvalue())
 
     memory_file.seek(0)
-    try:
-        language = session['language']
-    except KeyError:
-        language = 'en'
+    language = app_config.DEFAULT_LANGUAGE
     if language == 'fr':
         fn = "Ionogrammes.zip"
     else:
@@ -1197,10 +1282,7 @@ def download_csv():
         CSV file based on the applied filters
     """
 
-    try:
-        language = session['language']
-    except KeyError:
-        language = 'en'
+    language = app_config.DEFAULT_LANGUAGE
 
     start_date = dt.datetime.strptime(flask.request.args.get('start_date').split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(flask.request.args.get('end_date').split('T')[0], '%Y-%m-%d')
@@ -1960,8 +2042,6 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 # The variables in controls.py are placed here; babel does not work for translation unless it is hard coded here, not sure why. Likely has to with the way Dash builds the web app.
 @app.callback(
     [
-        Output("page-title", "children"),
-        Output("learn-more-button", "children"),
         Output("ionograms-ratio", "children"),
         Output("description-1", "children"),
         Output("description-2", "children"),
@@ -1992,6 +2072,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("Graph_description-2", "children"),
         Output("stat-selection-text", "children"),
         Output("stat-y-axis-text", "children"),
+        Output("date_picker_range", "start_date_placeholder_text"),
+        Output("date_picker_range", "end_date_placeholder_text"),
         Output("ground_station_list", "options"),
         Output("x_axis_selection_1", "options"),
         Output("y_axis_selection_1", "options"),
@@ -2004,8 +2086,6 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 def translate_static(x):
     print('Translating...')
     return [
-                _("Alouette I ionogram data"),
-                _("Learn more about Alouette"),
                 _("Ionograms selected") + " / " + _("Total number of ionograms"),
                 _("Launched in 1962, Alouette I sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized. These data were used to fuel hundreds of scientific papers at the time. Although ionosphere data derived from inversions and this dataset are readily available, the raw data from Alouette I’s ionograms allow for further studies due to scientific advancements since they were acquired. In the past, accessing this data was difficult, which limited its use, interpretation, and analysis on a larger scale."),
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
@@ -2036,6 +2116,8 @@ def translate_static(x):
                 _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Explore the data by selecting different variables in the drop-down menu on the right."),
                 _("Select statistic:"),
                 _("Select plotted value:"),
+                _("Select start date"),
+                _("Select end date"),
                 [  # Ground_station_options
                     {'label': _('Resolute Bay, No. W. Territories'), 'value': 'Resolute Bay, No. W. Territories'},
                     {'label': _('Blossom Point, Maryland'), 'value': 'Blossom Point, Maryland'},
@@ -2088,24 +2170,24 @@ def translate_static(x):
                     {'label': _('Median'), 'value': 'median'}
                 ],
     ]
-# Translate the header and the footer by injecting raw HTML
-@app.callback(
-    [
-        Output('gc-header', 'children'),
-        Output('gc-footer', 'children')
-    ],
-    [Input('none2', 'children')]
-)
-def translate_header_footer(x):
-    """ Translates the government header and footer
-    """
-    try: # On the first load of the webpage, there is a bug where the header won't load due to the session not being established yet. This try/except defaults the header/footer to english
-        if session['language'] == 'fr':
-            return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_fr), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_fr)]
-        else:
-            return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
-    except:
-        return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
+# # Translate the header and the footer by injecting raw HTML
+# @app.callback(
+#     [
+#         Output('gc-header', 'children'),
+#         Output('gc-footer', 'children')
+#     ],
+#     [Input('none2', 'children')]
+# )
+# def translate_header_footer(x):
+#     """ Translates the government header and footer
+#     """
+#     try: # On the first load of the webpage, there is a bug where the header won't load due to the session not being established yet. This try/except defaults the header/footer to english
+#         if session['language'] == 'fr':
+#             return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_fr), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_fr)]
+#         else:
+#             return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
+#     except:
+#         return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
 
 
 @app.callback(
@@ -2118,10 +2200,7 @@ def translate_header_footer(x):
 def update_language_button(x):
     """Updates the button to switch languages
     """
-    try:
-        language = session['language']
-    except KeyError:
-        language = None
+    language = app_config.DEFAULT_LANGUAGE
     if language == 'fr':
         return 'EN', prefixe+'/language/en'
     else:
@@ -2133,14 +2212,8 @@ def update_language_button(x):
 def get_locale():
     # if the user has set up the language manually it will be stored in the session,
     # so we use the locale from the user settings
-    try:
-        language = session['language']
-    except KeyError:
-        language = None
-    if language is not None:
-        return language
-    else:
-        return 'en'
+    language = app_config.DEFAULT_LANGUAGE
+    return language
 
 
 @app.server.route('/language/<language>')
@@ -2148,7 +2221,7 @@ def set_language(language=None):
     """Sets the session language, then refreshes the page
     """
 
-    session['language'] = language
+    session['language'] = app_config.DEFAULT_LANGUAGE
 
     return redirect(url_for('/'))
 

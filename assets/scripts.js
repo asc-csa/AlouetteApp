@@ -3,6 +3,14 @@ const expected_canvas_count = 8;
 $(document).ready(function(){
     var canvas_check = setInterval(checkForCanvases, 3000);
 
+    var css_fixer = setInterval(removeBaddCss, 3500);
+
+    var ariaFixes = setInterval(function(){
+        var dropdowns = $('.Select-input input');
+        dropdowns.removeAttr('aria-owns');
+        $('.Select-input').attr('role', 'option');
+    }, 3000);
+
     // Callback function to execute when mutations are observed
     const callback = function(mutationsList, observer) {
         // Use traditional 'for loops' for IE 11
@@ -16,6 +24,17 @@ $(document).ready(function(){
             }
         }
     };
+
+    function removeBaddCss(){
+        $("head").find('style').each(function () {
+            // console.log('removing css');
+            html = $(this).html();
+            if(html.match(/border-color:\s*transparent\s*inherit\s*transparent\s*transparent\s*!important/gm)){
+                $(this).html( html.replace(/border-color:\s*transparent\s*inherit\s*transparent\s*transparent\s*!important/gm,"") );
+            }
+        });
+        
+    }
 
     // Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback);

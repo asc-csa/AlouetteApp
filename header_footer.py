@@ -1,16 +1,54 @@
 # Raw header and footer code copied from GC websites. This html is injected into the webapp using dash-dangerously-set-inner-html
 
-gc_head_en = '''
-  <meta charset="utf-8">
-	<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
-		wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
-	<title>Static header and footer - Bootstrap 3 - Canada.ca</title>
-	<meta content="width=device-width,initial-scale=1" name="viewport">
-	<meta name="description" content="Static header and footer on Bootstrap 3 with the mega menu. Web Experience Toolkit (WET) includes reusable components for building and maintaining innovative Web sites that are accessible, usable, and interoperable.">
+from .config import Config
+from flask_babel import _ ,Babel
+app_config = Config()
+
+app_title_en = '''
+  <div id="header" class="container" style="margin-bottom: 25px;">
+    <div class='flex-display justify-space-between'>
+      <div class="">
+        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
+      </div>
+      <div id="title" class="">
+        <h1 id="page-title" >'''+_('Alouette I ionogram data') +'''</h1>
+      </div>
+      <div id="button-div" style="display: flex; align-items: center;" >
+        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
+          <span id="learn-more-button">'''+_('Learn more about Alouette') +'''</span>
+        </a>
+      </div>
+    </div>
+  </div>
 '''
 
-gc_menu_items_en = '''
-<li role="presentation"> <a role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="gc-mnu-jobs" aria-expanded="false" href="#">Jobs and the workplace</a>
+gc_breadcrumb_en = '''
+<nav id="wb-bc" property="breadcrumb">
+    <h2>You are here:</h2>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="https://www.canada.ca/en.html">Canada.ca</a></li>
+        <li><a href="https://www.asc-csa.gc.ca/eng/default.asp">Canadian Space Agency</a></li>
+      </ol>
+    </div>
+</nav>
+'''
+
+gc_breadcrumb_fr = '''
+<nav id="wb-bc" property="breadcrumb">
+    <h2>You are here:</h2>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
+        <li><a href="https://www.asc-csa.gc.ca/fra/default.asp">Agence spatiale canadienne</a></li>
+      </ol>
+    </div>
+</nav>
+'''
+
+gc_menu_items_en='''
+<li role="presentation">
+  <a role="menuitem" tabindex="0" aria-haspopup="true" aria-controls="gc-mnu-jobs" aria-expanded="false" href="#">Jobs and the workplace</a>
   <ul id="gc-mnu-jobs" role="menu" aria-orientation="vertical">
     <li role="presentation"> <a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/jobs.html">Jobs<span class="visible-xs-inline visible-sm-inline">: home</span></a> </li>
     <li role="separator"></li>
@@ -101,7 +139,7 @@ gc_menu_items_en = '''
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/trade.html">International trade and investment</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/permits.html">Permits, licences and regulations</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/doing-business.html">Doing business with government</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/innovation.html">R&D and innovation</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/innovation.html">R&amp;D and innovation</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/research.html">Research and business intelligence</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/ip.html">Intellectual property and copyright</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/maintaingrowimprovebusiness.html">Maintaining your business</a></li>
@@ -126,7 +164,7 @@ gc_menu_items_en = '''
   <ul id="gc-mnu-benny" role="menu" aria-orientation="vertical">
     <li role="presentation"> <a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/benefits.html">Benefits<span class="visible-xs-inline visible-sm-inline">: home</span></a> </li>
     <li role="separator"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://www.canada.ca/en/services/benefits/covid19-emergency-benefits.html">COVID-19 &ndash; Benefits and services </a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://www.canada.ca/en/services/benefits/covid19-emergency-benefits.html">COVID-19 – Benefits and services </a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/benefits/ei.html">Employment Insurance benefits and leave</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/benefits/family.html">Family and caregiving benefits</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/benefits/publicpensions.html">Public pensions</a></li>
@@ -154,7 +192,7 @@ gc_menu_items_en = '''
     </li>
   </ul>
 </li>
-<li role="presentation"> <a role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="gc-mnu-health" aria-expanded="false" href="#">Health</a>
+<li role="presentation"> <a role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="gc-mnu-health" aria-expanded="true" href="#">Health</a>
   <ul id="gc-mnu-health" role="menu" aria-orientation="vertical">
     <li role="presentation"> <a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/health.html">Health<span class="visible-xs-inline visible-sm-inline">: home</span></a> </li>
     <li role="separator"></li>
@@ -210,7 +248,7 @@ gc_menu_items_en = '''
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/weather.html">Weather, climate and hazards</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/energy.html">Energy</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/natural-resources.html">Natural resources</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/agricultural-practices.html">Agricultural practices</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.agr.gc.ca/eng/agriculture-and-the-environment/?id=1580153237101">Agriculture and the environment</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/fisheries.html">Fisheries</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/wildlife-plants-species.html">Wildlife, plants and species</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/environment/pollution-waste-management.html">Pollution and waste management</a></li>
@@ -390,7 +428,7 @@ gc_menu_items_en = '''
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/sciencesubjects.html">Science subjects</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/open-data.html">Open data, statistics and archives</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/institutes.html">Research institutes and facilities</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/innovation.html">R&D and innovation</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/innovation.html">R&amp;D and innovation</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/business/ip.html">Intellectual property and copyright</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/scientistsdirectory.html">Directory of scientists and research professionals</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.canada.ca/en/services/science/educationalresources.html">Science education resources</a></li>
@@ -409,178 +447,185 @@ gc_menu_items_en = '''
 </li>
 '''
 
-def html_tag_attr( lang ):
-  return 'class="no-js" lang="'+lang+'" dir="ltr"'
+gc_header_en = '''
+<div class='global-header'>
+<nav>
+  <ul id="wb-tphp" class="wb-init wb-disable-inited">
+	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Skip to main content</a></li>
+	  <!-- <li class="wb-slc"><a class="wb-sl" href="#wb-info">Skip to "About government"</a></li>
+    <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Switch to basic HTML version</a></li> -->
+  </ul>
+</nav>
+<header>
+	<div id="wb-bnr" class="container">
+		<div class="row">	
+			<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+        <h2 class="wb-inv">Language selection</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-inline mrgn-bttm-0">
+                    <li>
+                        <a lang="fr" href="'''+ app_config.FR_LINK +'''">                       
+                          <span class="hidden-xs">Français</span>
+                          <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr> 
+                        </a>
+                    </li> 
+                </ul>
+            </div>
+        </div>
+      </section>
+				<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" resource="#wb-publisher" typeof="GovernmentOrganization">
+						<link href="https://canada.ca/content/canadasite/en.html" property="url">
+							<img src="https://canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg" alt="Government of Canada" property="logo">
+							<span class="wb-inv"> /
+								<span lang="fr">Gouvernement du Canada</span>
+							</span>
+					<meta property="name" content="Government of Canada">
+					<meta property="areaServed" typeof="Country" content="Canada">
+					<link property="logo" href="https://canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg">
+				</div>
+				<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
+					<h2>Search</h2>	
+          <form action="https://www.canada.ca/en/sr/srb.html" method="get" name="cse-search-box" role="search">
+            <div class="form-group wb-srch-qry">
+              <label for="wb-srch-q" class="wb-inv">Search Canada.ca</label>
+              <input name="cdn" value="canada" type="hidden">
+              <input name="st" value="s" type="hidden">
+              <input name="num" value="10" type="hidden">
+              <input name="langs" value="en" type="hidden">
+              <input name="st1rt" value="1" type="hidden">
+              <input name="s5bm3ts21rch" value="x" type="hidden">
+                <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="Search Canada.ca">
+              <input type="hidden" name="_charset_" value="UTF-8">
+              <datalist id="wb-srch-q-ac">
+              </datalist>
+            </div>
+            <div class="form-group submit">
+            <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span class="glyphicon-search glyphicon"></span><span class="wb-inv">Search</span></button>
+            </div>
+          </form>
+				</section>
+		</div>
+	</div>
+	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
+		<h2 class="wb-inv">Menu</h2>
+		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it."><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
+		<ul role="menu" aria-orientation="vertical" data-ajax-replace="/content/dam/canada/sitemenu/sitemenu-v2-en.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
+    '''+ gc_menu_items_en +'''
+    </ul>
+	</div></nav>
+  '''+ gc_breadcrumb_en +'''
+	
+</header>
+</div>
+'''
 
-gc_header_en ='''
+gc_header_en_old ='''
 <header>
     <div id="wb-bnr" class="container">
-       <div class="row">
-          <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-             <h2 class="wb-inv">Language selection</h2>
-             <ul class="list-inline mrgn-bttm-0">
-                <li>
-                   <a lang="fr" hreflang="fr" href="/alouette/language/fr">
-                   <span class="hidden-xs">Français</span>
-                   <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr>
-                   </a>
-                </li>
-             </ul>
-          </section>
-          <div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" resource="#wb-publisher" typeof="GovernmentOrganization">
-             <a href="https://www.canada.ca/en.html" property="url"><img src="assets/gc_theme_cdn/assets/sig-blk-en.svg" alt="Government of Canada" property="logo"><span class="wb-inv"> / <span lang="fr">Gouvernement du Canada</span></span></a>
-             <meta property="name" content="Government of Canada">
-             <meta property="areaServed" typeof="Country" content="Canada">
-             <link property="logo" href="../GCWeb/assets/wmms-blk.svg">
-          </div>
-          <section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
-             <h2>Search</h2>
-             <form action="#" method="post" name="cse-search-box" role="search">
-                <div class="form-group wb-srch-qry">
-                   <label for="wb-srch-q" class="wb-inv">Search Canada.ca</label>
-                   <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="Search Canada.ca">
-                   <datalist id="wb-srch-q-ac"></datalist>
-                </div>
-                <div class="form-group submit">
-                   <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span class="glyphicon-search glyphicon"></span><span class="wb-inv">Search</span></button>
-                </div>
-             </form>
-          </section>
-       </div>
+      <div class="row">
+        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+          <h2 class="wb-inv">Language selection</h2>
+          <ul class="list-inline mrgn-bttm-0">
+            <li>
+              <a lang="fr" hreflang="fr" href="'''+ app_config.FR_LINK +'''">
+              <span class="hidden-xs">Français</span>
+              <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
+          <a href="https://www.canada.ca/en.html" property="URL">
+            <img src="assets/gc_theme_cdn/assets/sig-blk-en.svg" alt="Government of Canada" property="logo">
+              <span class="wb-inv"> /
+                <span lang="fr">Gouvernement du Canada</span>
+              </span></a>
+          <meta property="name" content="Government of Canada">
+          <meta property="areaServed" typeof="Country" content="Canada">
+          <link property="logo" href="assets/gc_theme_cdn/assets/sig-blk-en.svg">
+        </div>
+        <section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
+          <h2>Search</h2>
+          <form action="//www.canada.ca/en/sr/srb/sra.html" method="get" name="cse-search-box" role="search">
+            <div class="form-group wb-srch-qry">
+              <label for="wb-srch-q" class="wb-inv">Search Canadian Space Agency</label>
+              <input name="dmn" value="asc-csa.gc.ca" type="hidden">
+              <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="allq" type="search" value="" size="34" maxlength="170" placeholder="Search Canadian Space Agency">
+              <datalist id="wb-srch-q-ac"></datalist>
+            </div>
+            <div class="form-group submit">
+              <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub">
+                <span class="glyphicon-search glyphicon"></span>
+                <span class="wb-inv">Search</span></button>
+            </div>
+          </form>
+        </section>
+      </div>
     </div>
-    <nav class="gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2">
-       <div class="container">
-          <h2 class="wb-inv">Menu</h2>
-          <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it."><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
-          <ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-en.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
+    <nav class="gcweb-menu" typeof="SiteNavigationElement">
+        <div class="container">
+        <h2 class="wb-inv">Menu</h2>
+        <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it."><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
+        <ul role="menu" aria-orientation="vertical" data-ajax-replace="https://wet-boew.github.io/themes-dist/GCWeb/ajax/sitemenu-v5-en.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
 
-        <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW) -->
-        ''' + gc_menu_items_en +'''
+        <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
+        wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
+        <!-- DataAjaxFragmentStart -->
+        '''+ gc_menu_items_en +'''
         <!-- DataAjaxFragmentEnd -->
         </ul>
-       </div>
+        </div>
     </nav>
-    <nav id="wb-bc" property="breadcrumb">
-       <h2>You are here:</h2>
-       <div class="container">
-          <ol class="breadcrumb">
-            <li><a href="https://www.canada.ca/en.html">Canada.ca</a></li>
-            <li><a href="https://www.asc-csa.gc.ca/eng/default.asp">Canadian Space Agency</a></li>
-          </ol>
-       </div>
-    </nav>
- </header>
+    '''+ gc_breadcrumb_en +'''
+</header>
 '''
 
 
 gc_footer_en = '''
-    <div id="wb-info">
-<div class="landscape">
-<nav class="container wb-navcurr">
-<h2 class="wb-inv">About government</h2>
-<ul class="list-unstyled colcount-sm-2 colcount-md-3">
-<li><a href="https://www.canada.ca/en/contact.html">Contact us</a></li>
-<li><a href="https://www.canada.ca/en/government/dept.html">Departments and agencies</a></li>
-<li><a href="https://www.canada.ca/en/government/publicservice.html">Public service and military</a></li>
-<li><a href="https://www.canada.ca/en/news.html">News</a></li>
-<li><a href="https://www.canada.ca/en/government/system/laws.html">Treaties, laws and regulations</a></li>
-<li><a href="https://www.canada.ca/en/transparency/reporting.html">Government-wide reporting</a></li>
-<li><a href="https://pm.gc.ca/eng">Prime Minister</a></li>
-<li><a href="https://www.canada.ca/en/government/system.html">How government works</a></li>
-<li><a href="https://open.canada.ca/en/">Open government</a></li>
-</ul>
-</nav>
-</div>
-<div class="brand">
-<div class="container">
-<div class="row">
-<nav class="col-md-9 col-lg-10 ftr-urlt-lnk">
-<h2 class="wb-inv">About this site</h2>
-<ul>
-<li><a href="https://www.canada.ca/en/social.html">Social media</a></li>
-<li><a href="https://www.canada.ca/en/mobile.html">Mobile applications</a></li>
-<li><a href="https://www1.canada.ca/en/newsite.html">About Canada.ca</a></li>
-<li><a href="https://www.canada.ca/en/transparency/terms.html">Terms and conditions</a></li>
-<li><a href="https://www.canada.ca/en/transparency/privacy.html">Privacy</a></li>
-</ul>
-</nav>
-<div class="col-xs-6 visible-sm visible-xs tofpg">
-<a href="#wb-cont">Top of page <span class="glyphicon glyphicon-chevron-up"></span></a>
-</div>
-<div class="col-xs-6 col-md-3 col-lg-2 text-right">
-<img src="assets/gc_theme_cdn/assets/wmms-blk.svg" alt="Symbol of the Government of Canada">
-</div>
-</div>
-</div>
-</div>
-</div>
-'''
-
-
-gc_header_fr = '''
-<html class="no-js" lang="fr" dir="ltr">
-<header>
-	<div id="wb-bnr" class="container">
-		
-		<section id="wb-lng" class="text-right">
-            <h2 class="wb-inv">Sélection de la langue</h2>
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="list-inline margin-bottom-none">
-                        <li>
-                        </li>
-                        
-                        
-                    </ul>
+        <div class="landscape">
+        <nav class="container wb-navcurr">
+            <h2 class="wb-inv">About government</h2>
+            <ul class="list-unstyled colcount-sm-2 colcount-md-3">
+                        <li><a href="https://canada.ca/en/contact.html">Contact us</a></li>
+                        <li><a href="https://canada.ca/en/government/dept.html">Departments and agencies</a></li>
+                        <li><a href="https://canada.ca/en/government/publicservice.html">Public service and military</a></li>
+                        <li><a href="https://canada.ca/en/news.html">News</a></li>
+                        <li><a href="https://canada.ca/en/government/system/laws.html">Treaties, laws and regulations</a></li>
+                        <li><a href="https://canada.ca/en/transparency/reporting.html">Government-wide reporting</a></li>
+                        <li><a href="http://pm.gc.ca/en">Prime Minister</a></li>
+                        <li><a href="https://canada.ca/en/government/system.html">About government</a></li>
+                        <li><a href="http://open.canada.ca/en">Open government</a></li>  
+            </ul>
+        </nav>
+        </div>
+        <div class="brand">
+            <div class="container">
+                <div class="row">
+                    <nav class="col-md-10 ftr-urlt-lnk">
+                        <h2 class="wb-inv">About this site</h2>
+                        <ul>
+                          <li><a href="https://canada.ca/en/social.html">Social media</a></li>
+                          <li><a href="https://canada.ca/en/mobile.html">Mobile applications</a></li>
+                          <li><a href="https://canada.ca/en/government/about.html">About Canada.ca</a></li>
+                          <li><a href="https://canada.ca/en/transparency/terms.html">Terms and conditions</a></li>
+                          <li><a href="https://canada.ca/en/transparency/privacy.html">Privacy</a></li>
+                        </ul>
+                    </nav>
+                    <div class="col-xs-6 visible-sm visible-xs tofpg">
+                        <a href="#wb-cont">Top of page <span class="glyphicon glyphicon-chevron-up"></span></a>
+                    </div>
+                    <div class="col-xs-6 col-md-2 text-right">
+                        <img src="https://canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg" alt="Symbol of the Government of Canada">
+                    </div>
                 </div>
             </div>
-        </section>
-		<div class="row">
-			<div class="brand col-xs-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
-				<a href="/fr.html" property="url">
-                    <img src="assets/gc_theme_cdn/assets/sig-blk-en.svg" alt="" property="logo">
-                    <span class="wb-inv" property="name"> Gouvernement du Canada</span>
-                </a>
-                <meta property="areaServed" typeof="Country" content="Canada">
-				<link property="logo" href="https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/wmms-blk.svg">
-			</div>
-			<section id="wb-srch" class="col-lg-8 text-right">
-				<h2>Recherche</h2>
-				
-				<a href="https://www.canada.ca/fr/sr/srb.html">
-                    <form action="/fr/sr/srb.html" method="get" name="cse-search-box" role="search" class="form-inline">
-                    <div class="form-group">
-                    <label for="wb-srch-q" class="wb-inv">Rechercher dans Canada.ca</label>
-                    <input name="cdn" value="canada" type="hidden">
-                    <input name="st" value="s" type="hidden">
-                    <input name="num" value="10" type="hidden">
-                    <input name="langs" value="fr" type="hidden">
-                    <input name="st1rt" value="1" type="hidden">
-                    <input name="s5bm3ts21rch" value="x" type="hidden">
-                    
-                        <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="Rechercher dans Canada.ca">
-                        
-                    
-                    <input type="hidden" name="_charset_" value="UTF-8">
-                    
-                    <datalist id="wb-srch-q-ac">
-                    </datalist>
-                    </div>
-                    <div class="form-group submit">
-                    <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span class="glyphicon-search glyphicon"></span><span class="wb-inv">Recherche</span></button>
-                    </div>
-                    </form>
-                </a>
+        </div>
+'''
 
-			</section>
-		</div>
-	</div>
-
-	
-	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
-		<h2 class="wb-inv">Menu</h2>
-		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
-		<ul role="menu" aria-orientation="vertical" data-ajax-replace="/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3"><li role="presentation"> <a role="menuitem" tabindex="0" aria-haspopup="true" aria-controls="gc-mnu-jobs" aria-expanded="true" href="#">Emplois et milieu de travail</a>
+gc_menu_items_fr='''
+<li role="presentation"> 
+    <a role="menuitem" tabindex="0" aria-haspopup="true" aria-controls="gc-mnu-jobs" aria-expanded="true" href="#">Emplois et milieu de travail</a>
   <ul id="gc-mnu-jobs" role="menu" aria-orientation="vertical">
     <li role="presentation"> <a role="menuitem" tabindex="-1" href="https://www.canada.ca/fr/services/emplois.html">Emplois<span class="visible-xs-inline visible-sm-inline"> : accueil</span></a> </li>
     <li role="separator"></li>
@@ -973,34 +1018,178 @@ gc_header_fr = '''
     </li>
   </ul>
 </li>
-</ul>
+'''
+
+gc_header_fr = '''
+<div class='global-header'>
+<nav>
+  <ul id="wb-tphp" class="wb-init wb-disable-inited">
+	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Passer au contenu principal</a></li>
+	  <!--<li class="wb-slc"><a class="wb-sl" href="#wb-info">Passer à « Au sujet du gouvernement »</a></li>
+    <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Passer à la version HTML simplifiée</a></li>-->
+  </ul>
+</nav>
+<header>
+	<div id="wb-bnr" class="container">
+		<div class="row">
+			
+			<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+    <h2 class="wb-inv">Sélection de la langue</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-inline mrgn-bttm-0">
+                <li>
+                    <a lang="en" href="'''+ app_config.EN_LINK +'''">
+                            <span class="hidden-xs">English</span>
+                            <abbr title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">en</abbr>
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</section>
+				<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" resource="#wb-publisher" typeof="GovernmentOrganization">
+					
+                    
+					
+						<link href="https://www.canada.ca/content/canadasite/fr.html" property="url">
+						
+							<img src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-fr.svg" alt="Gouvernement du Canada" property="logo">
+							<span class="wb-inv"> /
+								
+								<span lang="en">Government of Canada</span>
+							</span>
+						
+					
+					<meta property="name" content="Gouvernement du Canada">
+					<meta property="areaServed" typeof="Country" content="Canada">
+					<link property="logo" href="https://www.canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg">
+				</div>
+				<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
+					<h2>Recherche</h2>
+					
+<form action="https://www.canada.ca/fr/sr/srb.html" method="get" name="cse-search-box" role="search">
+	<div class="form-group wb-srch-qry">
+		<label for="wb-srch-q" class="wb-inv">Rechercher dans Canada.ca</label>
+		<input name="cdn" value="canada" type="hidden">
+		<input name="st" value="s" type="hidden">
+		<input name="num" value="10" type="hidden">
+		<input name="langs" value="fr" type="hidden">
+		<input name="st1rt" value="1" type="hidden">
+		<input name="s5bm3ts21rch" value="x" type="hidden">
+		
+			<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="Rechercher dans Canada.ca">
+		    
+		
+		<input type="hidden" name="_charset_" value="UTF-8">
+
+		<datalist id="wb-srch-q-ac">
+		</datalist>
+	</div>
+	<div class="form-group submit">
+	<button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span class="glyphicon-search glyphicon"></span><span class="wb-inv">Recherche</span></button>
+	</div>
+</form>
+
+				</section>
+		</div>
+	</div>
+	
+	
+	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
+		<h2 class="wb-inv">Menu</h2>
+		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
+		<ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
+    '''+ gc_menu_items_fr +'''
+    </ul>
+		
+	</div></nav>
+	'''+ gc_breadcrumb_fr +'''
+	<div data-ajax-replace="https://www.canada.ca/bin/canada/alert/messages.fr.html" class="original wb-init wb-data-ajax-replace-inited" id="wb-auto-4"></div>
+
+	
+
+
+</header>
+</div>
+'''
+
+gc_header_fr_old = '''
+<header>
+				<div id="wb-bnr" class="container">
+					<div class="row">
+						<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
+							<h2 class="wb-inv">Sélection de la langue</h2>
+							<ul class="list-inline mrgn-bttm-0">
+								<li>
+									<a lang="en" hreflang="en" href="'''+ app_config.EN_LINK +'''">
+									<span class="hidden-xs">English</span>
+									<abbr title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">en</abbr>
+									</a>
+								</li>
+							</ul>
+						</section>
+						<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
+							<a href="https://www.canada.ca/en.html" property="URL">
+								<img src="assets/gc_theme_cdn/assets/sig-blk-fr.svg" alt="Gouvernement du Canada" property="logo">
+									<span class="wb-inv"> /
+										<span lang="en">Government of Canada</span>
+									</span></a>
+							<meta property="name" content="Gouvernement du Canada">
+							<meta property="areaServed" typeof="Country" content="Canada">
+							<link property="logo" href="assets/gc_theme_cdn/assets/sig-blk-fr.svg">
+						</div>
+						<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
+							<h2>Recherche</h2>
+							<form action="//www.canada.ca/fr/sr/srb/sra.html" method="get" name="cse-search-box" role="search">
+								<div class="form-group wb-srch-qry">
+									<label for="wb-srch-q" class="wb-inv">Rechercher dans l'Agence spatiale canadienne</label>
+									<input name="dmn" value="asc-csa.gc.ca" type="hidden">
+									<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="allq" type="search" value="" size="34" maxlength="170" placeholder="Rechercher dans l'Agence spatiale canadienne">
+									<datalist id="wb-srch-q-ac"></datalist>
+								</div>
+								<div class="form-group submit">
+									<button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub">
+										<span class="glyphicon-search glyphicon"></span>
+										<span class="wb-inv">Recherche</span></button>
+								</div>
+							</form>
+						</section>
+					</div>
+				</div>
+
+	
+	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
+		<h2 class="wb-inv">Menu</h2>
+		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
+		<ul role="menu" aria-orientation="vertical" data-ajax-replace="/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
+    '''+ gc_menu_items_fr +'''
+    </ul>
 	</div></nav>
 	
 	
 	
-		<nav id="wb-bc" property="breadcrumb"><h2 class="wb-inv">Vous êtes ici&nbsp;:</h2><div class="container"><ol class="breadcrumb">
-<li><a href="/fr.html">Accueil</a></li>
-</ol></div></nav>
+	'''+ gc_breadcrumb_fr +'''
 	<div data-ajax-replace="/bin/canada/alert/messages.fr.html" class="original wb-init wb-data-ajax-replace-inited" id="wb-auto-4"></div>
 
 </header>
 '''
 
 gc_footer_fr = '''
-<div class="global-footer">
-    <footer id="wb-info">
         <div class="landscape">
         <nav class="container wb-navcurr">
             <h2 class="wb-inv">Au sujet du gouvernement</h2>
             <ul class="list-unstyled colcount-sm-2 colcount-md-3">
-                        <li><a href="https://www.canada.ca/fr/contact.html">Contactez-nous</a></li>       
-                        <li><a href="https://www.canada.ca/fr/gouvernement/min.html">Ministères et organismes</a></li>
-                        <li><a href="https://www.canada.ca/fr/gouvernement/fonctionpublique.html">Fonction publique et force militaire</a></li>                   
-                        <li><a href="https://www.canada.ca/fr/nouvelles.html">Nouvelles</a></li>
-                        <li><a href="https://www.canada.ca/fr/gouvernement/systeme/lois.html">Traités, lois et règlements</a></li>
-                        <li><a href="https://www.canada.ca/fr/transparence/rapports.html">Rapports à l'échelle du gouvernement</a></li>
+                        <li><a href="https://canada.ca/fr/contact.html">Contactez-nous</a></li>
+                        <li><a href="https://canada.ca/fr/gouvernement/min.html">Ministères et organismes</a></li>
+                        <li><a href="https://canada.ca/fr/gouvernement/fonctionpublique.html">Fonction publique et force militaire</a></li>
+                        <li><a href="https://canada.ca/fr/nouvelles.html">Nouvelles</a></li>
+                        <li><a href="https://canada.ca/fr/gouvernement/systeme/lois.html">Traités, lois et règlements</a></li>
+                        <li><a href="https://canada.ca/fr/transparence/rapports.html">Rapports à l'échelle du gouvernement</a></li>
                         <li><a href="https://pm.gc.ca/fr">Premier ministre</a></li>
-                        <li><a href="https://www.canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li>
+                        <li><a href="https://canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li>
                         <li><a href="http://ouvert.canada.ca/">Gouvernement ouvert</a></li>
             </ul>
         </nav>
@@ -1011,23 +1200,20 @@ gc_footer_fr = '''
                     <nav class="col-md-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">À propos de ce site</h2>
                         <ul>
-                            <li><a href="https://www.canada.ca/fr/sociaux.html">Médias sociaux</a></li>
-                            <li><a href="https://www.canada.ca/fr/mobile.html">Applications mobiles</a></li>
-                            <li><a href="https://www.canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
-                            <li><a href="https://www.canada.ca/fr/transparence/avis.html">Avis</a></li>
-                            <li><a href="https://www.canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
+                                    <li><a href="https://canada.ca/fr/sociaux.html">Médias sociaux</a></li>
+                                    <li><a href="https://canada.ca/fr/mobile.html">Applications mobiles</a></li>
+                                    <li><a href="https://canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
+                                    <li><a href="https://canada.ca/fr/transparence/avis.html">Avis</a></li>
+                                    <li><a href="https://canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
                         </ul>
                     </nav>
                     <div class="col-xs-6 visible-sm visible-xs tofpg">
                         <a href="#wb-cont">Haut de la page <span class="glyphicon glyphicon-chevron-up"></span></a>
                     </div>
                     <div class="col-xs-6 col-md-2 text-right">
-                        <img src="assets/gc_theme_cdn/assets/wmms-blk.svg" alt="Symbole du gouvernement du Canada">
+                        <img src="https://canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg" alt="Symbole du gouvernement du Canada">
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
-
-</div>
 '''
