@@ -104,38 +104,48 @@ ASSET_PATH = PATH.joinpath("public").resolve()  # path to "assets" folder
 
 scripts = ASSET_PATH.joinpath("scripts.js").resolve()
 
-# external_stylesheets = ['https://wet-boew.github.io/themes-dist/GCWeb/assets/favicon.ico',
-#                         'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-#                         'https://wet-boew.github.io/themes-dist/GCWeb/css/theme.min.css',
-#                         'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css']  # Link to external CSS
+external_stylesheets = [
+    'https://canada.ca/etc/designs/canada/wet-boew/css/wet-boew.min.css',
+    'https://canada.ca/etc/designs/canada/wet-boew/css/theme.min.css',
+    'https://use.fontawesome.com/releases/v5.8.1/css/all.css'
+    # 'assets/gc_theme_cdn/assets/favicon.ico',
+    # 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    # 'assets/gc_theme_cdn/css/theme.min.css',
+    # 'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/css/noscript.min.css'
+]  # Link to external CSS
+
+external_scripts = [
+    # 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+    # 'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js',
+    # 'assets/gc_theme_cdn/js/theme.min.js',
+    # 'https://cdn.plot.ly/plotly-locale-de-latest.js',
+    '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+    'https://canada.ca/etc/designs/canada/wet-boew/js/wet-boew.min.js',
+    'https://canada.ca/etc/designs/canada/wet-boew/js/theme.min.js',
+    'assets/scripts.js'
+
+
+]
 
 # external_stylesheets = [
-#     # 'assets/gc_theme/GCWeb/assets/favicon.ico',
+#     # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
 #     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-#     # 'assets/gc_theme/GCWeb/css/theme.min.css',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
+#     'assets/custom.css'
 #     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
 #     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
 #     ]  # Link to external CSS
 
-external_stylesheets = [
-    # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
-    'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
-    'assets/custom.css'
-    # 'assets/gc_theme/wet-boew/css/noscript.min.css',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
-    ]  # Link to external CSS
-
-external_scripts = [
-    'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
-    'https://cdn.plot.ly/plotly-locale-de-latest.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
-    'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
-    'assets/scripts.js',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
-    # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
-]
+# external_scripts = [
+#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
+#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
+#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
+#     'assets/scripts.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
+#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
+# ]
 
 def get_config_dict():
     config = configparser.RawConfigParser()
@@ -611,7 +621,13 @@ def build_filtering():
                                     ),
                                     html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
                                 html.Div([
-                                    dbc.Alert(color="secondary", id="pos_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                    dbc.Alert(
+                                        color="secondary",
+                                        id="pos_alert",
+                                        is_open=False,
+                                        fade=False,
+                                        style={"margin-top":"0.5em"}
+                                    ),
                                 ]),
 
                             ],
