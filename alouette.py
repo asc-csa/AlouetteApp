@@ -166,6 +166,9 @@ if __name__ == '__main__':
     app_config = Config()
     tokens = get_config_dict()
 
+    path_data=app_config.DATA_PATH
+    prefixe=app_config.APP_PREFIX
+
     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
     app = CustomDash(
@@ -177,15 +180,19 @@ if __name__ == '__main__':
 
 else :
     prefixe="/alouette"
-    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en
+    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
     from .analytics import analytics_code
     from .config import Config
     app_config = Config()
+
+    path_data=app_config.DATA_PATH
+    prefixe=app_config.APP_PREFIX
+
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = CustomDash(
         __name__,
-        requests_pathname_prefix='/alouette/',
+        requests_pathname_prefix=prefixe,
         meta_tags=[{"name": "viewport", "content": "width=device-width"}],
         external_stylesheets=external_stylesheets,
         external_scripts=external_scripts,
@@ -211,7 +218,7 @@ else:
         )
     meta_html += generate_meta_tag('keywords', '')
     app.title="SCISAT : application d’exploration des données de composition atmosphérique"
-    # app.set_app_header(app_title_fr)
+    app.set_app_header(app_title_fr)
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
