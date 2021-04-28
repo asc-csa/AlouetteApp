@@ -63,6 +63,7 @@ class CustomDash(dash.Dash):
                 <title>
                 {title}
                 </title>
+                <style id='dash_components_css'></style>
                 {css}
                 {meta}
             </head>
