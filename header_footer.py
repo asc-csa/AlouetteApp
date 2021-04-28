@@ -22,6 +22,24 @@ app_title_en = '''
   </div>
 '''
 
+app_title_fr = '''
+  <div id="header" class="container" style="margin-bottom: 25px;">
+    <div class='flex-display justify-space-between'>
+      <div class="">
+        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
+      </div>
+      <div id="title" class="">
+        <h1 id="page-title" >Données d'ionogrammes de l'Alouette I</h1>
+      </div>
+      <div id="button-div" style="display: flex; align-items: center;" >
+        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
+          <span id="learn-more-button">En apprendre plus sur Alouette</span>
+        </a>
+      </div>
+    </div>
+  </div>
+'''
+
 gc_breadcrumb_en = '''
 <nav id="wb-bc" property="breadcrumb">
     <h2>You are here:</h2>
