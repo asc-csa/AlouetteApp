@@ -2161,12 +2161,14 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         #Set labels for frequency/depth
         if var_selection == 'fmin':
             var_label = _("Minimum Frequency")
+            var_label_2 = _("minimum frequency")
             var_unit = "MHz"
         elif var_selection == 'max_depth':
             var_label = _("Maximum depth")
+            var_label_2 = _("maximum depth")
             var_unit = "km"
 
-        columns = [{"name":_("Ground station"),"id":"station"}, {"name":_("Latitude (°)"),"id":"lat"},{"name":_("Longitude (°)"), "id":"long"}, {"name":stat_label+" - "+var_label+" ("+var_unit+")","id":stat_selection}]
+        columns = [{"name":_("Ground station"),"id":"station"}, {"name":_("Latitude (°)"),"id":"lat"},{"name":_("Longitude (°)"), "id":"long"}, {"name":stat_label+" - "+var_label_2+" ("+var_unit+")","id":stat_selection}]
         # Count mapping from aggregated data
         stat_metric_data = {}
         stat_metric_data["min"] = df_stations[stat_selection].min()
