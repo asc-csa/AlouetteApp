@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-27 13:15-0400\n"
+"POT-Creation-Date: 2021-04-29 15:06-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,318 +17,326 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.1\n"
 
-#: alouette.py:236 alouette.py:2364 controls.py:7
+#: alouette.py:253 alouette.py:2403 controls.py:7
 msgid "Resolute Bay, No. W. Territories"
 msgstr ""
 
-#: alouette.py:237 alouette.py:2365 controls.py:8
+#: alouette.py:254 alouette.py:2404 controls.py:8
 msgid "Blossom Point, Maryland"
 msgstr ""
 
-#: alouette.py:238 alouette.py:2366 controls.py:9
+#: alouette.py:255 alouette.py:2405 controls.py:9
 msgid "South Atlantic, Falkland Islands"
 msgstr ""
 
-#: alouette.py:239 alouette.py:2367 controls.py:10
+#: alouette.py:256 alouette.py:2406 controls.py:10
 msgid "St. John's, Newfoundland"
 msgstr ""
 
-#: alouette.py:240 alouette.py:2368 controls.py:11
+#: alouette.py:257 alouette.py:2407 controls.py:11
 msgid "Orroral Valley, Australia"
 msgstr ""
 
-#: alouette.py:241 alouette.py:2369 controls.py:12
+#: alouette.py:258 alouette.py:2408 controls.py:12
 msgid "Prince Albert, Canada"
 msgstr ""
 
-#: alouette.py:242 alouette.py:2370 controls.py:13
+#: alouette.py:259 alouette.py:2409 controls.py:13
 msgid "Ottawa, Canada"
 msgstr ""
 
-#: alouette.py:243 alouette.py:2371 controls.py:14
+#: alouette.py:260 alouette.py:2410 controls.py:14
 msgid "Byrd Station, Antartica"
 msgstr ""
 
-#: alouette.py:244 alouette.py:2372 controls.py:15
+#: alouette.py:261 alouette.py:2411 controls.py:15
 msgid "Las Palmas, Canary Island"
 msgstr ""
 
-#: alouette.py:245 alouette.py:2373 controls.py:16
+#: alouette.py:262 alouette.py:2412 controls.py:16
 msgid "Winkfield, England"
 msgstr ""
 
-#: alouette.py:246 alouette.py:2374 controls.py:17
+#: alouette.py:263 alouette.py:2413 controls.py:17
 msgid "Fort Myers, Florida"
 msgstr ""
 
-#: alouette.py:247 alouette.py:2375 controls.py:18
+#: alouette.py:264 alouette.py:2414 controls.py:18
 msgid "Antofagasta, Chile"
 msgstr ""
 
-#: alouette.py:248 alouette.py:2376 controls.py:19
+#: alouette.py:265 alouette.py:2415 controls.py:19
 msgid "East Grand Forks, Minnesota"
 msgstr ""
 
-#: alouette.py:249 alouette.py:2377 controls.py:20
+#: alouette.py:266 alouette.py:2416 controls.py:20
 msgid "Rosman, No. Carolina"
 msgstr ""
 
-#: alouette.py:250 alouette.py:2378 controls.py:21
+#: alouette.py:267 alouette.py:2417 controls.py:21
 msgid "College, Fairbanks, Alaska"
 msgstr ""
 
-#: alouette.py:251 alouette.py:2379 controls.py:22
+#: alouette.py:268 alouette.py:2418 controls.py:22
 msgid "Woomera, Australia"
 msgstr ""
 
-#: alouette.py:252 alouette.py:2380 controls.py:23
+#: alouette.py:269 alouette.py:2419 controls.py:23
 msgid "Gilmore Creek, Fairbanks, Alaska"
 msgstr ""
 
-#: alouette.py:253 alouette.py:2381 controls.py:24
+#: alouette.py:270 alouette.py:2420 controls.py:24
 msgid "Tromso, Norway"
 msgstr ""
 
-#: alouette.py:254 alouette.py:2382 controls.py:25
+#: alouette.py:271 alouette.py:2421 controls.py:25
 msgid "University of Alaska, Fairbanks, Alaska"
 msgstr ""
 
-#: alouette.py:255 alouette.py:2383 controls.py:26
+#: alouette.py:272 alouette.py:2422 controls.py:26
 msgid "Darwin, Australia"
 msgstr ""
 
-#: alouette.py:256 alouette.py:2384 controls.py:27
+#: alouette.py:273 alouette.py:2423 controls.py:27
 msgid "Quito, Ecuador"
 msgstr ""
 
-#: alouette.py:257 alouette.py:2385 controls.py:28
+#: alouette.py:274 alouette.py:2424 controls.py:28
 msgid "South Point, Hawaiian Islands"
 msgstr ""
 
-#: alouette.py:258 alouette.py:2386 controls.py:29
+#: alouette.py:275 alouette.py:2425 controls.py:29
 msgid "Lima, Peru"
 msgstr ""
 
-#: alouette.py:259 alouette.py:2387 controls.py:30
+#: alouette.py:276 alouette.py:2426 controls.py:30
 msgid "Johannesburg, South Africa"
 msgstr ""
 
-#: alouette.py:260 alouette.py:2388 controls.py:31
+#: alouette.py:277 alouette.py:2427 controls.py:31
 msgid "Kano, Nigeria"
 msgstr ""
 
-#: alouette.py:261 alouette.py:2389 controls.py:32
+#: alouette.py:278 alouette.py:2428 controls.py:32
 msgid "Tananarive, Madagascar"
 msgstr ""
 
-#: alouette.py:262 alouette.py:2390 controls.py:33
+#: alouette.py:279 alouette.py:2429 controls.py:33
 msgid "Bretigny, France"
 msgstr ""
 
-#: alouette.py:263 alouette.py:2391 controls.py:34
+#: alouette.py:280 alouette.py:2430 controls.py:34
 msgid "Singapore, Malaysia"
 msgstr ""
 
-#: alouette.py:264 alouette.py:2392 controls.py:35
+#: alouette.py:281 alouette.py:2431 controls.py:35
 msgid "Boulder, Colorado"
 msgstr ""
 
-#: alouette.py:265 alouette.py:2393 controls.py:36
+#: alouette.py:282 alouette.py:2432 controls.py:36
 msgid "Mojave, California"
 msgstr ""
 
-#: alouette.py:266 alouette.py:2394 controls.py:37
+#: alouette.py:283 alouette.py:2433 controls.py:37
 msgid "Kauai, Hawaii"
 msgstr ""
 
-#: alouette.py:267 alouette.py:2395 controls.py:38
+#: alouette.py:284 alouette.py:2434 controls.py:38
 msgid "Kashima, Japan"
 msgstr ""
 
-#: alouette.py:275 alouette.py:1610 alouette.py:1901 alouette.py:2021
-#: alouette.py:2398 controls.py:46
+#: alouette.py:292 alouette.py:1643 alouette.py:1934 alouette.py:2054
+#: alouette.py:2437 controls.py:46
 msgid "Date"
 msgstr ""
 
-#: alouette.py:276 alouette.py:1817 alouette.py:2017 alouette.py:2399
+#: alouette.py:293 alouette.py:1850 alouette.py:2050 alouette.py:2438
 #: controls.py:47
 msgid "Latitude"
 msgstr ""
 
-#: alouette.py:277 alouette.py:1817 alouette.py:2019 alouette.py:2399
+#: alouette.py:294 alouette.py:1850 alouette.py:2052 alouette.py:2438
 #: controls.py:48
 msgid "Longitude"
 msgstr ""
 
-#: alouette.py:280 alouette.py:2402 alouette.py:2406
+#: alouette.py:297 alouette.py:2441 alouette.py:2445
 msgid "Minimum frequency"
 msgstr ""
 
-#: alouette.py:281 alouette.py:2166 alouette.py:2403 alouette.py:2407
+#: alouette.py:298 alouette.py:2200 alouette.py:2442 alouette.py:2446
 msgid "Maximum depth"
 msgstr ""
 
-#: alouette.py:604
+#: alouette.py:620
 msgid "Sélectionner | Select"
 msgstr ""
 
-#: alouette.py:769
+#: alouette.py:794
 msgid "Goto page "
 msgstr ""
 
-#: alouette.py:777 alouette.py:787
+#: alouette.py:802 alouette.py:812
 msgid "Current Page"
 msgstr ""
 
-#: alouette.py:808 alouette.py:832
+#: alouette.py:833 alouette.py:857
 msgid "Previous"
 msgstr ""
 
-#: alouette.py:809
+#: alouette.py:834
 msgid "Next"
 msgstr ""
 
-#: alouette.py:810 alouette.py:835
+#: alouette.py:835 alouette.py:860
 msgid "Goto Previous Page"
 msgstr ""
 
-#: alouette.py:811 alouette.py:873
+#: alouette.py:836 alouette.py:898
 msgid "Goto Next Page"
 msgstr ""
 
-#: alouette.py:812 alouette.py:881
+#: alouette.py:837 alouette.py:906
 msgid "Pagination Navigation"
 msgstr ""
 
-#: alouette.py:844
+#: alouette.py:869
 msgid "Goto page 1, Current Page"
 msgstr ""
 
-#: alouette.py:844
+#: alouette.py:869
 msgid "true"
 msgstr ""
 
-#: alouette.py:853
+#: alouette.py:878
 msgid "Goto page 2"
 msgstr ""
 
-#: alouette.py:863
+#: alouette.py:888
 msgid "Goto page 3"
 msgstr ""
 
-#: alouette.py:882
+#: alouette.py:907
 msgid "navigation"
 msgstr ""
 
-#: alouette.py:1585 alouette.py:1593
+#: alouette.py:1618 alouette.py:1626
 msgid "All Ionograms"
 msgstr ""
 
-#: alouette.py:1598
+#: alouette.py:1631
 msgid "Ionograms per month"
 msgstr ""
 
-#: alouette.py:1600
+#: alouette.py:1633
 msgid "Number of Ionograms"
 msgstr ""
 
-#: alouette.py:1610
+#: alouette.py:1643
 msgid "Count"
 msgstr ""
 
-#: alouette.py:1753
+#: alouette.py:1786
 msgid "<br>No. of Ionograms: "
 msgstr ""
 
-#: alouette.py:1755 alouette.py:2221
+#: alouette.py:1788 alouette.py:2256
 msgid "<br>Latitude: "
 msgstr ""
 
-#: alouette.py:1756 alouette.py:2222
+#: alouette.py:1789 alouette.py:2257
 msgid "<br>Longitude: "
 msgstr ""
 
-#: alouette.py:1817 alouette.py:2169
+#: alouette.py:1850 alouette.py:2204
 msgid "Ground station"
 msgstr ""
 
-#: alouette.py:1817
+#: alouette.py:1850
 msgid "Ionograms count"
 msgstr ""
 
-#: alouette.py:1929 alouette.py:2169
+#: alouette.py:1962 alouette.py:2204
 msgid "Latitude (°)"
 msgstr ""
 
-#: alouette.py:1933 alouette.py:2169
+#: alouette.py:1966 alouette.py:2204
 msgid "Longitude (°)"
 msgstr ""
 
-#: alouette.py:1974
+#: alouette.py:2007
 msgid "95% Confidence Interval"
 msgstr ""
 
-#: alouette.py:1989
+#: alouette.py:2022
 msgid "Estimated Mean"
 msgstr ""
 
-#: alouette.py:2025
+#: alouette.py:2058
 msgid "Maximum depth [km]"
 msgstr ""
 
-#: alouette.py:2026
+#: alouette.py:2059
 msgid "Min. confidence interval of max. depth (km)"
 msgstr ""
 
-#: alouette.py:2027
+#: alouette.py:2060
 msgid "Mean maximum depth (km)"
 msgstr ""
 
-#: alouette.py:2028
+#: alouette.py:2061
 msgid "Max. confidence interval of max. depth (km)"
 msgstr ""
 
-#: alouette.py:2030
+#: alouette.py:2063
 msgid "Minimum frequency [MHz]"
 msgstr ""
 
-#: alouette.py:2031
+#: alouette.py:2064
 msgid "Min. confidence interval of min. frequency (MHz)"
 msgstr ""
 
-#: alouette.py:2032
+#: alouette.py:2065
 msgid "Mean minimum frequency (MHz)"
 msgstr ""
 
-#: alouette.py:2033
+#: alouette.py:2066
 msgid "Max. confidence interval of min. frequency (MHz)"
 msgstr ""
 
-#: alouette.py:2043
+#: alouette.py:2076
 msgid "Data visualization (95 percent confidence interval)"
 msgstr ""
 
-#: alouette.py:2156 alouette.py:2411
+#: alouette.py:2189 alouette.py:2450
 msgid "Mean"
 msgstr ""
 
-#: alouette.py:2159 alouette.py:2412
+#: alouette.py:2192 alouette.py:2451
 msgid "Median"
 msgstr ""
 
-#: alouette.py:2163 controls.py:51
+#: alouette.py:2196 controls.py:51
 msgid "Minimum Frequency"
 msgstr ""
 
-#: alouette.py:2333
+#: alouette.py:2197
+msgid "minimum frequency"
+msgstr ""
+
+#: alouette.py:2201
+msgid "maximum depth"
+msgstr ""
+
+#: alouette.py:2370
 msgid "Ionograms selected"
 msgstr ""
 
-#: alouette.py:2333
+#: alouette.py:2370
 msgid "Total number of ionograms"
 msgstr ""
 
-#: alouette.py:2334
+#: alouette.py:2371
 msgid ""
 "Launched in 1962, Alouette I sent radio waves of different frequencies "
 "into the topmost layer of the atmosphere, known as the ionosphere, and "
@@ -343,7 +351,7 @@ msgid ""
 "analysis on a larger scale."
 msgstr ""
 
-#: alouette.py:2335
+#: alouette.py:2372
 msgid ""
 "This application provides users the ability to select, download and "
 "visualize Alouette I's data. Please note that the metadata and parameters"
@@ -353,7 +361,7 @@ msgid ""
 "and should not be directly used in a scientific context."
 msgstr ""
 
-#: alouette.py:2336
+#: alouette.py:2373
 msgid ""
 "Visit our GitHub page to learn more about the [code used to make this "
 "application](https://github.com/asc-csa/AlouetteApp) and the [code used "
@@ -363,11 +371,11 @@ msgid ""
 "csa.gc.ca/en/dataset/221c1c75-4c42-4286-a4ce-ca6c3027b7fe)"
 msgstr ""
 
-#: alouette.py:2337
+#: alouette.py:2374
 msgid "Select data"
 msgstr ""
 
-#: alouette.py:2338
+#: alouette.py:2375
 msgid ""
 "Invalid values provided. Latitude values must be between -90 and 90. "
 "Longitude values must be between -180 and 180. Minimum values must be "
@@ -375,103 +383,103 @@ msgid ""
 "multiples of 5."
 msgstr ""
 
-#: alouette.py:2339
+#: alouette.py:2376
 msgid ""
 "Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962)"
 " and 31/12/1972 (Dec. 31st 1972)."
 msgstr ""
 
-#: alouette.py:2340
+#: alouette.py:2377
 msgid "Selection of the ground stations"
 msgstr ""
 
-#: alouette.py:2341
+#: alouette.py:2378
 msgid "Selection of the range of latitude "
 msgstr ""
 
-#: alouette.py:2342
+#: alouette.py:2379
 msgid "Selection of the range of longitude"
 msgstr ""
 
-#: alouette.py:2343
+#: alouette.py:2380
 msgid "Date selection"
 msgstr ""
 
-#: alouette.py:2344
+#: alouette.py:2381
 msgid "Download the selected dataset"
 msgstr ""
 
-#: alouette.py:2345
+#: alouette.py:2382
 msgid "Filter by ground station latitude:"
 msgstr ""
 
-#: alouette.py:2346
+#: alouette.py:2383
 msgid "Minimum latitude"
 msgstr ""
 
-#: alouette.py:2347
+#: alouette.py:2384
 msgid "Maximum latitude"
 msgstr ""
 
-#: alouette.py:2348
+#: alouette.py:2385
 msgid "Filter by ground station longitude:"
 msgstr ""
 
-#: alouette.py:2349
+#: alouette.py:2386
 msgid "Minimum longitude"
 msgstr ""
 
-#: alouette.py:2350
+#: alouette.py:2387
 msgid "Maximum longitude"
 msgstr ""
 
-#: alouette.py:2351
+#: alouette.py:2388
 msgid ""
 "Map of the world showing ground stations. Each station is represented by "
 "a circle, the size of which depends on the number of ionograms at each "
 "station."
 msgstr ""
 
-#: alouette.py:2352
+#: alouette.py:2389
 msgid "Filter by date:"
 msgstr ""
 
-#: alouette.py:2353
+#: alouette.py:2390
 msgid "Select ground stations:"
 msgstr ""
 
-#: alouette.py:2354
+#: alouette.py:2391
 msgid "Download summary data as CSV"
 msgstr ""
 
-#: alouette.py:2355
+#: alouette.py:2392
 msgid "Download selected ionogram images"
 msgstr ""
 
-#: alouette.py:2356
+#: alouette.py:2393
 msgid ""
 "Graph showing the number of ionograms captured during each month. The "
 "X-axis indicates the date and the Y-axis indicates the number of "
 "ionograms."
 msgstr ""
 
-#: alouette.py:2357
+#: alouette.py:2394
 msgid "The ionogram images download is currently limited to "
 msgstr ""
 
-#: alouette.py:2357
+#: alouette.py:2394
 msgid " images at a time."
 msgstr ""
 
-#: alouette.py:2358
+#: alouette.py:2395
 msgid "Select x-axis:"
 msgstr ""
 
-#: alouette.py:2359
+#: alouette.py:2396
 msgid "Select y-axis:"
 msgstr ""
 
-#: alouette.py:2360
+#: alouette.py:2397
 msgid ""
 "Map showing either minimum frequency or maximum depth values at each "
 "ground station. Each station is represented by a circle, the size of "
@@ -480,34 +488,42 @@ msgid ""
 "down menu on the right."
 msgstr ""
 
-#: alouette.py:2361
+#: alouette.py:2398
 msgid "Select statistic:"
 msgstr ""
 
-#: alouette.py:2362
+#: alouette.py:2399
 msgid "Select plotted value:"
 msgstr ""
 
-#: alouette.py:2409
+#: alouette.py:2400
+msgid "Select start date"
+msgstr ""
+
+#: alouette.py:2401
+msgid "Select end date"
+msgstr ""
+
+#: alouette.py:2448
 msgid ""
 "Graph showing either the mean minimum frequency or mean maximum depth "
 "values as a function of either date, longitude, or latitude. Explore the "
 "data by selecting different variables in the drop-down menu on the right."
 msgstr ""
 
-#: alouette.py:2414
+#: alouette.py:2453
 msgid "Text version - Monthly ionograms count"
 msgstr ""
 
-#: alouette.py:2415
+#: alouette.py:2454
 msgid "Text version - Geographical ionograms count"
 msgstr ""
 
-#: alouette.py:2416
+#: alouette.py:2455
 msgid "Text version - Data visualization (95 percent confidence interval)"
 msgstr ""
 
-#: alouette.py:2417
+#: alouette.py:2456
 msgid "Text version - Geographical visualization"
 msgstr ""
 
