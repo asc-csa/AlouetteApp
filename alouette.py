@@ -463,6 +463,19 @@ def build_filtering():
             [
                 html.Div(
                     [
+                        html.Section(
+                            [
+                                html.H2(
+                                    id='error_header'
+                                ),
+                                html.Ul(
+                                    id='form_errors'
+                                )
+                            ],
+                            id='filter_errors',
+                            hidden=True,
+                            className='alert alert-danger'
+                        ),
                         html.Div(
                             [
                             html.Div(
@@ -485,6 +498,13 @@ def build_filtering():
                                             htmlFor = "lat_min",
                                             hidden = True
                                         ),
+                                        html.Div([
+                                            html.Div(
+                                                id="lat_alert",
+                                                hidden=True,
+                                                className='label label-danger'
+                                            ),
+                                        ]),
                                         dcc.Input(
                                             id="lat_min",
                                             type='number',
@@ -521,20 +541,19 @@ def build_filtering():
                                         id="longitude-text",
                                         className="control_label",
                                     ),
-                                    # dcc.RangeSlider(
-                                    #     id="lon_slider",
-                                    #     min=-180.0,
-                                    #     max=180.0,
-                                    #     value=[-180.0, 180.0],
-                                    #     className="dcc_control",
-                                    #     marks=lon_dict,
-                                    # ),
                                     html.Div([
                                         html.Label(
                                             id = "lon_min-text",
                                             htmlFor = "lon_min",
                                             hidden = True
                                         ),
+                                        html.Div([
+                                            html.Div(
+                                                id="lon_alert",
+                                                hidden=True,
+                                                className='label label-danger'
+                                            ),
+                                        ]),
                                         dcc.Input(
                                             id="lon_min",
                                             type='number',
@@ -570,7 +589,7 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    dbc.Alert(color="secondary", id="date_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                    html.Div( id="date_alert", className='label label-danger' ),
                                 ]),
                                 html.P(
                                     id="yearslider-text",
@@ -628,15 +647,6 @@ def build_filtering():
                                         **{'aria-label': 'Select plotted value'}
                                     ),
                                     html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
-                                html.Div([
-                                    dbc.Alert(
-                                        color="secondary",
-                                        id="pos_alert",
-                                        is_open=False,
-                                        fade=False,
-                                        style={"margin-top":"0.5em"}
-                                    ),
-                                ]),
 
                             ],
                             id="map-options",
@@ -1088,16 +1098,82 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
         return [] # if we have not selected any stations, keep the selection box empty
 
 @app.callback(
-    Output("pos_alert", "is_open"),
-    [   Input("lat_min", "value"),
+    Output("lat_alert", "hidden"),[
+        Input("lat_min", "value"),
         Input("lat_max", "value"),
+    ]
+)
+
+def form_lat_validation(lat_min,lat_max):
+    return lat_validation(lat_min,lat_max)
+
+def lat_validation(lat_min,lat_max):
+    try:
+        s = ((lat_min < lat_max) and (lat_min >= -90) and (lat_max <= 90))
+    except TypeError:
+        s = False
+    return s
+
+@app.callback(
+    Output("lon_alert", "hidden"),[
         Input("lon_min", "value"),
         Input("lon_max", "value"),
+    ]
+)
+def form_lon_validation(lon_min,lon_max):
+    return lon_validation(lon_min,lon_max)
+
+def lon_validation(lon_min,lon_max):
+    try:
+        s = ((lon_min < lon_max) and (lon_min >= -180) and (lon_max <= 180))
+    except TypeError:
+        s = False
+    return s
+
+@app.callback(
+    [
+        Output("filter_errors", "hidden"),
+        Output("form_errors", 'children'),
+        Output("error_header", 'children')
     ],
     [
-        State("pos_alert", "is_open")
+        Input('lat_min','value'),
+        Input('lat_max','value'),
+        Input('lon_min','value'),
+        Input('lon_max','value'),
+        Input("date_picker_range", "start_date"),
+        Input("date_picker_range", "end_date")
     ],
 )
+def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
+    s = False
+    errors = []
+    if not lon_validation(lon_min, lon_max) or not lat_validation(lat_min, lat_max):
+        if not lat_validation(lat_min, lat_max):
+            errors.append(html.Li(_("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5.")))
+        if not lon_validation(lon_min, lon_max):
+            errors.append(html.Li(_("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5.")))
+        if not date_validation(start_date,end_date):
+            errors.append(html.Li(_("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972).")))
+    else:
+        s = True
+    return [
+        s,
+        errors,
+        _('The form could not be submitted because errors were found.')
+    ]
+
+# @app.callback(
+#     Output("pos_alert", "is_open"),
+#     [   Input("lat_min", "value"),
+#         Input("lat_max", "value"),
+#         Input("lon_min", "value"),
+#         Input("lon_max", "value"),
+#     ],
+#     [
+#         State("pos_alert", "is_open")
+#     ],
+# )
 def pos_validation(lat_min,lat_max,lon_min,lon_max, is_open):
     try:
         s = not ((lat_min < lat_max) and (lat_min >= -90) and (lat_max <= 90) and (lon_min < lon_max) and (lon_min >= -180) and (lon_max <= 180))
@@ -1106,15 +1182,15 @@ def pos_validation(lat_min,lat_max,lon_min,lon_max, is_open):
     return s
 
 @app.callback(
-    Output("date_alert", "is_open"),
+    Output("date_alert", "hidden"),
     [   Input("date_picker_range", "start_date"),
         Input("date_picker_range", "end_date")
-    ],
-    [
-        State("date_alert", "is_open")
-    ],
+    ]
 )
-def date_validation(start_date, end_date, is_open):
+def form_date_validation(start_date, end_date):
+    return date_validation(start_date, end_date)
+
+def date_validation(start_date, end_date):
     try:
         start = dt.datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%S')
         end = dt.datetime.strptime(end_date, '%Y-%m-%dT%H:%M:%S')
@@ -1123,7 +1199,7 @@ def date_validation(start_date, end_date, is_open):
         end = dt.datetime.strptime(end_date, '%Y-%m-%d')
     MIN_DATE=dt.datetime(1962, 9, 29)
     MAX_DATE=dt.datetime(1972, 12, 31)
-    return not ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
+    return ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
 
 # Selectors -> Image download link
 @app.callback(
@@ -2055,7 +2131,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("description-2", "children"),
         Output("github-link", "children"),
         Output("select-data", "children"),
-        Output("pos_alert", "children"),
+        Output("lat_alert", "children"),
+        Output("lon_alert", "children"),
         Output("date_alert", "children"),
         Output("ground_station_selection", "children"),
         Output("lat_selection", "children"),
@@ -2099,7 +2176,8 @@ def translate_static(x):
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Visit our GitHub page to learn more about the [code used to make this application](https://github.com/asc-csa/AlouetteApp) and the [code used to extract metadata and parameters from the ionogram images](https://github.com/asc-csa/Alouette_extract). The dataset can also be accessed in [CSA's Open Government Portal](https://data.asc-csa.gc.ca/en/dataset/221c1c75-4c42-4286-a4ce-ca6c3027b7fe)"),
                 _("Select data"),
-                _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
                 _("Selection of the ground stations"),
                 _("Selection of the range of latitude "),

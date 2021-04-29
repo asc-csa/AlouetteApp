@@ -754,3 +754,20 @@ margin: 15px 10px 0px;
 .Select--multi .Select-value-label {
   max-width: calc( 100% - 20px );
 }
+
+/* Alerts */
+.dash-alert-danger::before {
+  color: #d3080c;
+  content: "";
+}
+
+.label.label-danger{
+  white-space: normal;
+  text-align: left;
+  display: block;
+  font-size: 16px;
+}
+
+[hidden]{
+  display: none !important;
+}
