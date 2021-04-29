@@ -14,6 +14,8 @@ from scipy.stats import sem, t
 from scipy import mean
 from dateutil.relativedelta import relativedelta
 from dash.dependencies import Input, Output, State
+import dash_table as dst
+from dash_table.Format import Format, Scheme
 import locale
 import urllib.parse
 
@@ -222,7 +224,7 @@ else:
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
-app.set_lang(app_config.DEFAULT_LANGUAGE)   
+app.set_lang(app_config.DEFAULT_LANGUAGE)
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
 server = app.server
 server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
@@ -676,7 +678,8 @@ def build_filtering():
                                             "displaylogo": False,
                                             "displayModeBar" : False
                                         },
-                                    )],
+                                    ),
+                                    detail_table("geo_table","geo_table_text")],
                                 ),
                             html.P(id="Map_description-1"),
                             ],
@@ -696,7 +699,8 @@ def build_filtering():
                                                 "displaylogo": False,
                                                 "displayModeBar": False
                                             }
-                                        )
+                                        ),
+                                        detail_table("count_table","count_table_text")
                                     ],
                                     id="countGraphContainer",
                                 ),
@@ -716,6 +720,197 @@ def build_filtering():
 
     ])
 
+def detail_table(id, id2):
+    #next button pagnation, for some reason the pages are 0 indexed but the dispalyed page isn't
+    @app.callback(
+        [
+            Output( id, 'page_current'),
+            Output( id+'-btn-1-a', 'data-value'),
+            Output( id+'-btn-2-a', 'data-value'),
+            Output( id+'-btn-3-a', 'data-value'),
+            Output( id+'-btn-1-a', "children"),
+            Output( id+'-btn-2-a', "children"),
+            Output( id+'-btn-3-a', "children"),
+            Output( id+'-btn-1-a', "aria-label"),
+            Output( id+'-btn-2-a', "aria-label"),
+            Output( id+'-btn-3-a', "aria-label"),
+            Output( id+'-btn-1-a', "aria-current"),
+            Output( id+'-btn-2-a', "aria-current"),
+            Output( id+'-btn-3-a', "aria-current"),
+            Output( id+'-btn-1', "className"),
+            Output( id+'-btn-2', "className"),
+            Output( id+'-btn-prev-a', 'children'),
+            Output( id+'-btn-next-a', 'children'),
+            Output( id+'-btn-prev-a', "aria-label"),
+            Output( id+'-btn-next-a', "aria-label"),
+            Output( id+'-navigation', "aria-label"),
+        ],
+        [
+            Input( id+'-btn-prev', 'n_clicks'),
+            Input( id+'-btn-1', 'n_clicks'),
+            Input( id+'-btn-2', 'n_clicks'),
+            Input( id+'-btn-3', 'n_clicks'),
+            Input( id+'-btn-next', 'n_clicks')
+        ],
+        [
+            State( id, 'page_current'),
+            State( id+'-btn-1-a', 'data-value'),
+            State( id+'-btn-2-a', 'data-value'),
+            State( id+'-btn-3-a', 'data-value'),
+        ]
+    )
+    def update_table_next(btn_prev, btn_1, btn_2, btn_3, btn_next, curr_page, btn1_value, btn2_value, btn3_value):
+        session['language'] = app_config.DEFAULT_LANGUAGE
+        ctx = dash.callback_context
+        btn1_current = 'false'
+        btn2_current = 'false'
+        btn3_current = 'false'
+
+        btn1_class = ''
+        btn2_class = ''
+
+        btn1_aria = ''
+        btn2_aria = ''
+        btn3_aria = ''
+
+        if ctx.triggered:
+            start_page = curr_page
+            # curr_page = curr_page + 1
+            print(ctx.triggered)
+            if ctx.triggered[0]['prop_id'] == id+'-btn-next.n_clicks':
+                curr_page += 1
+            if ctx.triggered[0]['prop_id'] == id+'-btn-1.n_clicks':
+                curr_page = btn1_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-2.n_clicks':
+                curr_page = btn2_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-3.n_clicks':
+                curr_page = btn3_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-prev.n_clicks':
+                curr_page -= 1
+
+            if curr_page < 0:
+                curr_page = 0
+
+        aria_prefix = _('Goto page ')
+
+        if curr_page < 1:
+            btn1_value = curr_page
+            btn2_value = curr_page+1
+            btn3_value = curr_page+2
+            btn1_current = 'true'
+            btn1_class = 'active'
+            btn1_aria = aria_prefix + str(btn1_value+1) + ', ' + _('Current Page')
+            btn2_aria = aria_prefix + str(btn2_value+1)
+            btn3_aria = aria_prefix + str(btn3_value+1)
+        else:
+            btn1_value = curr_page -1
+            btn2_value = curr_page
+            btn3_value = curr_page + 1
+            btn2_current = 'true'
+            btn2_class = 'active'
+            btn1_aria = aria_prefix + str(btn1_value+1)
+            btn2_aria = aria_prefix + str(btn2_value+1) + ', ' + _('Current Page')
+            btn3_aria = aria_prefix + str(btn3_value+1)
+
+        # print('curr_page: '+ str(curr_page))
+
+        return [
+            curr_page,
+            btn1_value,
+            btn2_value,
+            btn3_value,
+            btn1_value+1,
+            btn2_value+1,
+            btn3_value+1,
+            btn1_aria,
+            btn2_aria,
+            btn3_aria,
+            btn1_current,
+            btn2_current,
+            btn3_current,
+            btn1_class,
+            btn2_class,
+            _('Previous'),
+            _('Next'),
+            _('Goto Previous Page'),
+            _('Goto Next Page'),
+            _('Pagination Navigation')
+        ]
+
+    return html.Div([
+        html.Details(
+            [
+                html.Summary(id=id2),
+                html.Div(
+                    dst.DataTable(
+                        id=id,
+                        page_size= 10,
+                        page_current = 0
+                    ),
+                    style={"margin":"4rem"}
+                ),
+                html.Nav(
+                    html.Ul(
+                        [
+                            html.Li(
+                                html.A(
+                                    _('Previous'),
+                                    id=id+'-btn-prev-a',
+                                    className='page-prev',
+                                    **{'aria-label': _('Goto Previous Page'), 'data-value': -1}
+                                ),
+                                id=id+'-btn-prev',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '1',
+                                    id=id+'-btn-1-a',
+                                    **{'aria-label': _("Goto page 1, Current Page"), 'aria-current': _('true'), 'data-value': 0}
+                                ),
+                                id=id+'-btn-1',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '2',
+                                    id=id+'-btn-2-a',
+                                    **{'aria-label': _('Goto page 2'), 'data-value': 1}
+                                ),
+                                className='active',
+                                id=id+'-btn-2',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '3',
+                                    id=id+'-btn-3-a',
+                                    **{'aria-label': _('Goto page 3'), 'data-value': 2}
+                                ),
+                                id=id+'-btn-3',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    'Next',
+                                    id=id+'-btn-next-a',
+                                    className='page-next',
+                                    **{'aria-label': _('Goto Next Page'), 'data-value': -2}
+                                ),
+                                id=id+'-btn-next',
+                                n_clicks=0
+                            )
+                        ],
+                        className = 'pagination'
+                    ),
+                    **{'aria-label': _('Pagination Navigation')},
+                    role = _('navigation'),
+                    className = 'table_pagination',
+                    id = id+'-navigation'
+                )
+            ]
+        )
+    ])
 
 # Builds the layout for the map displaying statistics as well as the confidence interval graph
 def build_stats():
@@ -786,7 +981,8 @@ def build_stats():
                                            "displaylogo": False,
                                            "displayModeBar": False
                                        }
-                                       )],
+                                       ),
+                             detail_table("viz_table","viz_table_text")],
                             id="vizChartContainer",
                             #className="pretty_container",
                         ),
@@ -867,7 +1063,8 @@ def build_stats():
                                            "displaylogo": False,
                                            "displayModeBar": False
                                        }
-                                       )],
+                                       ),
+                             detail_table("viz_map_table","viz_map_table_text")],
                             id="vizGraphContainer",
                         ),
                     ],
@@ -1305,7 +1502,7 @@ def download_csv():
     dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations)
 
     if language == 'fr':
-        dff.columns = [ 
+        dff.columns = [
             'ID',
             'Nom du fichier',
             'Fréquence minimale',
@@ -1320,7 +1517,7 @@ def download_csv():
             'Longitude'
         ]
     else:
-        dff.columns = [ 
+        dff.columns = [
             'ID',
             'File name',
             'Minimum frequency',
@@ -1351,7 +1548,11 @@ def download_csv():
 
 # Selectors -> count graph
 @app.callback(
-    Output("count_graph", "figure"),
+    [
+        Output("count_graph", "figure"),
+        Output("count_table", "columns"),
+        Output("count_table", "data")
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1407,6 +1608,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     g.index = g["timestamp"]
     g = g.resample("M").count()
 
+
     data = [
         dict(
             type="scatter",
@@ -1436,13 +1638,21 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     figure = dict(data=data, layout=layout_count)
 
+    g["timestamp"]=g.index.strftime("%Y-%m-%d")
+    table_data = g.to_dict('records')
+    columns = [{"name":_("Date"), "id":"timestamp"},{"name":_("Count"),"id":"file_name"}]
+
     print(f'make_count_figure: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return figure
+    return [figure, columns, table_data]
 
 
 @app.callback(
-    Output("selector_map", "figure"),
+    [
+        Output("selector_map", "figure"),
+        Output("geo_table", "columns"),
+        Output("geo_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1496,8 +1706,14 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     traces = []
-
+    table_data = []
     for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+        template = {"station":"","lat":"","long":"","count":""}
+        template["station"] = station_details[0]
+        template["lat"] = station_details[1]
+        template["long"] = station_details[2]
+        template["count"] = len(dfff)
+        table_data.append(template)
         trace = dict(
             station_name=station_details[0],
             lat=station_details[1],
@@ -1631,12 +1847,19 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
 
     print(f'generate_geo_map: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return {"data": stations, "layout": layout}
+    columns = [{"name":_("Ground station"), "id":"station"},{"name":_("Latitude"),"id":"lat"},{"name":_("Longitude"),"id":"long"},{"name":_("Ionograms count"),"id":"count"}]
+
+
+    return [{"data": stations, "layout": layout}, columns, table_data]
 
 
 # Selectors -> viz chart (95% CI)
 @app.callback(
-    Output("viz_chart", "figure"),
+    [
+        Output("viz_chart", "figure"),
+        Output("viz_table", "columns"),
+        Output("viz_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1704,11 +1927,11 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ci_upper_limits = []
     ci_lower_limits = []
     bins = []
-
+    title=""
     # bucketing the data
     if x_axis_selection == 'timestamp':
         dff.index = dff["timestamp"]
-
+        title=_("Date")
         index_month = dt.date(int(dff.index.min().year), int(dff.index.min().month), 1)
         end_month = dt.date(int(dff.index.max().year), int(dff.index.max().month), 1)
 
@@ -1730,15 +1953,17 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 estimated_means.append(bin_mean)
                 ci_upper_limits.append(bin_mean + error_range)
                 ci_lower_limits.append(bin_mean - error_range if bin_mean - error_range >= 0 else 0)
-                bins.append(index_month)
+            bins.append(index_month)
 
             index_month += relativedelta(months=1)
 
     elif x_axis_selection == 'lat' or x_axis_selection == 'lon':
         if x_axis_selection == 'lat':
+            title=_("Latitude (°)")
             step = 5
             index_range = range(-90,90,step)
         if x_axis_selection == 'lon':
+            title=_("Longitude (°)")
             step = 5
             index_range = range(-180, 180, step)
 
@@ -1761,7 +1986,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 estimated_means.append(bin_mean)
                 ci_upper_limits.append(bin_mean + error_range)
                 ci_lower_limits.append(bin_mean - error_range if bin_mean - error_range >= 0 else 0)
-                bins.append(i)
+            bins.append(i)
 
     data = [
         dict(
@@ -1801,6 +2026,25 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             showlegend=True,
         ),
     ]
+
+    table_data = []
+    for i in range(0,len(bins)):
+        template = {"bin":"","lw_conf":"","mean":"","up_conf":""}
+        template["bin"] = bins[i]
+        if ci_lower_limits[i]!=None:
+            template["lw_conf"] = "%.3f" % ci_lower_limits[i]
+        else:
+            template["lw_conf"] = ci_lower_limits[i]
+        if ci_upper_limits[i]!=None:
+            template["up_conf"] = "%.3f" % ci_upper_limits[i]
+        else:
+            template["up_conf"] = ci_upper_limits[i]
+        if estimated_means[i]!=None:
+            template["mean"] = "%.3f" % estimated_means[i]
+        else:
+            template["mean"] = estimated_means[i]
+        table_data.append(template)
+
     #Set x-axis label dynamically
     if x_axis_selection == 'lat':
         x_label = _("Latitude")
@@ -1812,8 +2056,16 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     # Set y-axis label dynamically
     if y_axis_selection == 'max_depth':
         y_label = _("Maximum depth [km]")
+        lw_conf = _("Min. confidence interval of max. depth (km)")
+        mean_name = _("Mean maximum depth (km)")
+        up_conf = _("Max. confidence interval of max. depth (km)")
     elif y_axis_selection == 'fmin':
         y_label = _("Minimum frequency [MHz]")
+        lw_conf = _("Min. confidence interval of min. frequency (MHz)")
+        mean_name = _("Mean minimum frequency (MHz)")
+        up_conf = _("Max. confidence interval of min. frequency (MHz)")
+
+    columns = [{"name":title, "id":"bin"},{"name":lw_conf,"id":"lw_conf"},{"name":mean_name,"id":"mean"},{"name":up_conf,"id":"up_conf"}]
 
     layout = dict(
         autosize=True,
@@ -1832,11 +2084,15 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
 
     print(f'make_viz_chart: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return figure
+    return [figure, columns, table_data]
 
 # Selectors -> viz map
 @app.callback(
-    Output("viz_map", "figure"),
+    [
+        Output("viz_map", "figure"),
+        Output("viz_map_table", "columns"),
+        Output("viz_map_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1899,7 +2155,17 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     traces = []
+    table_data = []
+
     for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+        template = {"station":"","lat":"","long":"","count":"", "mean":"", "median":""}
+        template["station"] = station_details[0]
+        template["lat"] = station_details[1]
+        template["long"] = station_details[2]
+        template["count"] = len(dfff)
+        template["mean"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].mean()[station_details[0]][0]
+        template["median"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].median()[station_details[0]][0]
+        table_data.append(template)
         trace = dict(
             station_name=station_details[0],
             lat=station_details[1],
@@ -1928,11 +2194,14 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         #Set labels for frequency/depth
         if var_selection == 'fmin':
             var_label = _("Minimum Frequency")
+            var_label_2 = _("minimum frequency")
             var_unit = "MHz"
         elif var_selection == 'max_depth':
             var_label = _("Maximum depth")
+            var_label_2 = _("maximum depth")
             var_unit = "km"
 
+        columns = [{"name":_("Ground station"),"id":"station"}, {"name":_("Latitude (°)"),"id":"lat"},{"name":_("Longitude (°)"), "id":"long"}, {"name":stat_label+" - "+var_label_2+" ("+var_unit+")","id":stat_selection}]
         # Count mapping from aggregated data
         stat_metric_data = {}
         stat_metric_data["min"] = df_stations[stat_selection].min()
@@ -1990,6 +2259,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
             stations.append(station)
 
     else:
+        columns = []
         station = go.Scattermapbox(
             lat=[],
             lon=[],
@@ -2042,7 +2312,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 
     print(f'make_viz_map: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return {"data": stations, "layout": layout}
+    return [{"data": stations, "layout": layout}, columns, table_data]
 
 
 # Inject the static text here after translating
@@ -2087,6 +2357,10 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("y_axis_selection_2", "options"),
         Output("Map_description-2", "children"),
         Output("stat_selection", "options"),
+        Output("count_table_text", "children"),
+        Output("geo_table_text","children"),
+        Output("viz_table_text","children"),
+        Output("viz_map_table_text","children"),
     ],
         [Input('none', 'children')], # A placeholder to call the translations upon startup
 )
@@ -2176,6 +2450,10 @@ def translate_static(x):
                     {'label': _('Mean'), 'value': 'mean'},
                     {'label': _('Median'), 'value': 'median'}
                 ],
+                _("Text version - Monthly ionograms count"),
+                _("Text version - Geographical ionograms count"),
+                _("Text version - Data visualization (95 percent confidence interval)"),
+                _("Text version - Geographical visualization"),
     ]
 # # Translate the header and the footer by injecting raw HTML
 # @app.callback(
@@ -2237,4 +2515,3 @@ if __name__ == '__main__':
     app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
 
 print('Loading complete.')
-
