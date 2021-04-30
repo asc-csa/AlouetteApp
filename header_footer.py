@@ -54,7 +54,7 @@ gc_breadcrumb_en = '''
 
 gc_breadcrumb_fr = '''
 <nav id="wb-bc" property="breadcrumb">
-    <h2>You are here:</h2>
+    <h2>Vous êtes ici :</h2>
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
