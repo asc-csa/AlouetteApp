@@ -771,3 +771,11 @@ margin: 15px 10px 0px;
 [hidden]{
   display: none !important;
 }
+
+.dash-table-container .dash-fixed-content{
+  overflow-x: scroll;
+}
+
+.previous-next-container{
+  display: none !important;
+}
