@@ -19,6 +19,7 @@ import urllib.parse
 
 from zipfile import ZipFile
 import os
+from os import path
 import flask
 from io import StringIO
 from flask_babel import _ ,Babel
@@ -32,9 +33,13 @@ class CustomDash(dash.Dash):
     footer = ''
     meta_html = ''
     app_header = ''
+    analytics_footer = ''
 
     def set_analytics(self, code):
         self.analytics_code = code
+
+    def set_analytics_footer(self, code):
+        self.analytics_footer = code
 
     def set_lang(self, lang):
         self.lang = lang
@@ -77,6 +82,7 @@ class CustomDash(dash.Dash):
                     {config}
                     {scripts}
                     {renderer}
+                    {analytics_footer}
                     </footer>
                 </div>
             </body>
@@ -91,6 +97,7 @@ class CustomDash(dash.Dash):
             css = kwargs['css'],
             title = kwargs['title'],
             analytics = self.analytics_code,
+            analytics_footer = self.analytics_footer,
             meta = self.meta_html,
             lang = self.lang,
             header = self.header,
@@ -162,7 +169,11 @@ if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
-    from analytics import analytics_code
+    if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
+        from analytics import analytics_code, analytics_footer
+    else:
+        analytics_code = ''
+        analytics_footer = ''
     from .config import Config
     app_config = Config()
     tokens = get_config_dict()
@@ -182,7 +193,11 @@ if __name__ == '__main__':
 else :
     prefixe="/alouette"
     from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
-    from .analytics import analytics_code
+    if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
+        from .analytics import analytics_code, analytics_footer
+    else:
+        analytics_code = ''
+        analytics_footer = ''
     from .config import Config
     app_config = Config()
 
@@ -223,6 +238,7 @@ else:
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
+app.set_analytics_footer(analytics_footer)
 app.set_lang(app_config.DEFAULT_LANGUAGE)   
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
 server = app.server
@@ -1150,11 +1166,28 @@ def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
     errors = []
     if not lon_validation(lon_min, lon_max) or not lat_validation(lat_min, lat_max):
         if not lat_validation(lat_min, lat_max):
-            errors.append(html.Li(_("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5.")))
+            errors.append(
+                html.Li(
+                    html.A(
+                        _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                        href="#lat_alert"
+                    )
+                )
+            )
         if not lon_validation(lon_min, lon_max):
-            errors.append(html.Li(_("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5.")))
+            errors.append(
+                html.Li(
+                    _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                        href="#lon_alert"
+                )
+            )
         if not date_validation(start_date,end_date):
-            errors.append(html.Li(_("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972).")))
+            errors.append(
+                html.Li(
+                    _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                    href="#date_alert"
+                )
+            )
     else:
         s = True
     return [
