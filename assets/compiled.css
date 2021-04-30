@@ -181,11 +181,11 @@
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-a {
+/* a {
   color: #1eaedb;
   text-decoration: underline;
   cursor: pointer;
-}
+} */
 a:hover {
   color: #0fa0ce;
 }
