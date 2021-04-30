@@ -1177,15 +1177,19 @@ def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
         if not lon_validation(lon_min, lon_max):
             errors.append(
                 html.Li(
-                    _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                    html.A(
+                        _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                         href="#lon_alert"
+                    )
                 )
             )
         if not date_validation(start_date,end_date):
             errors.append(
                 html.Li(
-                    _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
-                    href="#date_alert"
+                    html.A(
+                        _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                        href="#date_alert"
+                    )
                 )
             )
     else:
