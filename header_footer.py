@@ -5,7 +5,7 @@ from flask_babel import _ ,Babel
 app_config = Config()
 
 app_title_en = '''
-  <div id="header" class="container" style="margin-bottom: 25px;">
+  <div id="header" role='region' aria-label="title" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
       <div class="">
         <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
@@ -23,7 +23,7 @@ app_title_en = '''
 '''
 
 app_title_fr = '''
-  <div id="header" class="container" style="margin-bottom: 25px;">
+  <div id="header" role='region' aria-label="titre" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
       <div class="">
         <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
@@ -41,20 +41,20 @@ app_title_fr = '''
 '''
 
 gc_breadcrumb_en = '''
-<nav id="wb-bc" property="breadcrumb">
+<nav id="wb-bc" aria-label="breadcrumb" property="breadcrumb">
     <h2>You are here:</h2>
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="https://www.canada.ca/en.html">Canada.ca</a></li>
         <li><a href="https://www.asc-csa.gc.ca/eng/default.asp">Canadian Space Agency</a></li>
       </ol>
-    </div>
+    </div> 
 </nav>
 '''
 
 gc_breadcrumb_fr = '''
-<nav id="wb-bc" property="breadcrumb">
-    <h2>You are here:</h2>
+<nav id="wb-bc"  aria-label="Fil d'ariane" property="breadcrumb">
+    <h2>Vous êtes ici :</h2>
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
@@ -467,14 +467,14 @@ gc_menu_items_en='''
 
 gc_header_en = '''
 <div class='global-header'>
-<nav>
+<nav aria-label='accessible menu' >
   <ul id="wb-tphp" class="wb-init wb-disable-inited">
 	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Skip to main content</a></li>
 	  <!-- <li class="wb-slc"><a class="wb-sl" href="#wb-info">Skip to "About government"</a></li>
     <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Switch to basic HTML version</a></li> -->
   </ul>
 </nav>
-<header>
+<header aria-label='Page Header'>
 	<div id="wb-bnr" class="container">
 		<div class="row">	
 			<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
@@ -525,7 +525,7 @@ gc_header_en = '''
 				</section>
 		</div>
 	</div>
-	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
+	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" aria-label="Main Navigation" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
 		<h2 class="wb-inv">Menu</h2>
 		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it."><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
 		<ul role="menu" aria-orientation="vertical" data-ajax-replace="/content/dam/canada/sitemenu/sitemenu-v2-en.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
@@ -602,7 +602,7 @@ gc_header_en_old ='''
 
 gc_footer_en = '''
         <div class="landscape">
-        <nav class="container wb-navcurr">
+        <nav class="container wb-navcurr" aria-label="Footer navigation">
             <h2 class="wb-inv">About government</h2>
             <ul class="list-unstyled colcount-sm-2 colcount-md-3">
                         <li><a href="https://canada.ca/en/contact.html">Contact us</a></li>
@@ -1040,14 +1040,14 @@ gc_menu_items_fr='''
 
 gc_header_fr = '''
 <div class='global-header'>
-<nav>
+<nav aria-label='menu accessible'>
   <ul id="wb-tphp" class="wb-init wb-disable-inited">
 	  <li class="wb-slc"><a class="wb-sl" href="#react-entry-point">Passer au contenu principal</a></li>
 	  <!--<li class="wb-slc"><a class="wb-sl" href="#wb-info">Passer à « Au sujet du gouvernement »</a></li>
     <li class="wb-slc"><a class="wb-sl" href="?wbdisable=true" rel="alternate">Passer à la version HTML simplifiée</a></li>-->
   </ul>
 </nav>
-<header>
+<header aria-label='En-tête de page' >
 	<div id="wb-bnr" class="container">
 		<div class="row">
 			
@@ -1116,7 +1116,7 @@ gc_header_fr = '''
 	</div>
 	
 	
-	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
+	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" aria-label="navigation principale" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
 		<h2 class="wb-inv">Menu</h2>
 		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
 		<ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
@@ -1197,7 +1197,7 @@ gc_header_fr_old = '''
 
 gc_footer_fr = '''
         <div class="landscape">
-        <nav class="container wb-navcurr">
+        <nav class="container wb-navcurr" aria-label="Navigation en bas de page">
             <h2 class="wb-inv">Au sujet du gouvernement</h2>
             <ul class="list-unstyled colcount-sm-2 colcount-md-3">
                         <li><a href="https://canada.ca/fr/contact.html">Contactez-nous</a></li>
