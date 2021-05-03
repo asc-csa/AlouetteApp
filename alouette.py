@@ -14,11 +14,14 @@ from scipy.stats import sem, t
 from scipy import mean
 from dateutil.relativedelta import relativedelta
 from dash.dependencies import Input, Output, State
+import dash_table as dst
+from dash_table.Format import Format, Scheme
 import locale
 import urllib.parse
 
 from zipfile import ZipFile
 import os
+from os import path
 import flask
 from io import StringIO
 from flask_babel import _ ,Babel
@@ -32,9 +35,13 @@ class CustomDash(dash.Dash):
     footer = ''
     meta_html = ''
     app_header = ''
+    analytics_footer = ''
 
     def set_analytics(self, code):
         self.analytics_code = code
+
+    def set_analytics_footer(self, code):
+        self.analytics_footer = code
 
     def set_lang(self, lang):
         self.lang = lang
@@ -63,6 +70,7 @@ class CustomDash(dash.Dash):
                 <title>
                 {title}
                 </title>
+                <style id='dash_components_css'></style>
                 {css}
                 {meta}
             </head>
@@ -76,6 +84,7 @@ class CustomDash(dash.Dash):
                     {config}
                     {scripts}
                     {renderer}
+                    {analytics_footer}
                     </footer>
                 </div>
             </body>
@@ -90,6 +99,7 @@ class CustomDash(dash.Dash):
             css = kwargs['css'],
             title = kwargs['title'],
             analytics = self.analytics_code,
+            analytics_footer = self.analytics_footer,
             meta = self.meta_html,
             lang = self.lang,
             header = self.header,
@@ -161,10 +171,17 @@ if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
-    from analytics import analytics_code
+    if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
+        from analytics import analytics_code, analytics_footer
+    else:
+        analytics_code = ''
+        analytics_footer = ''
     from .config import Config
     app_config = Config()
     tokens = get_config_dict()
+
+    path_data=app_config.DATA_PATH
+    prefixe=app_config.APP_PREFIX
 
     df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
@@ -177,15 +194,23 @@ if __name__ == '__main__':
 
 else :
     prefixe="/alouette"
-    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en
-    from .analytics import analytics_code
+    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
+    if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
+        from .analytics import analytics_code, analytics_footer
+    else:
+        analytics_code = ''
+        analytics_footer = ''
     from .config import Config
     app_config = Config()
+
+    path_data=app_config.DATA_PATH
+    prefixe=app_config.APP_PREFIX
+
     df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = CustomDash(
         __name__,
-        requests_pathname_prefix='/alouette/',
+        requests_pathname_prefix=prefixe,
         meta_tags=[{"name": "viewport", "content": "width=device-width"}],
         external_stylesheets=external_stylesheets,
         external_scripts=external_scripts,
@@ -211,10 +236,11 @@ else:
         )
     meta_html += generate_meta_tag('keywords', '')
     app.title="SCISAT : application d’exploration des données de composition atmosphérique"
-    # app.set_app_header(app_title_fr)
+    app.set_app_header(app_title_fr)
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
+app.set_analytics_footer(analytics_footer)
 app.set_lang(app_config.DEFAULT_LANGUAGE)   
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
 server = app.server
@@ -455,6 +481,19 @@ def build_filtering():
             [
                 html.Div(
                     [
+                        html.Section(
+                            [
+                                html.H2(
+                                    id='error_header'
+                                ),
+                                html.Ul(
+                                    id='form_errors'
+                                )
+                            ],
+                            id='filter_errors',
+                            hidden=True,
+                            className='alert alert-danger'
+                        ),
                         html.Div(
                             [
                             html.Div(
@@ -477,6 +516,13 @@ def build_filtering():
                                             htmlFor = "lat_min",
                                             hidden = True
                                         ),
+                                        html.Div([
+                                            html.Div(
+                                                id="lat_alert",
+                                                hidden=True,
+                                                className='label label-danger'
+                                            ),
+                                        ]),
                                         dcc.Input(
                                             id="lat_min",
                                             type='number',
@@ -513,20 +559,19 @@ def build_filtering():
                                         id="longitude-text",
                                         className="control_label",
                                     ),
-                                    # dcc.RangeSlider(
-                                    #     id="lon_slider",
-                                    #     min=-180.0,
-                                    #     max=180.0,
-                                    #     value=[-180.0, 180.0],
-                                    #     className="dcc_control",
-                                    #     marks=lon_dict,
-                                    # ),
                                     html.Div([
                                         html.Label(
                                             id = "lon_min-text",
                                             htmlFor = "lon_min",
                                             hidden = True
                                         ),
+                                        html.Div([
+                                            html.Div(
+                                                id="lon_alert",
+                                                hidden=True,
+                                                className='label label-danger'
+                                            ),
+                                        ]),
                                         dcc.Input(
                                             id="lon_min",
                                             type='number',
@@ -562,7 +607,7 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    dbc.Alert(color="secondary", id="date_alert", is_open=False, fade=False, style={"margin-top":"0.5em"}),
+                                    html.Div( id="date_alert", className='label label-danger' ),
                                 ]),
                                 html.P(
                                     id="yearslider-text",
@@ -620,15 +665,6 @@ def build_filtering():
                                         **{'aria-label': 'Select plotted value'}
                                     ),
                                     html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
-                                html.Div([
-                                    dbc.Alert(
-                                        color="secondary",
-                                        id="pos_alert",
-                                        is_open=False,
-                                        fade=False,
-                                        style={"margin-top":"0.5em"}
-                                    ),
-                                ]),
 
                             ],
                             id="map-options",
@@ -669,7 +705,8 @@ def build_filtering():
                                             "displaylogo": False,
                                             "displayModeBar" : False
                                         },
-                                    )],
+                                    ),
+                                    detail_table("geo_table","geo_table_text")],
                                 ),
                             html.P(id="Map_description-1"),
                             ],
@@ -689,7 +726,8 @@ def build_filtering():
                                                 "displaylogo": False,
                                                 "displayModeBar": False
                                             }
-                                        )
+                                        ),
+                                        detail_table("count_table","count_table_text")
                                     ],
                                     id="countGraphContainer",
                                 ),
@@ -709,6 +747,197 @@ def build_filtering():
 
     ])
 
+def detail_table(id, id2):
+    #next button pagnation, for some reason the pages are 0 indexed but the dispalyed page isn't
+    @app.callback(
+        [
+            Output( id, 'page_current'),
+            Output( id+'-btn-1-a', 'data-value'),
+            Output( id+'-btn-2-a', 'data-value'),
+            Output( id+'-btn-3-a', 'data-value'),
+            Output( id+'-btn-1-a', "children"),
+            Output( id+'-btn-2-a', "children"),
+            Output( id+'-btn-3-a', "children"),
+            Output( id+'-btn-1-a', "aria-label"),
+            Output( id+'-btn-2-a', "aria-label"),
+            Output( id+'-btn-3-a', "aria-label"),
+            Output( id+'-btn-1-a', "aria-current"),
+            Output( id+'-btn-2-a', "aria-current"),
+            Output( id+'-btn-3-a', "aria-current"),
+            Output( id+'-btn-1', "className"),
+            Output( id+'-btn-2', "className"),
+            Output( id+'-btn-prev-a', 'children'),
+            Output( id+'-btn-next-a', 'children'),
+            Output( id+'-btn-prev-a', "aria-label"),
+            Output( id+'-btn-next-a', "aria-label"),
+            Output( id+'-navigation', "aria-label"),
+        ],
+        [
+            Input( id+'-btn-prev', 'n_clicks'),
+            Input( id+'-btn-1', 'n_clicks'),
+            Input( id+'-btn-2', 'n_clicks'),
+            Input( id+'-btn-3', 'n_clicks'),
+            Input( id+'-btn-next', 'n_clicks')
+        ],
+        [
+            State( id, 'page_current'),
+            State( id+'-btn-1-a', 'data-value'),
+            State( id+'-btn-2-a', 'data-value'),
+            State( id+'-btn-3-a', 'data-value'),
+        ]
+    )
+    def update_table_next(btn_prev, btn_1, btn_2, btn_3, btn_next, curr_page, btn1_value, btn2_value, btn3_value):
+        session['language'] = app_config.DEFAULT_LANGUAGE
+        ctx = dash.callback_context
+        btn1_current = 'false'
+        btn2_current = 'false'
+        btn3_current = 'false'
+
+        btn1_class = ''
+        btn2_class = ''
+
+        btn1_aria = ''
+        btn2_aria = ''
+        btn3_aria = ''
+
+        if ctx.triggered:
+            start_page = curr_page
+            # curr_page = curr_page + 1
+            print(ctx.triggered)
+            if ctx.triggered[0]['prop_id'] == id+'-btn-next.n_clicks':
+                curr_page += 1
+            if ctx.triggered[0]['prop_id'] == id+'-btn-1.n_clicks':
+                curr_page = btn1_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-2.n_clicks':
+                curr_page = btn2_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-3.n_clicks':
+                curr_page = btn3_value
+            if ctx.triggered[0]['prop_id'] == id+'-btn-prev.n_clicks':
+                curr_page -= 1
+
+            if curr_page < 0:
+                curr_page = 0
+
+        aria_prefix = _('Goto page ')
+
+        if curr_page < 1:
+            btn1_value = curr_page
+            btn2_value = curr_page+1
+            btn3_value = curr_page+2
+            btn1_current = 'true'
+            btn1_class = 'active'
+            btn1_aria = aria_prefix + str(btn1_value+1) + ', ' + _('Current Page')
+            btn2_aria = aria_prefix + str(btn2_value+1)
+            btn3_aria = aria_prefix + str(btn3_value+1)
+        else:
+            btn1_value = curr_page -1
+            btn2_value = curr_page
+            btn3_value = curr_page + 1
+            btn2_current = 'true'
+            btn2_class = 'active'
+            btn1_aria = aria_prefix + str(btn1_value+1)
+            btn2_aria = aria_prefix + str(btn2_value+1) + ', ' + _('Current Page')
+            btn3_aria = aria_prefix + str(btn3_value+1)
+
+        # print('curr_page: '+ str(curr_page))
+
+        return [
+            curr_page,
+            btn1_value,
+            btn2_value,
+            btn3_value,
+            btn1_value+1,
+            btn2_value+1,
+            btn3_value+1,
+            btn1_aria,
+            btn2_aria,
+            btn3_aria,
+            btn1_current,
+            btn2_current,
+            btn3_current,
+            btn1_class,
+            btn2_class,
+            _('Previous'),
+            _('Next'),
+            _('Goto Previous Page'),
+            _('Goto Next Page'),
+            _('Pagination Navigation')
+        ]
+
+    return html.Div([
+        html.Details(
+            [
+                html.Summary(id=id2),
+                html.Div(
+                    dst.DataTable(
+                        id=id,
+                        page_size= 10,
+                        page_current = 0
+                    ),
+                    style={"margin":"4rem"}
+                ),
+                html.Nav(
+                    html.Ul(
+                        [
+                            html.Li(
+                                html.A(
+                                    _('Previous'),
+                                    id=id+'-btn-prev-a',
+                                    className='page-prev',
+                                    **{'aria-label': _('Goto Previous Page'), 'data-value': -1}
+                                ),
+                                id=id+'-btn-prev',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '1',
+                                    id=id+'-btn-1-a',
+                                    **{'aria-label': _("Goto page 1, Current Page"), 'aria-current': _('true'), 'data-value': 0}
+                                ),
+                                id=id+'-btn-1',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '2',
+                                    id=id+'-btn-2-a',
+                                    **{'aria-label': _('Goto page 2'), 'data-value': 1}
+                                ),
+                                className='active',
+                                id=id+'-btn-2',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    '3',
+                                    id=id+'-btn-3-a',
+                                    **{'aria-label': _('Goto page 3'), 'data-value': 2}
+                                ),
+                                id=id+'-btn-3',
+                                n_clicks=0
+                            ),
+                            html.Li(
+                                html.A(
+                                    'Next',
+                                    id=id+'-btn-next-a',
+                                    className='page-next',
+                                    **{'aria-label': _('Goto Next Page'), 'data-value': -2}
+                                ),
+                                id=id+'-btn-next',
+                                n_clicks=0
+                            )
+                        ],
+                        className = 'pagination'
+                    ),
+                    **{'aria-label': _('Pagination Navigation')},
+                    role = _('navigation'),
+                    className = 'table_pagination',
+                    id = id+'-navigation'
+                )
+            ]
+        )
+    ])
 
 # Builds the layout for the map displaying statistics as well as the confidence interval graph
 def build_stats():
@@ -779,7 +1008,8 @@ def build_stats():
                                            "displaylogo": False,
                                            "displayModeBar": False
                                        }
-                                       )],
+                                       ),
+                             detail_table("viz_table","viz_table_text")],
                             id="vizChartContainer",
                             #className="pretty_container",
                         ),
@@ -860,7 +1090,8 @@ def build_stats():
                                            "displaylogo": False,
                                            "displayModeBar": False
                                        }
-                                       )],
+                                       ),
+                             detail_table("viz_map_table","viz_map_table_text")],
                             id="vizGraphContainer",
                         ),
                     ],
@@ -1080,16 +1311,103 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
         return [] # if we have not selected any stations, keep the selection box empty
 
 @app.callback(
-    Output("pos_alert", "is_open"),
-    [   Input("lat_min", "value"),
+    Output("lat_alert", "hidden"),[
+        Input("lat_min", "value"),
         Input("lat_max", "value"),
+    ]
+)
+
+def form_lat_validation(lat_min,lat_max):
+    return lat_validation(lat_min,lat_max)
+
+def lat_validation(lat_min,lat_max):
+    try:
+        s = ((lat_min < lat_max) and (lat_min >= -90) and (lat_max <= 90))
+    except TypeError:
+        s = False
+    return s
+
+@app.callback(
+    Output("lon_alert", "hidden"),[
         Input("lon_min", "value"),
         Input("lon_max", "value"),
+    ]
+)
+def form_lon_validation(lon_min,lon_max):
+    return lon_validation(lon_min,lon_max)
+
+def lon_validation(lon_min,lon_max):
+    try:
+        s = ((lon_min < lon_max) and (lon_min >= -180) and (lon_max <= 180))
+    except TypeError:
+        s = False
+    return s
+
+@app.callback(
+    [
+        Output("filter_errors", "hidden"),
+        Output("form_errors", 'children'),
+        Output("error_header", 'children')
     ],
     [
-        State("pos_alert", "is_open")
+        Input('lat_min','value'),
+        Input('lat_max','value'),
+        Input('lon_min','value'),
+        Input('lon_max','value'),
+        Input("date_picker_range", "start_date"),
+        Input("date_picker_range", "end_date")
     ],
 )
+def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
+    s = False
+    errors = []
+    if not lon_validation(lon_min, lon_max) or not lat_validation(lat_min, lat_max):
+        if not lat_validation(lat_min, lat_max):
+            errors.append(
+                html.Li(
+                    html.A(
+                        _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                        href="#lat_alert"
+                    )
+                )
+            )
+        if not lon_validation(lon_min, lon_max):
+            errors.append(
+                html.Li(
+                    html.A(
+                        _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                        href="#lon_alert"
+                    )
+                )
+            )
+        if not date_validation(start_date,end_date):
+            errors.append(
+                html.Li(
+                    html.A(
+                        _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                        href="#date_alert"
+                    )
+                )
+            )
+    else:
+        s = True
+    return [
+        s,
+        errors,
+        _('The form could not be submitted because errors were found.')
+    ]
+
+# @app.callback(
+#     Output("pos_alert", "is_open"),
+#     [   Input("lat_min", "value"),
+#         Input("lat_max", "value"),
+#         Input("lon_min", "value"),
+#         Input("lon_max", "value"),
+#     ],
+#     [
+#         State("pos_alert", "is_open")
+#     ],
+# )
 def pos_validation(lat_min,lat_max,lon_min,lon_max, is_open):
     try:
         s = not ((lat_min < lat_max) and (lat_min >= -90) and (lat_max <= 90) and (lon_min < lon_max) and (lon_min >= -180) and (lon_max <= 180))
@@ -1098,15 +1416,15 @@ def pos_validation(lat_min,lat_max,lon_min,lon_max, is_open):
     return s
 
 @app.callback(
-    Output("date_alert", "is_open"),
+    Output("date_alert", "hidden"),
     [   Input("date_picker_range", "start_date"),
         Input("date_picker_range", "end_date")
-    ],
-    [
-        State("date_alert", "is_open")
-    ],
+    ]
 )
-def date_validation(start_date, end_date, is_open):
+def form_date_validation(start_date, end_date):
+    return date_validation(start_date, end_date)
+
+def date_validation(start_date, end_date):
     try:
         start = dt.datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%S')
         end = dt.datetime.strptime(end_date, '%Y-%m-%dT%H:%M:%S')
@@ -1115,7 +1433,7 @@ def date_validation(start_date, end_date, is_open):
         end = dt.datetime.strptime(end_date, '%Y-%m-%d')
     MIN_DATE=dt.datetime(1962, 9, 29)
     MAX_DATE=dt.datetime(1972, 12, 31)
-    return not ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
+    return ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
 
 # Selectors -> Image download link
 @app.callback(
@@ -1298,7 +1616,7 @@ def download_csv():
     dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations)
 
     if language == 'fr':
-        dff.columns = [ 
+        dff.columns = [
             'ID',
             'Nom du fichier',
             'Fréquence minimale',
@@ -1313,7 +1631,7 @@ def download_csv():
             'Longitude'
         ]
     else:
-        dff.columns = [ 
+        dff.columns = [
             'ID',
             'File name',
             'Minimum frequency',
@@ -1344,7 +1662,11 @@ def download_csv():
 
 # Selectors -> count graph
 @app.callback(
-    Output("count_graph", "figure"),
+    [
+        Output("count_graph", "figure"),
+        Output("count_table", "columns"),
+        Output("count_table", "data")
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1400,6 +1722,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     g.index = g["timestamp"]
     g = g.resample("M").count()
 
+
     data = [
         dict(
             type="scatter",
@@ -1429,13 +1752,21 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     figure = dict(data=data, layout=layout_count)
 
+    g["timestamp"]=g.index.strftime("%Y-%m-%d")
+    table_data = g.to_dict('records')
+    columns = [{"name":_("Date"), "id":"timestamp"},{"name":_("Count"),"id":"file_name"}]
+
     print(f'make_count_figure: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return figure
+    return [figure, columns, table_data]
 
 
 @app.callback(
-    Output("selector_map", "figure"),
+    [
+        Output("selector_map", "figure"),
+        Output("geo_table", "columns"),
+        Output("geo_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1489,8 +1820,14 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     traces = []
-
+    table_data = []
     for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+        template = {"station":"","lat":"","long":"","count":""}
+        template["station"] = station_details[0]
+        template["lat"] = station_details[1]
+        template["long"] = station_details[2]
+        template["count"] = len(dfff)
+        table_data.append(template)
         trace = dict(
             station_name=station_details[0],
             lat=station_details[1],
@@ -1624,12 +1961,19 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
 
     print(f'generate_geo_map: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return {"data": stations, "layout": layout}
+    columns = [{"name":_("Ground station"), "id":"station"},{"name":_("Latitude"),"id":"lat"},{"name":_("Longitude"),"id":"long"},{"name":_("Ionograms count"),"id":"count"}]
+
+
+    return [{"data": stations, "layout": layout}, columns, table_data]
 
 
 # Selectors -> viz chart (95% CI)
 @app.callback(
-    Output("viz_chart", "figure"),
+    [
+        Output("viz_chart", "figure"),
+        Output("viz_table", "columns"),
+        Output("viz_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1697,11 +2041,11 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ci_upper_limits = []
     ci_lower_limits = []
     bins = []
-
+    title=""
     # bucketing the data
     if x_axis_selection == 'timestamp':
         dff.index = dff["timestamp"]
-
+        title=_("Date")
         index_month = dt.date(int(dff.index.min().year), int(dff.index.min().month), 1)
         end_month = dt.date(int(dff.index.max().year), int(dff.index.max().month), 1)
 
@@ -1723,15 +2067,17 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 estimated_means.append(bin_mean)
                 ci_upper_limits.append(bin_mean + error_range)
                 ci_lower_limits.append(bin_mean - error_range if bin_mean - error_range >= 0 else 0)
-                bins.append(index_month)
+            bins.append(index_month)
 
             index_month += relativedelta(months=1)
 
     elif x_axis_selection == 'lat' or x_axis_selection == 'lon':
         if x_axis_selection == 'lat':
+            title=_("Latitude (°)")
             step = 5
             index_range = range(-90,90,step)
         if x_axis_selection == 'lon':
+            title=_("Longitude (°)")
             step = 5
             index_range = range(-180, 180, step)
 
@@ -1754,7 +2100,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 estimated_means.append(bin_mean)
                 ci_upper_limits.append(bin_mean + error_range)
                 ci_lower_limits.append(bin_mean - error_range if bin_mean - error_range >= 0 else 0)
-                bins.append(i)
+            bins.append(i)
 
     data = [
         dict(
@@ -1794,6 +2140,25 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             showlegend=True,
         ),
     ]
+
+    table_data = []
+    for i in range(0,len(bins)):
+        template = {"bin":"","lw_conf":"","mean":"","up_conf":""}
+        template["bin"] = bins[i]
+        if ci_lower_limits[i]!=None:
+            template["lw_conf"] = "%.3f" % ci_lower_limits[i]
+        else:
+            template["lw_conf"] = ci_lower_limits[i]
+        if ci_upper_limits[i]!=None:
+            template["up_conf"] = "%.3f" % ci_upper_limits[i]
+        else:
+            template["up_conf"] = ci_upper_limits[i]
+        if estimated_means[i]!=None:
+            template["mean"] = "%.3f" % estimated_means[i]
+        else:
+            template["mean"] = estimated_means[i]
+        table_data.append(template)
+
     #Set x-axis label dynamically
     if x_axis_selection == 'lat':
         x_label = _("Latitude")
@@ -1805,8 +2170,16 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     # Set y-axis label dynamically
     if y_axis_selection == 'max_depth':
         y_label = _("Maximum depth [km]")
+        lw_conf = _("Min. confidence interval of max. depth (km)")
+        mean_name = _("Mean maximum depth (km)")
+        up_conf = _("Max. confidence interval of max. depth (km)")
     elif y_axis_selection == 'fmin':
         y_label = _("Minimum frequency [MHz]")
+        lw_conf = _("Min. confidence interval of min. frequency (MHz)")
+        mean_name = _("Mean minimum frequency (MHz)")
+        up_conf = _("Max. confidence interval of min. frequency (MHz)")
+
+    columns = [{"name":title, "id":"bin"},{"name":lw_conf,"id":"lw_conf"},{"name":mean_name,"id":"mean"},{"name":up_conf,"id":"up_conf"}]
 
     layout = dict(
         autosize=True,
@@ -1825,11 +2198,15 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
 
     print(f'make_viz_chart: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return figure
+    return [figure, columns, table_data]
 
 # Selectors -> viz map
 @app.callback(
-    Output("viz_map", "figure"),
+    [
+        Output("viz_map", "figure"),
+        Output("viz_map_table", "columns"),
+        Output("viz_map_table", "data"),
+    ],
     # [Input("visualize-button", "n_clicks")],
     [
         Input("date_picker_range", "start_date"),
@@ -1892,7 +2269,17 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
 
     traces = []
+    table_data = []
+
     for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+        template = {"station":"","lat":"","long":"","count":"", "mean":"", "median":""}
+        template["station"] = station_details[0]
+        template["lat"] = station_details[1]
+        template["long"] = station_details[2]
+        template["count"] = len(dfff)
+        template["mean"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].mean()[station_details[0]][0]
+        template["median"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].median()[station_details[0]][0]
+        table_data.append(template)
         trace = dict(
             station_name=station_details[0],
             lat=station_details[1],
@@ -1921,11 +2308,14 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         #Set labels for frequency/depth
         if var_selection == 'fmin':
             var_label = _("Minimum Frequency")
+            var_label_2 = _("minimum frequency")
             var_unit = "MHz"
         elif var_selection == 'max_depth':
             var_label = _("Maximum depth")
+            var_label_2 = _("maximum depth")
             var_unit = "km"
 
+        columns = [{"name":_("Ground station"),"id":"station"}, {"name":_("Latitude (°)"),"id":"lat"},{"name":_("Longitude (°)"), "id":"long"}, {"name":stat_label+" - "+var_label_2+" ("+var_unit+")","id":stat_selection}]
         # Count mapping from aggregated data
         stat_metric_data = {}
         stat_metric_data["min"] = df_stations[stat_selection].min()
@@ -1983,6 +2373,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
             stations.append(station)
 
     else:
+        columns = []
         station = go.Scattermapbox(
             lat=[],
             lon=[],
@@ -2035,7 +2426,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 
     print(f'make_viz_map: {(dt.datetime.now()-start_time).total_seconds()}')
 
-    return {"data": stations, "layout": layout}
+    return [{"data": stations, "layout": layout}, columns, table_data]
 
 
 # Inject the static text here after translating
@@ -2047,7 +2438,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("description-2", "children"),
         Output("github-link", "children"),
         Output("select-data", "children"),
-        Output("pos_alert", "children"),
+        Output("lat_alert", "children"),
+        Output("lon_alert", "children"),
         Output("date_alert", "children"),
         Output("ground_station_selection", "children"),
         Output("lat_selection", "children"),
@@ -2080,6 +2472,10 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("y_axis_selection_2", "options"),
         Output("Map_description-2", "children"),
         Output("stat_selection", "options"),
+        Output("count_table_text", "children"),
+        Output("geo_table_text","children"),
+        Output("viz_table_text","children"),
+        Output("viz_map_table_text","children"),
     ],
         [Input('none', 'children')], # A placeholder to call the translations upon startup
 )
@@ -2091,7 +2487,8 @@ def translate_static(x):
                 _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Visit our GitHub page to learn more about the [code used to make this application](https://github.com/asc-csa/AlouetteApp) and the [code used to extract metadata and parameters from the ionogram images](https://github.com/asc-csa/Alouette_extract). The dataset can also be accessed in [CSA's Open Government Portal](https://data.asc-csa.gc.ca/en/dataset/221c1c75-4c42-4286-a4ce-ca6c3027b7fe)"),
                 _("Select data"),
-                _("Invalid values provided. Latitude values must be between -90 and 90. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
+                _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
                 _("Selection of the ground stations"),
                 _("Selection of the range of latitude "),
@@ -2169,6 +2566,10 @@ def translate_static(x):
                     {'label': _('Mean'), 'value': 'mean'},
                     {'label': _('Median'), 'value': 'median'}
                 ],
+                _("Text version - Monthly ionograms count"),
+                _("Text version - Geographical ionograms count"),
+                _("Text version - Data visualization (95 percent confidence interval)"),
+                _("Text version - Geographical visualization"),
     ]
 # # Translate the header and the footer by injecting raw HTML
 # @app.callback(
@@ -2230,4 +2631,3 @@ if __name__ == '__main__':
     app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
 
 print('Loading complete.')
-

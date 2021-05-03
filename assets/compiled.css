@@ -181,11 +181,11 @@
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-a {
+/* a {
   color: #1eaedb;
   text-decoration: underline;
   cursor: pointer;
-}
+} */
 a:hover {
   color: #0fa0ce;
 }
@@ -753,4 +753,29 @@ margin: 15px 10px 0px;
 
 .Select--multi .Select-value-label {
   max-width: calc( 100% - 20px );
+}
+
+/* Alerts */
+.dash-alert-danger::before {
+  color: #d3080c;
+  content: "";
+}
+
+.label.label-danger{
+  white-space: normal;
+  text-align: left;
+  display: block;
+  font-size: 16px;
+}
+
+[hidden]{
+  display: none !important;
+}
+
+.dash-table-container .dash-fixed-content{
+  overflow-x: scroll;
+}
+
+.previous-next-container{
+  display: none !important;
 }
