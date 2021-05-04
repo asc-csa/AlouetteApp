@@ -48,7 +48,7 @@ gc_breadcrumb_en = '''
         <li><a href="https://www.canada.ca/en.html">Canada.ca</a></li>
         <li><a href="https://www.asc-csa.gc.ca/eng/default.asp">Canadian Space Agency</a></li>
       </ol>
-    </div> 
+    </div>
 </nav>
 '''
 
@@ -386,10 +386,10 @@ gc_menu_items_en='''
     <li role="separator"></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/offices-bureaux/index.aspx?lang=eng">International offices and emergency contacts</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/study_work_travel-etude_travail_voyage/index.aspx?lang=eng">Study, work and travel worldwide</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/country-pays/index.aspx?lang=eng">Information by countries and territories</a></li> 
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://international.gc.ca/world-monde/stories-histoires/index.aspx?lang=eng">Stories</a></li>  
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/international_relations-relations_internationales/index.aspx?lang=eng">International relations</a></li> 
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/issues_development-enjeux_developpement/index.aspx?lang=eng">Global issues and international assistance</a></li>  
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/country-pays/index.aspx?lang=eng">Information by countries and territories</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="https://international.gc.ca/world-monde/stories-histoires/index.aspx?lang=eng">Stories</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/international_relations-relations_internationales/index.aspx?lang=eng">International relations</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/issues_development-enjeux_developpement/index.aspx?lang=eng">Global issues and international assistance</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/world-monde/funding-financement/index.aspx?lang=eng">Funding for international initiatives</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="http://www.canada.ca/en/services/business/trade/index.html">International trade and investment</a></li>
     <li role="separator" aria-orientation="vertical"></li>
@@ -397,7 +397,7 @@ gc_menu_items_en='''
       <ul id="gc-mnu-canworld-sub" role="menu" aria-orientation="vertical">
         <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.international.gc.ca/world-monde/covid-19/index.aspx?lang=eng">COVID-19: Trade, foreign affairs, international trade and development</a></li>
         <li role="presentation"><a role="menuitem" tabindex="-1" href="http://scholarships-bourses.gc.ca/scholarships-bourses/non_can/opportunities-opportunites.aspx?lang=eng">Find a Canadian scholarship as an international student</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="http://treaty-accord.gc.ca/index.aspx">International treaties signed by Canada</a></li>  
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="http://treaty-accord.gc.ca/index.aspx">International treaties signed by Canada</a></li>
         <li role="presentation"><a role="menuitem" tabindex="-1" href="http://educanada.ca/index.aspx?lang=eng">Find international study or research opportunities in Canada</a></li>
         <li role="presentation"><a role="menuitem" tabindex="-1" href="https://travel.gc.ca/assistance/embassies-consulates">Contact an embassy or consulate</a></li>
         <li role="presentation"><a role="menuitem" tabindex="-1" href="http://international.gc.ca/protocol-protocole/reps.aspx?lang=eng">Contact a foreign representative in Canada</a></li>
@@ -476,18 +476,18 @@ gc_header_en = '''
 </nav>
 <header aria-label='Page Header'>
 	<div id="wb-bnr" class="container">
-		<div class="row">	
+		<div class="row">
 			<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
         <h2 class="wb-inv">Language selection</h2>
         <div class="row">
             <div class="col-md-12">
                 <ul class="list-inline mrgn-bttm-0">
                     <li>
-                        <a lang="fr" href="'''+ app_config.FR_LINK +'''">                       
+                        <a lang="fr" href="'''+ app_config.FR_LINK +'''">
                           <span class="hidden-xs">Français</span>
-                          <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr> 
+                          <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr>
                         </a>
-                    </li> 
+                    </li>
                 </ul>
             </div>
         </div>
@@ -503,7 +503,7 @@ gc_header_en = '''
 					<link property="logo" href="https://canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg">
 				</div>
 				<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
-					<h2>Search</h2>	
+					<h2>Search</h2>
           <form action="https://www.canada.ca/en/sr/srb.html" method="get" name="cse-search-box" role="search">
             <div class="form-group wb-srch-qry">
               <label for="wb-srch-q" class="wb-inv">Search Canada.ca</label>
@@ -533,7 +533,7 @@ gc_header_en = '''
     </ul>
 	</div></nav>
   '''+ gc_breadcrumb_en +'''
-	
+
 </header>
 </div>
 '''
@@ -601,6 +601,18 @@ gc_header_en_old ='''
 
 
 gc_footer_en = '''
+        <div class="row" style="background-color: white;">
+        <div class="pagedetails container">
+        <div class="col-sm-6 col-md-5 col-lg-4">
+        <a href="https://www.asc-csa.gc.ca/eng/forms/information-request.asp" class="btn btn-default">Report a problem on this page</a>
+        </div>
+        <dl id="wb-dtmd">
+        <dt>Date modified:&#32;</dt>
+        <dd><time property="dateModified">2021-05-04</time></dd>
+        </dl>
+        </div>
+        </div>
+
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Footer navigation">
             <h2 class="wb-inv">About government</h2>
@@ -613,7 +625,7 @@ gc_footer_en = '''
                         <li><a href="https://canada.ca/en/transparency/reporting.html">Government-wide reporting</a></li>
                         <li><a href="http://pm.gc.ca/en">Prime Minister</a></li>
                         <li><a href="https://canada.ca/en/government/system.html">About government</a></li>
-                        <li><a href="http://open.canada.ca/en">Open government</a></li>  
+                        <li><a href="http://open.canada.ca/en">Open government</a></li>
             </ul>
         </nav>
         </div>
@@ -642,7 +654,7 @@ gc_footer_en = '''
 '''
 
 gc_menu_items_fr='''
-<li role="presentation"> 
+<li role="presentation">
     <a role="menuitem" tabindex="0" aria-haspopup="true" aria-controls="gc-mnu-jobs" aria-expanded="true" href="#">Emplois et milieu de travail</a>
   <ul id="gc-mnu-jobs" role="menu" aria-orientation="vertical">
     <li role="presentation"> <a role="menuitem" tabindex="-1" href="https://www.canada.ca/fr/services/emplois.html">Emplois<span class="visible-xs-inline visible-sm-inline"> : accueil</span></a> </li>
@@ -1050,7 +1062,7 @@ gc_header_fr = '''
 <header aria-label='En-tête de page' >
 	<div id="wb-bnr" class="container">
 		<div class="row">
-			
+
 			<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
     <h2 class="wb-inv">Sélection de la langue</h2>
     <div class="row">
@@ -1062,32 +1074,32 @@ gc_header_fr = '''
                             <abbr title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">en</abbr>
                     </a>
                 </li>
-                
-                
+
+
             </ul>
         </div>
     </div>
 </section>
 				<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" resource="#wb-publisher" typeof="GovernmentOrganization">
-					
-                    
-					
+
+
+
 						<link href="https://www.canada.ca/content/canadasite/fr.html" property="url">
-						
+
 							<img src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-fr.svg" alt="Gouvernement du Canada" property="logo">
 							<span class="wb-inv"> /
-								
+
 								<span lang="en">Government of Canada</span>
 							</span>
-						
-					
+
+
 					<meta property="name" content="Gouvernement du Canada">
 					<meta property="areaServed" typeof="Country" content="Canada">
 					<link property="logo" href="https://www.canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg">
 				</div>
 				<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
 					<h2>Recherche</h2>
-					
+
 <form action="https://www.canada.ca/fr/sr/srb.html" method="get" name="cse-search-box" role="search">
 	<div class="form-group wb-srch-qry">
 		<label for="wb-srch-q" class="wb-inv">Rechercher dans Canada.ca</label>
@@ -1097,10 +1109,10 @@ gc_header_fr = '''
 		<input name="langs" value="fr" type="hidden">
 		<input name="st1rt" value="1" type="hidden">
 		<input name="s5bm3ts21rch" value="x" type="hidden">
-		
+
 			<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="34" maxlength="170" placeholder="Rechercher dans Canada.ca">
-		    
-		
+
+
 		<input type="hidden" name="_charset_" value="UTF-8">
 
 		<datalist id="wb-srch-q-ac">
@@ -1114,20 +1126,20 @@ gc_header_fr = '''
 				</section>
 		</div>
 	</div>
-	
-	
+
+
 	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" aria-label="navigation principale" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
 		<h2 class="wb-inv">Menu</h2>
 		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
 		<ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
     '''+ gc_menu_items_fr +'''
     </ul>
-		
+
 	</div></nav>
 	'''+ gc_breadcrumb_fr +'''
 	<div data-ajax-replace="https://www.canada.ca/bin/canada/alert/messages.fr.html" class="original wb-init wb-data-ajax-replace-inited" id="wb-auto-4"></div>
 
-	
+
 
 
 </header>
@@ -1178,7 +1190,7 @@ gc_header_fr_old = '''
 					</div>
 				</div>
 
-	
+
 	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
 		<h2 class="wb-inv">Menu</h2>
 		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
@@ -1186,9 +1198,9 @@ gc_header_fr_old = '''
     '''+ gc_menu_items_fr +'''
     </ul>
 	</div></nav>
-	
-	
-	
+
+
+
 	'''+ gc_breadcrumb_fr +'''
 	<div data-ajax-replace="/bin/canada/alert/messages.fr.html" class="original wb-init wb-data-ajax-replace-inited" id="wb-auto-4"></div>
 
@@ -1196,6 +1208,18 @@ gc_header_fr_old = '''
 '''
 
 gc_footer_fr = '''
+        <div class="row" style="background-color: white;">
+        <div class="pagedetails container">
+        <div class="col-sm-6 col-md-5 col-lg-4">
+        <a href="https://www.asc-csa.gc.ca/fra/formulaires/demande-information.asp" class="btn btn-default">Signaler un problème sur cette page</a>
+        </div>
+        <dl id="wb-dtmd">
+        <dt>Date modified:&#32;</dt>
+        <dd><time property="dateModified">2021-05-04</time></dd>
+        </dl>
+        </div>
+        </div>
+
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Navigation en bas de page">
             <h2 class="wb-inv">Au sujet du gouvernement</h2>
