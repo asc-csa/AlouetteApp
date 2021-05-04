@@ -5,12 +5,6 @@ from flask_babel import _ ,Babel
 app_config = Config()
 
 app_title_en = '''
-  <meta name="dcterms.title" content="Alouette I ionogram data"/>
-  <meta name="dcterms.language" content="eng"/>
-  <meta name="dcterms.creator" content="Canadian Space Agency"/>
-  <meta name="dcterms.accessRights” content="2"/>
-  <meta name="dcterms.service" content="CSA-ASC"/>
-
   <div id="header" role='region' aria-label="title" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
       <div class="">
@@ -29,12 +23,6 @@ app_title_en = '''
 '''
 
 app_title_fr = '''
-  <meta name="dcterms.title" content="Données d'ionogrammes de l'Alouette I"/>
-  <meta name="dcterms.language" content="fra"/>
-  <meta name="dcterms.creator" content="Agence spatiale canadienne"/>
-  <meta name="dcterms.accessRights” content="2"/>
-  <meta name="dcterms.service" content="CSA-ASC"/>
-
   <div id="header" role='region' aria-label="titre" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
       <div class="">
