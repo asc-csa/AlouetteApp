@@ -222,26 +222,40 @@ if app_config.DEFAULT_LANGUAGE == 'en':
     app.set_footer(gc_footer_en)
     meta_html += generate_meta_tag(
         'description',
-        'Explore the composition of the Earth’s atmosphere with data from the SCISAT satellite! SCISAT has been monitoring the atmospheric concentrations of ozone and 70 other gases since 2003.'
+        'Explore ionosphere data from Alouette I, Canada’s first satellite! Launched in 1962, ionograms from Alouette I’s have shaped the way that we understand the Earth’s upper atmosphere.'
         )
     meta_html += generate_meta_tag('keywords', '')
-    app.title="SCISAT : data exploration application for atmospheric composition"
+
+    meta_html += generate_meta_tag('dcterms.title', 'Alouette: data exploration application for historic ionograms')
+    meta_html += generate_meta_tag('language', 'eng')
+    meta_html += generate_meta_tag('dcterms.creator', 'Canadian Space Agency')
+    meta_html += generate_meta_tag('dcterms.accessRights', '2')
+    meta_html += generate_meta_tag('dcterms.service', 'CSA-ASC')
+
+    app.title="Alouette: data exploration application for historic ionograms"
     app.set_app_header(app_title_en)
 else:
     app.set_header(gc_header_fr)
     app.set_footer(gc_footer_fr)
     meta_html += generate_meta_tag(
         'description',
-        "Explorez la composition de l’atmosphère terrestre avec les données du satellite SCISAT! SCISAT surveille les concentrations atmosphériques d'ozone et de 70 gaz supplémentaires depuis 2003."
+        "Explorer les données ionosphériques d’Alouette I, le premier satellite Canadien! Lancé en 1962, les ionogrammes d’Alouette I ont grandement influencé notre compréhension de la haute atmosphère terrestre."
         )
     meta_html += generate_meta_tag('keywords', '')
-    app.title="SCISAT : application d’exploration des données de composition atmosphérique"
+
+    meta_html += generate_meta_tag('dcterms.title', 'Alouette: application d’exploration des données d’ionogrammes historiques ')
+    meta_html += generate_meta_tag('language', 'fra')
+    meta_html += generate_meta_tag('dcterms.creator', 'Agence spatiale canadienne')
+    meta_html += generate_meta_tag('dcterms.accessRights', '2')
+    meta_html += generate_meta_tag('dcterms.service', 'CSA-ASC')
+
+    app.title="Alouette: application d’exploration des données d’ionogrammes historiques "
     app.set_app_header(app_title_fr)
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
 app.set_analytics_footer(analytics_footer)
-app.set_lang(app_config.DEFAULT_LANGUAGE)   
+app.set_lang(app_config.DEFAULT_LANGUAGE)
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
 server = app.server
 server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
