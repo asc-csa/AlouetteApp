@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-29 15:06-0400\n"
+"POT-Creation-Date: 2021-05-07 15:59-0300\n"
 "PO-Revision-Date: 2020-01-20 16:09-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.1\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: alouette.py:253 alouette.py:2403 controls.py:7
 msgid "Resolute Bay, No. W. Territories"
@@ -230,7 +230,7 @@ msgid "Ionograms per month"
 msgstr "Ionogrammes par mois"
 
 #: alouette.py:1633
-msgid "Number of Ionograms"
+msgid "Number of ionograms"
 msgstr "Nombre d'ionogrammes"
 
 #: alouette.py:1643
@@ -266,11 +266,11 @@ msgid "Longitude (°)"
 msgstr ""
 
 #: alouette.py:2007
-msgid "95% Confidence Interval"
+msgid "95% Confidence interval"
 msgstr "Intervalle de confiance de 95%"
 
 #: alouette.py:2022
-msgid "Estimated Mean"
+msgid "Estimated mean"
 msgstr "Moyenne estimée"
 
 #: alouette.py:2058
@@ -570,7 +570,9 @@ msgstr "Version textuelle - Distribution géographique des ionogrammes"
 
 #: alouette.py:2455
 msgid "Text version - Data visualization (95 percent confidence interval)"
-msgstr "Version textuelle - Visualisation des données (intervalle de confiance de 95 pourcent)"
+msgstr ""
+"Version textuelle - Visualisation des données (intervalle de confiance de"
+" 95 pourcent)"
 
 #: alouette.py:2456
 msgid "Text version - Geographical visualization"
@@ -919,3 +921,10 @@ msgstr "Profondeur maximale"
 
 #~ msgid "Learn more about Alouette"
 #~ msgstr "En apprendre plus sur Alouette"
+
+#~ msgid "95% Confidence Interval"
+#~ msgstr "Intervalle de confiance de 95%"
+
+#~ msgid "Number of Ionograms"
+#~ msgstr "Nombre d'ionogrammes"
+

@@ -1630,7 +1630,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     layout_count["title"] = _("Ionograms per month")
     layout_count["xaxis"] = {"title": "Date", "automargin": True}
-    layout_count["yaxis"] = {"title": _("Number of Ionograms"), "automargin": True}
+    layout_count["yaxis"] = {"title": _("Number of ionograms"), "automargin": True}
     layout_count["dragmode"] = "select"
     layout_count["showlegend"] = False
     layout_count["autosize"] = True
@@ -2004,7 +2004,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         dict(
             fill="tonexty",
             mode="none",
-            name=_("95% Confidence Interval"),
+            name=_("95% Confidence interval"),
             type="scatter",
             x=bins,
             y=ci_lower_limits,
@@ -2019,7 +2019,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             mode="lines+markers",
             x=bins,
             y=estimated_means,
-            name=_("Estimated Mean"),
+            name=_("Estimated mean"),
             line={'color': 'rgb(18,99,168)'},
             marker={'size': 2.5},
             connectgaps=False,
