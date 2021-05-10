@@ -7,6 +7,8 @@ $(document).ready(function(){
 
     var datepicker_fixer = setInterval(date_picker_closer, 3500);
 
+    var map_link_fixer = setInterval(removeMapLink, 3500);
+
     var ariaFixes = setInterval(function(){
         var dropdowns = $('.Select-input input');
         dropdowns.removeAttr('aria-owns');
@@ -50,6 +52,14 @@ $(document).ready(function(){
             $('.DateInput_input').focus(function(){
                 $('.DateRangePicker_picker').show();
             });
+        }
+    }
+
+    function removeMapLink(){
+        if($('.mapboxgl-ctrl-attrib-inner')){
+            // console.log('found map list');
+            // clearInterval(map_link_fixer);
+            $('.mapboxgl-ctrl-attrib-inner').attr('role', 'list');
         }
     }
 
