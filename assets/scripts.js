@@ -59,7 +59,7 @@ $(document).ready(function(){
         if($('.mapboxgl-ctrl-attrib-inner')){
             // console.log('found map list');
             // clearInterval(map_link_fixer);
-            $('.mapboxgl-ctrl-attrib-inner').attr('role', 'list');
+            $('.mapboxgl-ctrl-attrib-inner a').removeAttr('role');
         }
     }
 
