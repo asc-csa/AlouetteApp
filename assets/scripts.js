@@ -5,6 +5,8 @@ $(document).ready(function(){
 
     var css_fixer = setInterval(removeBaddCss, 3500);
 
+    var datepicker_fixer = setInterval(date_picker_closer, 3500);
+
     var ariaFixes = setInterval(function(){
         var dropdowns = $('.Select-input input');
         dropdowns.removeAttr('aria-owns');
@@ -24,6 +26,32 @@ $(document).ready(function(){
             }
         }
     };
+
+    function date_picker_closer(){
+        console.log("looking for datepicker");
+        if($('#react-entry-point')){
+            clearInterval(datepicker_fixer);
+            $('#react-entry-point').keyup(function(e) {
+                var code = e.keyCode || e.which;
+            
+                if (code === 9) {  
+                    // e.preventDefault();
+                    // myFunction();
+                    console.log($(document.activeElement));
+                    if($(document.activeElement).parents('#date_picker_range').length){
+                        console.log('focused');
+                        $('.DateRangePicker_picker').show();
+                    }else{
+                        $('.DateRangePicker_picker').hide();
+                    }
+                }
+            });
+
+            $('.DateInput_input').focus(function(){
+                $('.DateRangePicker_picker').show();
+            });
+        }
+    }
 
     function removeBaddCss(){
         $("head").find('style').each(function () {
