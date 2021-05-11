@@ -645,7 +645,7 @@ def build_filtering():
                                         end_date=dt.datetime(1972, 12, 31),
                                         start_date_placeholder_text='Select start date',
                                         end_date_placeholder_text='Select end date',
-                                        display_format="Y/MM/DD",
+                                        display_format="Y-MM-DD",
                                         style={"margin-top": "5px"}
                                     ),
                                     html.Div(id='output-container-date-picker-range'),
@@ -901,7 +901,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto Previous Page'), 'data-value': -1}
                                 ),
                                 id=id+'-btn-prev',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -910,7 +911,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _("Goto page 1, Current Page"), 'aria-current': _('true'), 'data-value': 0}
                                 ),
                                 id=id+'-btn-1',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -920,7 +922,8 @@ def detail_table(id, id2):
                                 ),
                                 className='active',
                                 id=id+'-btn-2',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -929,7 +932,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto page 3'), 'data-value': 2}
                                 ),
                                 id=id+'-btn-3',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -939,7 +943,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto Next Page'), 'data-value': -2}
                                 ),
                                 id=id+'-btn-next',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             )
                         ],
                         className = 'pagination'
@@ -1758,7 +1763,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     layout_count["title"] = _("Ionograms per month")
     layout_count["xaxis"] = {"title": "Date", "automargin": True}
-    layout_count["yaxis"] = {"title": _("Number of Ionograms"), "automargin": True}
+    layout_count["yaxis"] = {"title": _("Number of ionograms"), "automargin": True}
     layout_count["dragmode"] = "select"
     layout_count["showlegend"] = False
     layout_count["autosize"] = True
@@ -2044,6 +2049,12 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     """
     start_time = dt.datetime.now()
 
+    language = get_locale()
+
+    if language == 'en':
+        confidence_interval = "95\u0025 confidence interval"
+    else:
+        confidence_interval = "Intervalle de confiance de 95%"
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
@@ -2132,7 +2143,8 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         dict(
             fill="tonexty",
             mode="none",
-            name=_("95% Confidence Interval"),
+            name=confidence_interval,
+            # name=_("95% confidence interval"),
             type="scatter",
             x=bins,
             y=ci_lower_limits,
@@ -2147,7 +2159,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
             mode="lines+markers",
             x=bins,
             y=estimated_means,
-            name=_("Estimated Mean"),
+            name=_("Estimated mean"),
             line={'color': 'rgb(18,99,168)'},
             marker={'size': 2.5},
             connectgaps=False,
