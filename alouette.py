@@ -901,7 +901,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto Previous Page'), 'data-value': -1}
                                 ),
                                 id=id+'-btn-prev',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -910,7 +911,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _("Goto page 1, Current Page"), 'aria-current': _('true'), 'data-value': 0}
                                 ),
                                 id=id+'-btn-1',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -920,7 +922,8 @@ def detail_table(id, id2):
                                 ),
                                 className='active',
                                 id=id+'-btn-2',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -929,7 +932,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto page 3'), 'data-value': 2}
                                 ),
                                 id=id+'-btn-3',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             ),
                             html.Li(
                                 html.A(
@@ -939,7 +943,8 @@ def detail_table(id, id2):
                                     **{'aria-label': _('Goto Next Page'), 'data-value': -2}
                                 ),
                                 id=id+'-btn-next',
-                                n_clicks=0
+                                n_clicks=0,
+                                tabIndex=0
                             )
                         ],
                         className = 'pagination'

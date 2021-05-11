@@ -15,6 +15,16 @@ $(document).ready(function(){
         $('.Select-input').attr('role', 'option');
     }, 3000);
 
+    $('#react-entry-point').keydown(function(e) {
+        var code = e.keyCode || e.which;
+    
+        if (code === 13 ) {  
+            // e.preventDefault();
+            // myFunction();
+            $(document.activeElement).click();
+        }
+    });
+
     // Callback function to execute when mutations are observed
     const callback = function(mutationsList, observer) {
         // Use traditional 'for loops' for IE 11
