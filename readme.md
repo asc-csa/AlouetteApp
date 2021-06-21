@@ -110,6 +110,53 @@ The customized version of dash-core-components can be found here: https://github
 Once you have downloaded the repository, enter the directory. From there copy `dash_core_components` to your `site-packages` directory within your python installation and replace the existing dash-core-components directory. If you followed the directions above and used conda you will find `site-packages` in this location:
 `/home/<your_username>/anaconda3/lib/python3.8/site-packages`
 
+## Production Installation
+This document details the installation procedure for the Alouette explorer app. The app requires Python 3.
+
+Clone the repo from the shared documents in the M://transfer drive (temporary, due to issues with gccode).
+
+Install python 3.7:
+```
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.7
+```
+Set python 3.7 as the default python3 interpreter (in case other versions were installed previously):
+
+```
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+```
+Check the version of python3. It should be on version 3.7.6:
+```
+python3 -V
+```
+Install venv:
+```
+sudo apt-get install python3-venv
+```
+Make a python 3 virtual environment and activate it:
+```
+python3 -m venv --without-pip PATH_TO_APP_FOLDER/alouette_app/alouette_venv
+source PATH_TO_APP_FOLDER/alouette_app/alouette_venv/bin/activate
+```
+Install the required packages:
+```
+cd alouette_app
+pip install –r requirements.txt
+```
+Set environment variable for the ionogram images:
+```
+IONOGRAM_PATH='/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
+export IONOGRAM_PATH
+source /etc/bash.bashrc
+```
+Run the app:
+```
+python3 app.py
+```
+By default the Alouette app will be running at the following port. To change the configured port, modify the last line of code in app.py
+
 ## Built with
 
  - [Plotly Dash](https://dash.plot.ly/) - The Python framework built on top of Flask used to develop the application. All components and visualizations on the web application are Dash objects that are created and updated in the callback functions in app.py. I would recommend that you look over Dash's comprehensive documentation (linked) if you are unsure how it works.
@@ -147,7 +194,7 @@ The current and previous roadmaps can be found on livelink for reference:
 [http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader]([http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader])
 
 ## Version
-This is v0.2 of the Alouette app. 
+This is v0.1 of the Alouette app. 
 
 ## Authors | Auteurs
  - Hansen Liu
