@@ -1,4 +1,5 @@
 
+
 ![alouette satellite](alouette.jpg)
 
 - [En Français](#Application-pour-filtrer,-télécharger-et-visualiser-les-données-Alouette-I)
@@ -102,6 +103,13 @@ For starting the application:
 
 Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
 
+This application also requires a customized version of dash-core-components, without it the application will not meet Accessibility guidelines and may encounter errors when you attempt to run it.
+
+The customized version of dash-core-components can be found here: https://github.com/asc-csa/dash-core-components
+
+Once you have downloaded the repository, enter the directory. From there copy `dash_core_components` to your `site-packages` directory within your python installation and replace the existing dash-core-components directory. If you followed the directions above and used conda you will find `site-packages` in this location:
+`/home/<your_username>/anaconda3/lib/python3.8/site-packages`
+
 ## Built with
 
  - [Plotly Dash](https://dash.plot.ly/) - The Python framework built on top of Flask used to develop the application. All components and visualizations on the web application are Dash objects that are created and updated in the callback functions in app.py. I would recommend that you look over Dash's comprehensive documentation (linked) if you are unsure how it works.
@@ -139,11 +147,12 @@ The current and previous roadmaps can be found on livelink for reference:
 [http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader]([http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader])
 
 ## Version
-This is v0.1 of the Alouette app. 
+This is v0.2 of the Alouette app. 
 
 ## Authors | Auteurs
  - Hansen Liu
  - Wasiq Mohammmad
+ - Cole DeMan
 
 
 ## Acknowledgments | Remerciments
