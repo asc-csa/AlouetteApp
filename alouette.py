@@ -74,7 +74,7 @@ class CustomDash(dash.Dash):
                 {css}
                 {meta}
             </head>
-            <body>
+            <body id="wb-cont">
                 {header}
                 {app_header}
                 {app_entry}
