@@ -1,4 +1,5 @@
 
+
 ![alouette satellite](alouette.jpg)
 
 - [En Français](#Application-pour-filtrer,-télécharger-et-visualiser-les-données-Alouette-I)
@@ -15,6 +16,8 @@ de son expérience principale était de comprendre la structure de la haute iono
 ![ionogram](ionogram.png)
 
 Ce projet est une application qui permet aux utilisateurs de filtrer les ionogrammes sur de multiples paramètres et télécharger soit les données extraites des ionogrammes sélectionnés sous forme de CSV, soit les images des ionogrammes eux-mêmes. L'application permet également aux utilisateurs de visualiser un résumé des données des ionogrammes qu'ils ont sélectionnés, à la fois sur une carte et un graphique linéaire, évitant ainsi le téléchargement des données pour des aperçus simples. 
+
+Vous pouvez accéder à cette micro application en direct au https://donnees-data.asc-csa.gc.ca/alouette-fr. 
 
 ![interface de l'application](appinterface.png)
 
@@ -86,6 +89,8 @@ satellite consists of hundreds of thousands of ionograms with a proportion now s
 
 This project is an application that allows users to filter through ionograms on multiple parameters and download either the selected ionograms’ extracted features as a CSV or the ionogram images  themselves. The application also allows users to visualize a summary of the data from their selected ionograms on both a map and a line chart, forgoing the need for downloading the data for simple insights. 
 
+The live version of this micro application is available at https://donnees-data.asc-csa.gc.ca/alouette.
+
 ![app interface](appinterface_fr.png)
 
 
@@ -101,6 +106,60 @@ For starting the application:
         python alouette.py
 
 Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
+
+This application also requires a customized version of dash-core-components, without it the application will not meet Accessibility guidelines and may encounter errors when you attempt to run it.
+
+The customized version of dash-core-components can be found here: https://github.com/asc-csa/dash-core-components
+
+Once you have downloaded the repository, enter the directory. From there copy `dash_core_components` to your `site-packages` directory within your python installation and replace the existing dash-core-components directory. If you followed the directions above and used conda you will find `site-packages` in this location:
+`/home/<your_username>/anaconda3/lib/python3.8/site-packages`
+
+## Production Installation
+This document details the installation procedure for the Alouette explorer app. The app requires Python 3.
+
+Clone the repo from the shared documents in the M://transfer drive (temporary, due to issues with gccode).
+
+Install python 3.7:
+```
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.7
+```
+Set python 3.7 as the default python3 interpreter (in case other versions were installed previously):
+
+```
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+```
+Check the version of python3. It should be on version 3.7.6:
+```
+python3 -V
+```
+Install venv:
+```
+sudo apt-get install python3-venv
+```
+Make a python 3 virtual environment and activate it:
+```
+python3 -m venv --without-pip PATH_TO_APP_FOLDER/alouette_app/alouette_venv
+source PATH_TO_APP_FOLDER/alouette_app/alouette_venv/bin/activate
+```
+Install the required packages:
+```
+cd alouette_app
+pip install –r requirements.txt
+```
+Set environment variable for the ionogram images:
+```
+IONOGRAM_PATH='/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
+export IONOGRAM_PATH
+source /etc/bash.bashrc
+```
+Run the app:
+```
+python3 app.py
+```
+By default the Alouette app will be running at the following port. To change the configured port, modify the last line of code in app.py
 
 ## Built with
 
@@ -144,6 +203,7 @@ This is v0.1 of the Alouette app.
 ## Authors | Auteurs
  - Hansen Liu
  - Wasiq Mohammmad
+ - Cole DeMan
 
 
 ## Acknowledgments | Remerciments

@@ -64,6 +64,7 @@ class CustomDash(dash.Dash):
         <!DOCTYPE html>
         <html lang='{lang}'>
             <head>
+                <meta charset="UTF-8" />
                 {analytics}
                 {metas}
                 {favicon}
@@ -74,7 +75,7 @@ class CustomDash(dash.Dash):
                 {css}
                 {meta}
             </head>
-            <body>
+            <body id="wb-cont">
                 {header}
                 {app_header}
                 {app_entry}
