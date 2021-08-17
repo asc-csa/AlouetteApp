@@ -17,6 +17,8 @@ de son expérience principale était de comprendre la structure de la haute iono
 
 Ce projet est une application qui permet aux utilisateurs de filtrer les ionogrammes sur de multiples paramètres et télécharger soit les données extraites des ionogrammes sélectionnés sous forme de CSV, soit les images des ionogrammes eux-mêmes. L'application permet également aux utilisateurs de visualiser un résumé des données des ionogrammes qu'ils ont sélectionnés, à la fois sur une carte et un graphique linéaire, évitant ainsi le téléchargement des données pour des aperçus simples. 
 
+Vous pouvez accéder à cette micro application en direct au https://donnees-data.asc-csa.gc.ca/alouette-fr. 
+
 ![interface de l'application](appinterface.png)
 
 
@@ -86,6 +88,8 @@ satellite consists of hundreds of thousands of ionograms with a proportion now s
 ![ionogramme](ionogram.png)
 
 This project is an application that allows users to filter through ionograms on multiple parameters and download either the selected ionograms’ extracted features as a CSV or the ionogram images  themselves. The application also allows users to visualize a summary of the data from their selected ionograms on both a map and a line chart, forgoing the need for downloading the data for simple insights. 
+
+The live version of this micro application is available at https://donnees-data.asc-csa.gc.ca/alouette.
 
 ![app interface](appinterface_fr.png)
 
