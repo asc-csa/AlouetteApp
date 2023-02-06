@@ -258,6 +258,10 @@ app.set_analytics(analytics_code)
 app.set_analytics_footer(analytics_footer)
 app.set_lang(app_config.DEFAULT_LANGUAGE)
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
+
+#necessary for apache config (serving to /app/ alongside CKAN)
+app.url_base_pathname = '/app/'
+
 server = app.server
 server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
 babel = Babel(server)  # Hook flask-babel to the app
