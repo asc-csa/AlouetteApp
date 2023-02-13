@@ -36,7 +36,7 @@ Pour démarrer l'application :
         pip install -r requirements.txt
         python alouette.py
 
-Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
+Lors de l'exécution, l'[application](http://127.0.0.1:8888/alouette/) se trouve à cet endroit. Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
 
 ## Construit avec
 
@@ -111,7 +111,7 @@ For starting the application:
         pip install -r requirements.txt
         python alouette.py
 
-Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
+The URL is [http://127.0.0.1:8888/scisat/)](http://127.0.0.1:8888/alouette/). Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
 
 This application also requires a customized version of dash-core-components, without it the application will not meet Accessibility guidelines and may encounter errors when you attempt to run it.
 
