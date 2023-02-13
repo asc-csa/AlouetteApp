@@ -32,7 +32,7 @@ app_title_fr = '''
         <h1 id="page-title" >Données d'ionogrammes de l'Alouette I</h1>
       </div>
       <div id="button-div" style="display: flex; align-items: center;" >
-        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/alouette.asp" class="btn btn-primary">
+        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/fra/satellites/alouette.asp" class="btn btn-primary">
           <span id="learn-more-button">En apprendre plus sur Alouette</span>
         </a>
       </div>
