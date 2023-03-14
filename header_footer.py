@@ -608,26 +608,41 @@ gc_footer_en = '''
         </div>
         <dl id="wb-dtmd">
         <dt>Date modified:&#32;</dt>
-        <dd><time property="dateModified">2021-05-04</time></dd>
+        <dd><time property="dateModified">2023-03-14</time></dd>
         </dl>
         </div>
         </div>
 
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Footer navigation">
-            <h2 class="wb-inv">About government</h2>
-            <ul class="list-unstyled colcount-sm-2 colcount-md-3">
-                        <li><a href="https://canada.ca/en/contact.html">Contact us</a></li>
-                        <li><a href="https://canada.ca/en/government/dept.html">Departments and agencies</a></li>
-                        <li><a href="https://canada.ca/en/government/publicservice.html">Public service and military</a></li>
-                        <li><a href="https://canada.ca/en/news.html">News</a></li>
-                        <li><a href="https://canada.ca/en/government/system/laws.html">Treaties, laws and regulations</a></li>
-                        <li><a href="https://canada.ca/en/transparency/reporting.html">Government-wide reporting</a></li>
-                        <li><a href="http://pm.gc.ca/en">Prime Minister</a></li>
-                        <li><a href="https://canada.ca/en/government/system.html">About government</a></li>
-                        <li><a href="http://open.canada.ca/en">Open government</a></li>
-            </ul>
-        </nav>
+				<h3 class="text-white">Government of Canada</h3>
+				<ul class="list-col-xs-1 list-col-sm-2 list-col-md-3">
+					<li><a href="https://www.canada.ca/en/contact.html">All contacts</a></li>
+					<li><a href="https://www.canada.ca/en/government/dept.html">Departments and agencies</a></li>
+					<li><a href="https://www.canada.ca/en/government/system.html">About government</a></li>
+				</ul>
+				<h4 class="text-white"><span class="wb-inv">Themes and topics</span></h4>
+				<ul class="list-unstyled colcount-sm-2 colcount-md-3">
+					<li><a href="https://www.canada.ca/en/services/jobs.html">Jobs</a></li>
+					<li><a href="https://www.canada.ca/en/services/immigration-citizenship.html">Immigration and citizenship</a></li>
+					<li><a href="https://travel.gc.ca/">Travel and tourism</a></li>
+					<li><a href="https://www.canada.ca/en/services/business.html">Business</a></li>
+					<li><a href="https://www.canada.ca/en/services/benefits.html">Benefits</a></li>
+					<li><a href="https://www.canada.ca/en/services/health.html">Health</a></li>
+					<li><a href="https://www.canada.ca/en/services/taxes.html">Taxes</a></li>
+					<li><a href="https://www.canada.ca/en/services/environment.html">Environment and natural resources</a></li>
+					<li><a href="https://www.canada.ca/en/services/defence.html">National security and defence</a></li>
+					<li><a href="https://www.canada.ca/en/services/culture.html">Culture, history and sport</a></li>
+					<li><a href="https://www.canada.ca/en/services/policing.html">Policing, justice and emergencies</a></li>
+					<li><a href="https://www.canada.ca/en/services/transport.html">Transport and infrastructure</a></li>
+					<li><a href="https://international.gc.ca/world-monde/index.aspx?lang=eng">Canada and the world</a></li>
+					<li><a href="https://www.canada.ca/en/services/finance.html">Money and finance</a></li>
+					<li><a href="https://www.canada.ca/en/services/science.html">Science and innovation</a></li>
+					<li><a href="https://www.canada.ca/en/services/indigenous-peoples.html">Indigenous peoples</a></li>
+					<li><a href="https://www.canada.ca/en/services/veterans.html">Veterans and military</a></li>
+					<li><a href="https://www.canada.ca/en/services/youth.html">Youth</a></li>
+				</ul>
+			</nav>
         </div>
         <div class="brand">
             <div class="container">
@@ -635,11 +650,11 @@ gc_footer_en = '''
                     <nav class="col-md-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">About this site</h2>
                         <ul>
-                          <li><a href="https://canada.ca/en/social.html">Social media</a></li>
-                          <li><a href="https://canada.ca/en/mobile.html">Mobile applications</a></li>
-                          <li><a href="https://canada.ca/en/government/about.html">About Canada.ca</a></li>
-                          <li><a href="https://canada.ca/en/transparency/terms.html">Terms and conditions</a></li>
-                          <li><a href="https://canada.ca/en/transparency/privacy.html">Privacy</a></li>
+                            <li><a href="https://www.canada.ca/en/social.html">Social media</a></li>
+                            <li><a href="https://www.canada.ca/en/mobile.html">Mobile applications</a></li>
+                            <li><a href="https://www.canada.ca/en/government/about.html">About Canada.ca</a></li>
+                            <li><a href="https://www.canada.ca/en/transparency/terms.html">Terms and conditions</a></li>
+                            <li><a href="https://www.canada.ca/en/transparency/privacy.html">Privacy</a></li>
                         </ul>
                     </nav>
                     <div class="col-xs-6 visible-sm visible-xs tofpg">
@@ -1214,27 +1229,40 @@ gc_footer_fr = '''
         <a href="https://www.asc-csa.gc.ca/fra/formulaires/demande-information.asp" class="btn btn-default">Signaler un problème sur cette page</a>
         </div>
         <dl id="wb-dtmd">
-        <dt>Date modified:&#32;</dt>
-        <dd><time property="dateModified">2021-05-04</time></dd>
+        <dt>Date de modification:&#32;</dt>
+        <dd><time property="dateModified">2023-03-14</time></dd>
         </dl>
         </div>
         </div>
 
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Navigation en bas de page">
-            <h2 class="wb-inv">Au sujet du gouvernement</h2>
-            <ul class="list-unstyled colcount-sm-2 colcount-md-3">
-                        <li><a href="https://canada.ca/fr/contact.html">Contactez-nous</a></li>
-                        <li><a href="https://canada.ca/fr/gouvernement/min.html">Ministères et organismes</a></li>
-                        <li><a href="https://canada.ca/fr/gouvernement/fonctionpublique.html">Fonction publique et force militaire</a></li>
-                        <li><a href="https://canada.ca/fr/nouvelles.html">Nouvelles</a></li>
-                        <li><a href="https://canada.ca/fr/gouvernement/systeme/lois.html">Traités, lois et règlements</a></li>
-                        <li><a href="https://canada.ca/fr/transparence/rapports.html">Rapports à l'échelle du gouvernement</a></li>
-                        <li><a href="https://pm.gc.ca/fr">Premier ministre</a></li>
-                        <li><a href="https://canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li>
-                        <li><a href="http://ouvert.canada.ca/">Gouvernement ouvert</a></li>
-            </ul>
-        </nav>
+				<h3 class="text-white">Gouvernement du Canada</h3>
+				<ul class="list-col-xs-1 list-col-sm-2 list-col-md-3">
+                    <li><a href="https://www.canada.ca/fr/contact.html">Toutes les coordonnées</a></li>
+					<li><a href="https://www.canada.ca/fr/gouvernement/min.html">Ministères et organismes</a></li>
+					<li><a href="https://www.canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li></ul>
+				<h4 class="text-white"><span class="wb-inv">Thèmes et sujets</span></h4>
+				<ul class="list-unstyled colcount-sm-2 colcount-md-3">
+                    <li><a href="https://www.canada.ca/fr/services/emplois.html">Emplois</a></li>
+					<li><a href="https://www.canada.ca/fr/services/immigration-citoyennete.html">Immigration et citoyenneté</a></li>
+					<li><a href="https://voyage.gc.ca/">Voyage et tourisme</a></li>
+					<li><a href="https://www.canada.ca/fr/services/entreprises.html">Entreprises</a></li>
+					<li><a href="https://www.canada.ca/fr/services/prestations.html">Prestations</a></li>
+					<li><a href="https://www.canada.ca/fr/services/sante.html">Santé</a></li>
+					<li><a href="https://www.canada.ca/fr/services/impots.html">Impôts</a></li>
+					<li><a href="https://www.canada.ca/fr/services/environnement.html">Environnement et ressources naturelles</a></li>
+					<li><a href="https://www.canada.ca/fr/services/defense.html">Sécurité nationale et défense</a></li>
+					<li><a href="https://www.canada.ca/fr/services/culture.html">Culture, histoire et sport</a></li>
+					<li><a href="https://www.canada.ca/fr/services/police.html">Services de police, justice et urgences</a></li>
+					<li><a href="https://www.canada.ca/fr/services/transport.html">Transport et infrastructure</a></li>
+					<li><a href="https://www.international.gc.ca/world-monde/index.aspx?lang=fra">Le Canada et le monde</a></li>
+					<li><a href="https://www.canada.ca/fr/services/finance.html">Argent et finance</a></li>
+					<li><a href="https://www.canada.ca/fr/services/science.html">Science et innovation</a></li>
+					<li><a href="https://www.canada.ca/fr/services/autochtones.html">Autochtones</a></li>
+					<li><a href="https://www.canada.ca/fr/services/veterans.html">Vétérans et militaires</a></li>
+					<li><a href="https://www.canada.ca/fr/services/jeunesse.html">Jeunesse</a></li></ul>
+			</nav>
         </div>
         <div class="brand">
             <div class="container">
@@ -1242,11 +1270,11 @@ gc_footer_fr = '''
                     <nav class="col-md-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">À propos de ce site</h2>
                         <ul>
-                                    <li><a href="https://canada.ca/fr/sociaux.html">Médias sociaux</a></li>
-                                    <li><a href="https://canada.ca/fr/mobile.html">Applications mobiles</a></li>
-                                    <li><a href="https://canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
-                                    <li><a href="https://canada.ca/fr/transparence/avis.html">Avis</a></li>
-                                    <li><a href="https://canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
+                            <li><a href="https://www.canada.ca/fr/sociaux.html">Médias sociaux</a></li>
+                            <li><a href="https://www.canada.ca/fr/mobile.html">Applications mobiles</a></li>
+                            <li><a href="https://www.canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
+                            <li><a href="https://www.canada.ca/fr/transparence/avis.html">Avis</a></li>
+                            <li><a href="https://www.canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
                         </ul>
                     </nav>
                     <div class="col-xs-6 visible-sm visible-xs tofpg">
