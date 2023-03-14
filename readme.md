@@ -22,6 +22,9 @@ Vous pouvez accéder à cette micro application en direct au https://donnees-dat
 ![interface de l'application](appinterface.png)
 
 
+## Dépendances
+L'application repose sur l'architecture [App-Launcher](https://github.com/asc-csa/App-Launcher). Cette application doit être installée en premier lieu.
+
 ## Démarrage rapide
 
 Les commandes suivantes peuvent être exécutées plus facilement dans un environnement virtuel (comme conda). Il peut donc être judicieux d'installer [Anaconda] (https://www.anaconda.com/distribution/) au préalable. 
@@ -33,7 +36,7 @@ Pour démarrer l'application :
         pip install -r requirements.txt
         python alouette.py
 
-Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
+Lors de l'exécution, l'[application](http://127.0.0.1:8888/alouette/) se trouve à cet endroit. Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
 
 ## Construit avec
 
@@ -94,6 +97,9 @@ The live version of this micro application is available at https://donnees-data.
 ![app interface](appinterface_fr.png)
 
 
+## Dependancies
+This application is based on [App-Launcher](https://github.com/asc-csa/App-Launcher). Make sure to install App-Launcher before moving on with Alouette.
+
 ## Quick start
 
 The following commands can be done more easily if in a virtual environment (like conda) so it may be a good idea to install [Anaconda](https://www.anaconda.com/distribution/) beforehand. 
@@ -105,7 +111,7 @@ For starting the application:
         pip install -r requirements.txt
         python alouette.py
 
-Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
+The URL is [http://127.0.0.1:8888/scisat/)](http://127.0.0.1:8888/alouette/). Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
 
 This application also requires a customized version of dash-core-components, without it the application will not meet Accessibility guidelines and may encounter errors when you attempt to run it.
 
