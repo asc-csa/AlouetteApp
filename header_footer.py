@@ -650,11 +650,11 @@ gc_footer_en = '''
                     <nav class="col-md-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">About this site</h2>
                         <ul>
-                            <li><a href="https://www.canada.ca/en/social.html">Social media</a></li>
-                            <li><a href="https://www.canada.ca/en/mobile.html">Mobile applications</a></li>
-                            <li><a href="https://www.canada.ca/en/government/about.html">About Canada.ca</a></li>
-                            <li><a href="https://www.canada.ca/en/transparency/terms.html">Terms and conditions</a></li>
-                            <li><a href="https://www.canada.ca/en/transparency/privacy.html">Privacy</a></li>
+                            <li><a href="https://www.canada.ca/en/social.html" style="color: #223677">Social media</a></li>
+                            <li><a href="https://www.canada.ca/en/mobile.html" style="color: #223677">Mobile applications</a></li>
+                            <li><a href="https://www.canada.ca/en/government/about.html" style="color: #223677">About Canada.ca</a></li>
+                            <li><a href="https://www.canada.ca/en/transparency/terms.html" style="color: #223677">Terms and conditions</a></li>
+                            <li><a href="https://www.canada.ca/en/transparency/privacy.html" style="color: #223677">Privacy</a></li>
                         </ul>
                     </nav>
                     <div class="col-xs-6 visible-sm visible-xs tofpg">
@@ -1270,11 +1270,11 @@ gc_footer_fr = '''
                     <nav class="col-md-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">À propos de ce site</h2>
                         <ul>
-                            <li><a href="https://www.canada.ca/fr/sociaux.html">Médias sociaux</a></li>
-                            <li><a href="https://www.canada.ca/fr/mobile.html">Applications mobiles</a></li>
-                            <li><a href="https://www.canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
-                            <li><a href="https://www.canada.ca/fr/transparence/avis.html">Avis</a></li>
-                            <li><a href="https://www.canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
+                            <li><a href="https://www.canada.ca/fr/sociaux.html" style="color: #223677">Médias sociaux</a></li>
+                            <li><a href="https://www.canada.ca/fr/mobile.html" style="color: #223677">Applications mobiles</a></li>
+                            <li><a href="https://www.canada.ca/fr/gouvernement/a-propos.html" style="color: #223677">À propos de Canada.ca</a></li>
+                            <li><a href="https://www.canada.ca/fr/transparence/avis.html" style="color: #223677">Avis</a></li>
+                            <li><a href="https://www.canada.ca/fr/transparence/confidentialite.html" style="color: #223677">Confidentialité</a></li>
                         </ul>
                     </nav>
                     <div class="col-xs-6 visible-sm visible-xs tofpg">
