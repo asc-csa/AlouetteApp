@@ -1161,7 +1161,7 @@ app.layout = html.Div(
                 build_stats(),
             ],
             id="mainContainer",
-            style={"display": "flex", "flex-direction": "column", "margin": "auto", "width":"75%"},
+            style={"display": "flex", "flex-direction": "column", "margin": "auto", "width":"95%"},
             role='main',
         ),
         html.Div([""], id='gc-footer'),

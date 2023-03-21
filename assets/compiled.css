@@ -34,10 +34,10 @@
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.container {
+.container_frame {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
@@ -51,7 +51,7 @@
 
 /* For devices larger than 400px */
 @media (min-width: 400px) {
-  .container {
+  .container_frame {
     width: 85%;
     padding: 0;
   }
@@ -59,7 +59,7 @@
 
 /* For devices larger than 550px */
 @media (min-width: 550px) {
-  .container {
+  .container_frame {
     width: 80%;
   }
   .column,
@@ -202,7 +202,7 @@ input[type="button"] {
   padding: 0 30px;
   color: #f2f2f2;
   text-align: center;
-  /* font-size: 11px; */
+  #font-size: 11px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0.1rem;
@@ -281,6 +281,10 @@ select {
 
 .Select-placeholder{
   color: #000000;
+}
+
+.Select--multi .Select-value-label {
+  max-width: calc( 100% - 20px );
 }
 
 /* Removes awkward default styles on some inputs for iOS */
@@ -383,6 +387,34 @@ hr {
   border-top: 1px solid #e1e1e1;
 }
 
+/* Pagination
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.page-next:after,
+.page-prev:before{
+  font-family: "Glyphicons Halflings";
+  font-weight: 400;
+  line-height: 1em;
+  position: relative;
+  top: .1em;
+}
+.page-next:after {
+  content: "\e092";
+  margin-left: .5em;
+}
+.page-prev:before
+{
+  content: "\e091";
+  margin-right: .5em;
+}
+.previous-next-container{
+  display:none !important;
+}
+
+.table_pagination{
+  text-align: center;
+}
+
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -467,11 +499,11 @@ there.
     margin-bottom: 0px !important;
     height: 45px !important;
   }
-  #learn-more-button {
+  /* #learn-more-button {
     margin-top: 0px !important;
     padding: 0 10px !important;
     font-size: 12px !important;
-  }
+  } */
   #button {
     display: flex;
     justify-content: center;
@@ -479,15 +511,17 @@ there.
 }
 
 
-.header-btn {
+/* #learn-more-button {
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
   text-transform: none;
   float: right;
   margin-right: 10px;
-  margin-top: 20px;
-}
+  margin-top: 30px;
+} */
+
+
 
 /* Larger than desktop */
 @media (min-width: 1000px) {
@@ -582,6 +616,10 @@ there.
 
 .container-display {
   display: flex;
+}
+
+.csa-graph, .map-filters{
+  margin-bottom: 15px;
 }
 
 #individual_graph,
@@ -728,9 +766,8 @@ td.CalendarDay {
   -webkit-animation-delay: 1s;
 }
 
-.csa-graph, .map-filters{
-  margin-bottom: 15px;
-}
+#generate{
+  color: #fff;
 
 #ground_station_list > div.dcc_control{
   padding-left: 0;
@@ -751,10 +788,6 @@ float: left;
 margin: 15px 10px 0px;
 }
 
-.Select--multi .Select-value-label {
-  max-width: calc( 100% - 20px );
-}
-
 /* Alerts */
 .dash-alert-danger::before {
   color: #d3080c;
@@ -772,10 +805,7 @@ margin: 15px 10px 0px;
   display: none !important;
 }
 
+/* tables */
 .dash-table-container .dash-fixed-content{
   overflow-x: scroll;
-}
-
-.previous-next-container{
-  display: none !important;
 }
