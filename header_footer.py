@@ -7,11 +7,11 @@ app_config = Config()
 app_title_en = '''
   <div id="header" role='region' aria-label="title" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
-      <div class="">
-        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
-      </div>
       <div id="title" class="">
         <h1 id="page-title" >'''+_('Alouette I ionogram data') +'''</h1>
+      </div>
+      <div class="">
+        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
       </div>
       <div id="button-div" style="display: flex; align-items: center;" >
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
@@ -25,11 +25,11 @@ app_title_en = '''
 app_title_fr = '''
   <div id="header" role='region' aria-label="titre" class="container" style="margin-bottom: 25px;">
     <div class='flex-display justify-space-between'>
-      <div class="">
-        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
-      </div>
       <div id="title" class="">
         <h1 id="page-title" >Données d'ionogrammes de l'Alouette I</h1>
+      </div>
+      <div class="">
+        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
       </div>
       <div id="button-div" style="display: flex; align-items: center;" >
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
@@ -603,8 +603,10 @@ gc_header_en_old ='''
 gc_footer_en = '''
         <div class="row" style="background-color: white;">
         <div class="pagedetails container">
+        <div class="row">
         <div class="col-sm-6 col-md-5 col-lg-4">
         <a href="https://www.asc-csa.gc.ca/eng/forms/information-request.asp" class="btn btn-default">Report a problem on this page</a>
+        </div>
         </div>
         <dl id="wb-dtmd">
         <dt>Date modified:&#32;</dt>
@@ -1225,8 +1227,10 @@ gc_header_fr_old = '''
 gc_footer_fr = '''
         <div class="row" style="background-color: white;">
         <div class="pagedetails container">
+        <div class="row">
         <div class="col-sm-6 col-md-5 col-lg-4">
         <a href="https://www.asc-csa.gc.ca/fra/formulaires/demande-information.asp" class="btn btn-default">Signaler un problème sur cette page</a>
+        </div>
         </div>
         <dl id="wb-dtmd">
         <dt>Date de modification:&#32;</dt>
