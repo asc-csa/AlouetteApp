@@ -5,38 +5,24 @@ from flask_babel import _ ,Babel
 app_config = Config()
 
 app_title_en = '''
-  <div id="header" role='region' aria-label="title" class="container" style="margin-bottom: 25px;">
-    <div class='flex-display justify-space-between'>
-      <div id="title" class="">
-        <h1 id="page-title" >'''+_('Alouette I ionogram data') +'''</h1>
-      </div>
-      <div class="">
-        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
-      </div>
-      <div id="button-div" style="display: flex; align-items: center;" >
-        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
+      <div class='flex-display justify-space-between'>
+      <h1 property="name" id="page-title">'''+_('Alouette I ionogram data') +'''</h1>
+      <div class="text-right">
+        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/alouette.asp" class="btn btn-primary">
           <span id="learn-more-button">'''+_('Learn more about Alouette') +'''</span>
         </a>
       </div>
-    </div>
   </div>
 '''
 
 app_title_fr = '''
-  <div id="header" role='region' aria-label="titre" class="container" style="margin-bottom: 25px;">
-    <div class='flex-display justify-space-between'>
-      <div id="title" class="">
-        <h1 id="page-title" >Données d'ionogrammes de l'Alouette I</h1>
-      </div>
-      <div class="">
-        <img id="csa-image" alt="CSA Logo" src="/scisat/assets/csa-logo.png" style="height: 60px; width: auto; margin: 25px;">
-      </div>
-      <div id="button-div" style="display: flex; align-items: center;" >
-        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/scisat/about.asp" class="btn btn-primary">
-          <span id="learn-more-button">En apprendre plus sur Alouette</span>
+      <div class='flex-display justify-space-between'>
+      <h1 property="name" id="page-title">'''+_('Données d'ionogrammes de l'Alouette I') +'''</h1>
+      <div class="text-right">
+        <a id="learn-more-link" href="https://www.asc-csa.gc.ca/fra/satellites/alouette.asp" class="btn btn-primary">
+          <span id="learn-more-button">'''+_('En apprendre plus sur Alouette') +'''</span>
         </a>
       </div>
-    </div>
   </div>
 '''
 
@@ -538,65 +524,21 @@ gc_header_en = '''
 </div>
 '''
 
-gc_header_en_old ='''
-<header>
-    <div id="wb-bnr" class="container">
-      <div class="row">
-        <section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-          <h2 class="wb-inv">Language selection</h2>
-          <ul class="list-inline mrgn-bttm-0">
-            <li>
-              <a lang="fr" hreflang="fr" href="'''+ app_config.FR_LINK +'''">
-              <span class="hidden-xs">Français</span>
-              <abbr title="Français" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">fr</abbr>
-              </a>
-            </li>
-          </ul>
-        </section>
-        <div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
-          <a href="https://www.canada.ca/en.html" property="URL">
-            <img src="assets/gc_theme_cdn/assets/sig-blk-en.svg" alt="Government of Canada" property="logo">
-              <span class="wb-inv"> /
-                <span lang="fr">Gouvernement du Canada</span>
-              </span></a>
-          <meta property="name" content="Government of Canada">
-          <meta property="areaServed" typeof="Country" content="Canada">
-          <link property="logo" href="assets/gc_theme_cdn/assets/sig-blk-en.svg">
-        </div>
-        <section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
-          <h2>Search</h2>
-          <form action="//www.canada.ca/en/sr/srb/sra.html" method="get" name="cse-search-box" role="search">
-            <div class="form-group wb-srch-qry">
-              <label for="wb-srch-q" class="wb-inv">Search Canadian Space Agency</label>
-              <input name="dmn" value="asc-csa.gc.ca" type="hidden">
-              <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="allq" type="search" value="" size="34" maxlength="170" placeholder="Search Canadian Space Agency">
-              <datalist id="wb-srch-q-ac"></datalist>
-            </div>
-            <div class="form-group submit">
-              <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub">
-                <span class="glyphicon-search glyphicon"></span>
-                <span class="wb-inv">Search</span></button>
-            </div>
-          </form>
-        </section>
-      </div>
-    </div>
-    <nav class="gcweb-menu" typeof="SiteNavigationElement">
-        <div class="container">
-        <h2 class="wb-inv">Menu</h2>
-        <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it."><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
-        <ul role="menu" aria-orientation="vertical" data-ajax-replace="https://wet-boew.github.io/themes-dist/GCWeb/ajax/sitemenu-v5-en.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
+app_footer_en = '''
 
-        <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
-        wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
-        <!-- DataAjaxFragmentStart -->
-        '''+ gc_menu_items_en +'''
-        <!-- DataAjaxFragmentEnd -->
-        </ul>
+        <div class="row" style="background-color: white;">
+        <div class="pagedetails container">
+        <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-4">
+        <a href="https://www.asc-csa.gc.ca/eng/forms/information-request.asp" class="btn btn-default">Report a problem on this page</a>
         </div>
-    </nav>
-    '''+ gc_breadcrumb_en +'''
-</header>
+        </div>
+        <dl id="wb-dtmd">
+        <dt>Date modified:&#32;</dt>
+        <dd><time property="dateModified">2023-03-14</time></dd>
+        </dl>
+        </div>
+        </div>
 '''
 
 
@@ -1163,65 +1105,21 @@ gc_header_fr = '''
 </div>
 '''
 
-gc_header_fr_old = '''
-<header>
-				<div id="wb-bnr" class="container">
-					<div class="row">
-						<section id="wb-lng" class="col-xs-3 col-sm-12 pull-right text-right">
-							<h2 class="wb-inv">Sélection de la langue</h2>
-							<ul class="list-inline mrgn-bttm-0">
-								<li>
-									<a lang="en" hreflang="en" href="'''+ app_config.EN_LINK +'''">
-									<span class="hidden-xs">English</span>
-									<abbr title="English" class="visible-xs h3 mrgn-tp-sm mrgn-bttm-0 text-uppercase">en</abbr>
-									</a>
-								</li>
-							</ul>
-						</section>
-						<div class="brand col-xs-9 col-sm-5 col-md-4" property="publisher" typeof="GovernmentOrganization">
-							<a href="https://www.canada.ca/en.html" property="URL">
-								<img src="assets/gc_theme_cdn/assets/sig-blk-fr.svg" alt="Gouvernement du Canada" property="logo">
-									<span class="wb-inv"> /
-										<span lang="en">Government of Canada</span>
-									</span></a>
-							<meta property="name" content="Gouvernement du Canada">
-							<meta property="areaServed" typeof="Country" content="Canada">
-							<link property="logo" href="assets/gc_theme_cdn/assets/sig-blk-fr.svg">
-						</div>
-						<section id="wb-srch" class="col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-12 col-sm-5 col-md-4">
-							<h2>Recherche</h2>
-							<form action="//www.canada.ca/fr/sr/srb/sra.html" method="get" name="cse-search-box" role="search">
-								<div class="form-group wb-srch-qry">
-									<label for="wb-srch-q" class="wb-inv">Rechercher dans l'Agence spatiale canadienne</label>
-									<input name="dmn" value="asc-csa.gc.ca" type="hidden">
-									<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="allq" type="search" value="" size="34" maxlength="170" placeholder="Rechercher dans l'Agence spatiale canadienne">
-									<datalist id="wb-srch-q-ac"></datalist>
-								</div>
-								<div class="form-group submit">
-									<button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub">
-										<span class="glyphicon-search glyphicon"></span>
-										<span class="wb-inv">Recherche</span></button>
-								</div>
-							</form>
-						</section>
-					</div>
-				</div>
+app_footer_fr = '''
 
-
-	<nav class="gcweb-v2 gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2"><div class="container">
-		<h2 class="wb-inv">Menu</h2>
-		<button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Appuyez sur la barre d'espacement pour ouvrir ou sur la touche d'échappement pour fermer le menu. Utilisez les flèches haut et bas pour choisir un élément de sous-menu. Appuyez sur la touche Entrée ou sur la flèche vers la droite pour le développer, ou sur la flèche vers la gauche ou la touche Échap pour le réduire. Utilisez les flèches haut et bas pour choisir un élément de ce niveau et la touche Entrée pour y accéder.">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
-		<ul role="menu" aria-orientation="vertical" data-ajax-replace="/content/dam/canada/sitemenu/sitemenu-v2-fr.html" class="wb-init wb-data-ajax-replace-inited" id="wb-auto-3">
-    '''+ gc_menu_items_fr +'''
-    </ul>
-	</div></nav>
-
-
-
-	'''+ gc_breadcrumb_fr +'''
-	<div data-ajax-replace="/bin/canada/alert/messages.fr.html" class="original wb-init wb-data-ajax-replace-inited" id="wb-auto-4"></div>
-
-</header>
+        <div class="row" style="background-color: white;">
+        <div class="pagedetails container">
+        <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-4">
+        <a href="https://www.asc-csa.gc.ca/fra/formulaires/demande-information.asp" class="btn btn-default">Signaler un problème sur cette page</a>
+        </div>
+        </div>
+        <dl id="wb-dtmd">
+        <dt>Date de modification:&#32;</dt>
+        <dd><time property="dateModified">2023-03-14</time></dd>
+        </dl>
+        </div>
+        </div>
 '''
 
 gc_footer_fr = '''

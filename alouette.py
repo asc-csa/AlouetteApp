@@ -35,6 +35,7 @@ class CustomDash(dash.Dash):
     footer = ''
     meta_html = ''
     app_header = ''
+    app_footer = ''
     analytics_footer = ''
 
     def set_analytics(self, code):
@@ -58,6 +59,9 @@ class CustomDash(dash.Dash):
     def set_app_header(self, header):
         self.app_header = header
 
+    def set_app_footer(self, footer):
+        self.app_footer = footer
+
     def interpolate_index(self, **kwargs):
         # Inspect the arguments by printing them
         return '''
@@ -77,8 +81,11 @@ class CustomDash(dash.Dash):
             </head>
             <body id="wb-cont">
                 {header}
-                {app_header}
-                {app_entry}
+                <main property="mainContentOfPage" typeof="WebPageElement" class="container">
+                    {app_header}
+                    {app_entry}
+                    {app_footer}
+                </main>
                 <div class="global-footer">
                     <footer id="wb-info">
                     {footer}
@@ -105,7 +112,8 @@ class CustomDash(dash.Dash):
             lang = self.lang,
             header = self.header,
             footer = self.footer,
-            app_header = self.app_header
+            app_header = self.app_header,
+            app_footer = self.app_footer
             )
 
 # get relative data folder
@@ -171,7 +179,7 @@ def generate_meta_tag(name, content):
 if __name__ == '__main__':
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
-    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
+    from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr, app_footer_en, app_footer_fr
     if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
         from analytics import analytics_code, analytics_footer
     else:
@@ -195,7 +203,7 @@ if __name__ == '__main__':
 
 else :
     prefixe="/alouette"
-    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr
+    from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr, app_footer_en, app_footer_fr
     if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
         from .analytics import analytics_code, analytics_footer
     else:
@@ -235,6 +243,7 @@ if app_config.DEFAULT_LANGUAGE == 'en':
 
     app.title="Alouette: data exploration application for historic ionograms"
     app.set_app_header(app_title_en)
+    app.set_app_footer(app_footer_en)
 else:
     app.set_header(gc_header_fr)
     app.set_footer(gc_footer_fr)
@@ -252,6 +261,7 @@ else:
 
     app.title="Alouette: application d’exploration des données d’ionogrammes historiques "
     app.set_app_header(app_title_fr)
+    app.set_app_footer(app_footer_fr)
 
 app.set_meta_tags(meta_html)
 app.set_analytics(analytics_code)
