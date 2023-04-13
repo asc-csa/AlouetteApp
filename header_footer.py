@@ -543,19 +543,6 @@ app_footer_en = '''
 
 
 gc_footer_en = '''
-        <div class="row" style="background-color: white;">
-        <div class="pagedetails container">
-        <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-4">
-        <a href="https://www.asc-csa.gc.ca/eng/forms/information-request.asp" class="btn btn-default">Report a problem on this page</a>
-        </div>
-        </div>
-        <dl id="wb-dtmd">
-        <dt>Date modified:&#32;</dt>
-        <dd><time property="dateModified">2023-03-14</time></dd>
-        </dl>
-        </div>
-        </div>
 
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Footer navigation">
@@ -1123,19 +1110,6 @@ app_footer_fr = '''
 '''
 
 gc_footer_fr = '''
-        <div class="row" style="background-color: white;">
-        <div class="pagedetails container">
-        <div class="row">
-        <div class="col-sm-6 col-md-5 col-lg-4">
-        <a href="https://www.asc-csa.gc.ca/fra/formulaires/demande-information.asp" class="btn btn-default">Signaler un problème sur cette page</a>
-        </div>
-        </div>
-        <dl id="wb-dtmd">
-        <dt>Date de modification:&#32;</dt>
-        <dd><time property="dateModified">2023-03-14</time></dd>
-        </dl>
-        </div>
-        </div>
 
         <div class="landscape">
         <nav class="container wb-navcurr" aria-label="Navigation en bas de page">
