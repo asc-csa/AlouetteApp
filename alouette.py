@@ -4,9 +4,8 @@ import pathlib
 import copy
 import configparser
 import dash_core_components as dcc
-import dash_bootstrap_components as dbc
+#import dash_bootstrap_components as dbc
 import dash_html_components as html
-import dash_dangerously_set_inner_html
 import plotly.graph_objs as go
 import pandas as pd
 import datetime as dt
@@ -15,8 +14,8 @@ from scipy import mean
 from dateutil.relativedelta import relativedelta
 from dash.dependencies import Input, Output, State
 import dash_table as dst
-from dash_table.Format import Format, Scheme
-import locale
+#from dash_table.Format import Format, Scheme
+#import locale
 import urllib.parse
 
 from zipfile import ZipFile
@@ -25,7 +24,7 @@ from os import path
 import flask
 from io import StringIO
 from flask_babel import _ ,Babel
-from flask import session, redirect, url_for, request
+from flask import session, redirect, url_for
 
 class CustomDash(dash.Dash):
 
@@ -142,29 +141,7 @@ external_scripts = [
     'https://canada.ca/etc/designs/canada/wet-boew/js/wet-boew.min.js',
     'https://canada.ca/etc/designs/canada/wet-boew/js/theme.min.js',
     'assets/scripts.js'
-
-
 ]
-
-# external_stylesheets = [
-#     # 'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/assets/favicon.ico',
-#     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/css/theme.min.css',
-#     'assets/custom.css'
-#     # 'assets/gc_theme/wet-boew/css/noscript.min.css',
-#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js'
-#     ]  # Link to external CSS
-
-# external_scripts = [
-#     'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/i18n/en.min.js',
-#     'https://cdn.plot.ly/plotly-locale-de-latest.js',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/deps/jquery.magnific-popup.min.js',
-#     'https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js',
-#     'assets/scripts.js',
-#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/wet-en.js',
-#     # 'https://www.canada.ca/etc/designs/canada/cdts/gcweb/v4_0_30/cdts/compiled/soyutils.js'
-# ]
 
 def get_config_dict():
     config = configparser.RawConfigParser()
@@ -378,7 +355,8 @@ def coords_to_float(coord):
 
 
 
-df['timestamp'] = pd.to_datetime(df['timestamp'])  # converts the timestamp to date_time objects
+# converts the timestamp to date_time objects
+df['timestamp'] = pd.to_datetime(df['timestamp'])
 
 df['lat'] = df.apply(lambda x: coords_to_float(x['lat']), axis=1)
 df['lon'] = df.apply(lambda x: coords_to_float(x['lon']), axis=1)
@@ -403,61 +381,6 @@ layout = dict(
     ),
     transition={'duration': 500},
 )
-
-
-# # Builds the layout for the header
-# def build_header():
-#     return html.Div(
-#             [
-#                 html.Div([], className="one column"),
-#                 html.Div(
-#                     [
-#                         html.Img(
-#                             src=app.get_asset_url("csa-logo.png"),
-#                             id="csa-image",
-#                             style={
-#                                 "height": "60px",
-#                                 "width": "auto",
-#                                 "margin": "25px",
-#                             },
-#                             alt="CSA Logo"
-#                         )
-#                     ],
-#                     className="one column",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.H1(
-#                             "",
-#                             style={"margin-bottom": "10px", "margin-left": "15%"},
-#                             id="page-title"),
-#                     ],
-#                     className="six columns",
-#                     id="title",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.A(
-#                             id="learn-more-button",
-#                             className="btn btn-primary header-btn",
-#                             href="http://www.asc-csa.gc.ca/eng/satellites/alouette.asp"
-#                         ),
-#                         html.A(
-#                             html.Span('FR', id='language-button'),
-#                             href='/alouette/language/fr',
-#                             id='language-link',
-#                             className="btn btn-primary header-btn"
-#                         ),
-#                     ],
-#                     className="four columns",
-#                     id="button-div",
-#                     style={"text-align": "center"}
-#                 ),
-#             ],
-#             id="header",
-#             className="row flex-display",
-#             style={"margin-bottom": "25px"},
-#         )
 
 
 # Builds the layout and components for the inputs to filter the data, as well as the ionograms/month graph and the ground stations map
@@ -527,14 +450,6 @@ def build_filtering():
                                         id="latitude-text",
                                         className="control_label",
                                     ),
-                                    # dcc.RangeSlider(
-                                    #     id="lat_slider",
-                                    #     min=-90.0,
-                                    #     max=90.0,
-                                    #     value=[-90.0, 90.0],
-                                    #     className="dcc_control",
-                                    #     marks=lat_dict,
-                                    # ),
                                     html.Div([
                                         html.Label(
                                             id="lat_min-text",
@@ -638,14 +553,6 @@ def build_filtering():
                                     id="yearslider-text",
                                     className="control_label",
                                 ),
-                                # dcc.RangeSlider(
-                                #     id="year_slider",
-                                #     min=1962,
-                                #     max=1973,
-                                #     value=[1962, 1973],
-                                #     className="dcc_control",
-                                #     marks=year_dict
-                                # ),
                                 html.Div([
                                     dcc.DatePickerRange(
                                         id='date_picker_range',
@@ -811,6 +718,7 @@ def detail_table(id, id2):
             State( id+'-btn-3-a', 'data-value'),
         ]
     )
+    
     def update_table_next(btn_prev, btn_1, btn_2, btn_3, btn_next, curr_page, btn1_value, btn2_value, btn3_value):
         session['language'] = app_config.DEFAULT_LANGUAGE
         ctx = dash.callback_context
@@ -826,7 +734,6 @@ def detail_table(id, id2):
         btn3_aria = ''
 
         if ctx.triggered:
-            start_page = curr_page
             # curr_page = curr_page + 1
             print(ctx.triggered)
             if ctx.triggered[0]['prop_id'] == id+'-btn-next.n_clicks':
@@ -1135,27 +1042,6 @@ def build_stats():
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
     ])
 
-# app.index_string = '''
-#     <!DOCTYPE html>
-#     <html ''' + html_tag_attr( 'en' ) + '''>
-#         <head>
-#             '''+ analytics_code +'''
-#             '''+ gc_head_en +'''
-#             {%metas%}
-#             <title>{%title%}</title>
-#             {%favicon%}
-#             {%css%}
-#         </head>
-#         <body vocab="http://schema.org/"  resource="#wb-webpage" typeof="WebPage">
-#             <h1>Hello World</h1>
-#             {%app_entry%}
-#             <footer>
-#                 {%config%}
-#                 {%scripts%}
-#                 {%renderer%}
-#             </footer>
-#         </body>
-#     </html>
 #     '''
 # Create app layout
 app.layout = html.Div(
@@ -1504,8 +1390,6 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
 
 
 from io import BytesIO
-
-
 
 @app.server.route('/dash/downloadImages')
 def download_images():
