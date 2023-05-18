@@ -26,6 +26,7 @@ from io import StringIO
 from flask_babel import _ ,Babel
 from flask import session, redirect, url_for
 
+
 class CustomDash(dash.Dash):
 
     analytics_code = ''
@@ -154,6 +155,7 @@ def generate_meta_tag(name, content):
     return "<meta name=\"" + name + "\" content=\"" + content + "\">"
 
 if __name__ == '__main__':
+    print ('DEBUG: Alouette Main Block used')
     prefixe=""
 #   app.run_server(debug=True)  # For development/testing
     from header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr, app_footer_en, app_footer_fr
@@ -343,6 +345,7 @@ def coords_to_float(coord):
     float
         The coordinate in float form
     """
+    
     if coord != None:
         if str(coord)[-1] == 'N' or str(coord)[-1] == 'E':
             return float(str(coord)[:-1])
@@ -352,7 +355,6 @@ def coords_to_float(coord):
             return coord
     else:
         return coord
-
 
 
 # converts the timestamp to date_time objects
@@ -720,6 +722,7 @@ def detail_table(id, id2):
     )
     
     def update_table_next(btn_prev, btn_1, btn_2, btn_3, btn_next, curr_page, btn1_value, btn2_value, btn3_value):
+        
         session['language'] = app_config.DEFAULT_LANGUAGE
         ctx = dash.callback_context
         btn1_current = 'false'
@@ -735,7 +738,7 @@ def detail_table(id, id2):
 
         if ctx.triggered:
             # curr_page = curr_page + 1
-            print(ctx.triggered)
+            #print(ctx.triggered)
             if ctx.triggered[0]['prop_id'] == id+'-btn-next.n_clicks':
                 curr_page += 1
             if ctx.triggered[0]['prop_id'] == id+'-btn-1.n_clicks':
@@ -770,8 +773,6 @@ def detail_table(id, id2):
             btn1_aria = aria_prefix + str(btn1_value+1)
             btn2_aria = aria_prefix + str(btn2_value+1) + ', ' + _('Current Page')
             btn3_aria = aria_prefix + str(btn3_value+1)
-
-        # print('curr_page: '+ str(curr_page))
 
         return [
             curr_page,
@@ -1104,11 +1105,17 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
     DataFrame
         The filtered DataFrame
     """
+    
+    #print('\nDEBUG: entering filter_dataframe()')
+    #start_time = dt.datetime.now()
 
+    #print(f'DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
+    #TODO: the next line takes time (1.5 second)
     dff = df[
         (df["timestamp"].dt.date >= dt.date(start_date_dt.year, start_date_dt.month, start_date_dt.day))
         & (df["timestamp"].dt.date <= dt.date(end_date_dt.year, end_date_dt.month, end_date_dt.day))
             ]
+    #print(f'DEBUG: filter_dataframe(), point #2 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     if (lat_min != -90) or (lat_max != 90):
         dff = dff[
             (dff["lat"] >= lat_min)
@@ -1123,7 +1130,8 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         dff = dff[
             (dff["station_name"].isin(ground_stations))
             ]
-
+    
+    #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     return dff
 
 
@@ -1171,15 +1179,11 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     int
         The number of ionograms present in the dataframe after filtering
     """
-    start_time = dt.datetime.now()
-
+    
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
-
-    print(f'update_ionograms_text: {(dt.datetime.now()-start_time).total_seconds()}')
-
     return "{:n}".format(dff.shape[0]) + " / " + "{:n}".format(406566)
 
 
@@ -1215,6 +1219,7 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     list
         The number of ground stations present in the current selection
     """
+    
     # Manually set the value for dates so that changing the date does not update the ground station list
     start_date = dt.datetime(year=1962, month=9, day=29)
     end_date = dt.datetime(year=1972, month=12, day=31)
@@ -1275,6 +1280,7 @@ def lon_validation(lon_min,lon_max):
     ],
 )
 def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
+    
     s = False
     errors = []
     if not lon_validation(lon_min, lon_max) or not lat_validation(lat_min, lat_max):
@@ -1307,6 +1313,7 @@ def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
             )
     else:
         s = True
+    
     return [
         s,
         errors,
@@ -1393,7 +1400,7 @@ from io import BytesIO
 
 @app.server.route('/dash/downloadImages')
 def download_images():
-
+    
     start_date = dt.datetime.strptime(flask.request.args.get('start_date').split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(flask.request.args.get('end_date').split('T')[0], '%Y-%m-%d')
 
@@ -1437,7 +1444,6 @@ def download_images():
     return flask.send_file(memory_file, attachment_filename=fn, as_attachment=True)
 
 
-
 # Selectors -> CSV Link
 @app.callback(
     Output("download-link-1", "href"),
@@ -1478,7 +1484,6 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
 from flask import make_response
 from ast import literal_eval
 
-
 # Flask route that handles the CSV downloads. This allows for larger files to be passed,
 # as well as avoiding generating the CSV until the download is desired
 @app.server.route('/dash/downloadCSV')
@@ -1513,7 +1518,7 @@ def download_csv():
     output : CSV
         CSV file based on the applied filters
     """
-
+    
     language = app_config.DEFAULT_LANGUAGE
 
     start_date = dt.datetime.strptime(flask.request.args.get('start_date').split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
@@ -1570,7 +1575,6 @@ def download_csv():
     else:
         output.headers["Content-Disposition"] = "attachment; filename=summary_data.csv"
     output.headers["Content-type"] = "text/csv"
-
     return output
 
 
@@ -1624,8 +1628,6 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
         A dictionary containing 2 key-value pairs: the selected data as an array of dictionaries and the histogram's
         layout as as a Plotly layout graph object.
     """
-    start_time = dt.datetime.now()
-
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
@@ -1635,7 +1637,6 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     g = dff[["file_name", "timestamp"]]
     g.index = g["timestamp"]
     g = g.resample("M").count()
-
 
     data = [
         dict(
@@ -1669,8 +1670,6 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     g["timestamp"]=g.index.strftime("%Y-%m-%d")
     table_data = g.to_dict('records')
     columns = [{"name":_("Date"), "id":"timestamp"},{"name":_("Count"),"id":"file_name"}]
-
-    print(f'make_count_figure: {(dt.datetime.now()-start_time).total_seconds()}')
 
     return [figure, columns, table_data]
 
@@ -1726,8 +1725,6 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         A dictionary containing 2 key-value pairs: the selected data as an array of Plotly scattermapbox graph objects
         and the map's layout as a Plotly layout graph object.
     """
-    start_time = dt.datetime.now()
-
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
@@ -1735,7 +1732,8 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
 
     traces = []
     table_data = []
-    for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+    grouped_data = filtered_data.groupby(["station_name", "lat", "lon"])
+    for station_details, dfff in grouped_data:
         template = {"station":"","lat":"","long":"","count":""}
         template["station"] = station_details[0]
         template["lat"] = station_details[1]
@@ -1873,11 +1871,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         transition={'duration': 500},
     )
 
-    print(f'generate_geo_map: {(dt.datetime.now()-start_time).total_seconds()}')
-
     columns = [{"name":_("Ground station"), "id":"station"},{"name":_("Latitude"),"id":"lat"},{"name":_("Longitude"),"id":"long"},{"name":_("Ionograms count"),"id":"count"}]
-
-
     return [{"data": stations, "layout": layout}, columns, table_data]
 
 
@@ -1942,10 +1936,8 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         A dictionary containing 2 key-value pairs: the selected data as an array of dictionaries and the chart's layout
         as a Plotly layout graph object.
     """
-    start_time = dt.datetime.now()
 
     language = get_locale()
-
     if language == 'en':
         confidence_interval = "95\u0025 confidence interval"
     else:
@@ -1962,6 +1954,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ci_lower_limits = []
     bins = []
     title=""
+    
     # bucketing the data
     if x_axis_selection == 'timestamp':
         dff.index = dff["timestamp"]
@@ -2116,9 +2109,6 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     )
 
     figure = dict(data=data, layout=layout)
-
-    print(f'make_viz_chart: {(dt.datetime.now()-start_time).total_seconds()}')
-
     return [figure, columns, table_data]
 
 # Selectors -> viz map
@@ -2182,7 +2172,6 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         A dictionary containing 2 key-value pairs: the selected data as an array of Plotly scattermapbox graph objects
         and the map's layout as a Plotly layout graph object.
     """
-    start_time = dt.datetime.now()
 
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
@@ -2191,23 +2180,26 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
 
     traces = []
     table_data = []
-
-    for station_details, dfff in filtered_data.groupby(["station_name", "lat", "lon"]):
+    
+    grouped_data = filtered_data.groupby(["station_name", "lat", "lon"])
+    means = grouped_data[var_selection].mean()
+    medians = grouped_data[var_selection].median()
+    for station_details, dfff in grouped_data:
         template = {"station":"","lat":"","long":"","count":"", "mean":"", "median":""}
         template["station"] = station_details[0]
         template["lat"] = station_details[1]
         template["long"] = station_details[2]
         template["count"] = len(dfff)
-        template["mean"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].mean()[station_details[0]][0]
-        template["median"] = "%.2f" % filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].median()[station_details[0]][0]
+        template["mean"] =   "%.2f" % means[station_details[0]][0]
+        template["median"] = "%.2f" % medians[station_details[0]][0]
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
             lat=station_details[1],
             lon=station_details[2],
             count=len(dfff),
-            mean=filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].mean()[station_details[0]][0],
-            median=filtered_data.groupby(["station_name", "lat", "lon"])[var_selection].median()[station_details[0]][0]
+            mean=means[station_details[0]][0],
+            median=medians[station_details[0]][0]
         )
         traces.append(trace)
 
@@ -2345,8 +2337,6 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         transition={'duration': 500},
     )
 
-    print(f'make_viz_map: {(dt.datetime.now()-start_time).total_seconds()}')
-
     return [{"data": stations, "layout": layout}, columns, table_data]
 
 
@@ -2401,7 +2391,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         [Input('none', 'children')], # A placeholder to call the translations upon startup
 )
 def translate_static(x):
-    print('Translating...')
+
     return [
                 _("Ionograms selected") + " / " + _("Total number of ionograms"),
                 _("Launched in 1962, Alouette I sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized. These data were used to fuel hundreds of scientific papers at the time. Although ionosphere data derived from inversions and this dataset are readily available, the raw data from Alouette I’s ionograms allow for further studies due to scientific advancements since they were acquired. In the past, accessing this data was difficult, which limited its use, interpretation, and analysis on a larger scale."),
@@ -2529,7 +2519,6 @@ def update_language_button(x):
         return 'FR', prefixe+'/language/fr'
 
 
-
 @babel.localeselector
 def get_locale():
     # if the user has set up the language manually it will be stored in the session,
@@ -2544,11 +2533,10 @@ def set_language(language=None):
     """
 
     session['language'] = app_config.DEFAULT_LANGUAGE
-
     return redirect(url_for('/'))
 
 
 if __name__ == '__main__':
     app.run_server(debug=True, host='0.0.0.0', port=8888)  # For the server
 
-print('Loading complete.')
+print('Alouette loaded.')
