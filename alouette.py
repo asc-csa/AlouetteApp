@@ -1184,7 +1184,7 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
-    return "{:n}".format(dff.shape[0]) + " / " + "{:n}".format(406566)
+    return "{:n}".format(dff.shape[0]) + " / " + "{:n}".format(717298)
 
 
 # Selectors -> ground stations
