@@ -185,6 +185,7 @@ if __name__ == '__main__':
 
 else :
     prefixe="/alouette"
+    print ('Alouette Alternate Block used')
     from .header_footer import gc_header_en, gc_footer_en, gc_header_fr, gc_footer_fr, app_title_en, app_title_fr, app_footer_en, app_footer_fr
     if(path.exists(os.path.dirname(os.path.abspath(__file__)) + r"/analytics.py")):
         from .analytics import analytics_code, analytics_footer
@@ -197,7 +198,10 @@ else :
     path_data=app_config.DATA_PATH
     prefixe=app_config.APP_PREFIX
 
-    df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
+    try:
+        df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
+    except:
+        df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = CustomDash(
         __name__,
