@@ -154,6 +154,9 @@ def get_config_dict():
 def generate_meta_tag(name, content):
     return "<meta name=\"" + name + "\" content=\"" + content + "\">"
 
+def generate_meta_tag_with_title(name, content, title):
+    return "<meta name=\"" + name + "\" title=\"" + title + "\" content=\"" + content + "\">"
+
 if __name__ == '__main__':
     print ('DEBUG: Alouette Main Block used')
     prefixe=""
@@ -215,7 +218,7 @@ if app_config.DEFAULT_LANGUAGE == 'en':
     meta_html += generate_meta_tag('keywords', '')
 
     meta_html += generate_meta_tag('dcterms.title', 'Alouette: data exploration application for historic ionograms')
-    meta_html += generate_meta_tag('language', 'eng')
+    meta_html += generate_meta_tag_with_title('dcterms.language', 'eng', 'ISO639-2')
     meta_html += generate_meta_tag('dcterms.creator', 'Canadian Space Agency')
     meta_html += generate_meta_tag('dcterms.accessRights', '2')
     meta_html += generate_meta_tag('dcterms.service', 'CSA-ASC')
@@ -233,7 +236,7 @@ else:
     meta_html += generate_meta_tag('keywords', '')
 
     meta_html += generate_meta_tag('dcterms.title', 'Alouette: application d’exploration des données d’ionogrammes historiques ')
-    meta_html += generate_meta_tag('language', 'fra')
+    meta_html += generate_meta_tag_with_title('dcterms.language', 'fra', 'ISO639-2')
     meta_html += generate_meta_tag('dcterms.creator', 'Agence spatiale canadienne')
     meta_html += generate_meta_tag('dcterms.accessRights', '2')
     meta_html += generate_meta_tag('dcterms.service', 'CSA-ASC')
