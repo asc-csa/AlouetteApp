@@ -117,7 +117,8 @@ class CustomDash(dash.Dash):
             )
 
 # get relative data folder
-PATH = pathlib.Path(__file__).parent
+PTH = '/home/ckanportal/App-Launcher/'
+PATH = pathlib.Path(__file__).parent.absolute()
 DATA_PATH = PATH.joinpath("data").resolve()  # path to "data" folder
 ASSET_PATH = PATH.joinpath("public").resolve()  # path to "assets" folder
 
@@ -146,7 +147,7 @@ external_scripts = [
 
 def get_config_dict():
     config = configparser.RawConfigParser()
-    config.read('config.cfg')
+    config.read(PTH+'config.cfg')
     if not hasattr(get_config_dict, 'config_dict'):
         get_config_dict.config_dict = dict(config.items('TOKENS'))
     return get_config_dict.config_dict
@@ -174,7 +175,7 @@ if __name__ == '__main__':
     path_data=app_config.DATA_PATH
     prefixe=app_config.APP_PREFIX
 
-    df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
+    df = pd.read_csv(PTH+r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
 
     app = CustomDash(
     __name__,
@@ -198,10 +199,7 @@ else :
     path_data=app_config.DATA_PATH
     prefixe=app_config.APP_PREFIX
 
-    try:
-        df = pd.read_csv(r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
-    except:
-        df = pd.read_csv(r'data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
+    df = pd.read_csv(PTH+r'applications/alouette/data/final_alouette_data.csv')  # edit for compatibility with CKAN portal (e.g. API to dataframe)
     tokens = get_config_dict()
     app = CustomDash(
         __name__,
@@ -265,7 +263,8 @@ babel = Babel(server)  # Hook flask-babel to the app
 
 
 
-IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
+#IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
+IONOGRAM_PATH = '/storage/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images for testing
 MAX_IONOGRAM = 100
 # IONOGRAM_PATH = '/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images on server
 
