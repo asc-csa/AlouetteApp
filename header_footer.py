@@ -6,7 +6,7 @@ app_config = Config()
 
 app_title_en = '''
       <h1 property="name" id="page-title">International Satellites for Ionospheric Studies ionogram data</h1>
-      <div class="text-right">
+      <div class="text-right" style="width: 97%;">
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/alouette.asp" class="btn btn-primary">
           <span id="learn-more-button">Learn more about Alouette-ISIS</span>
         </a>
@@ -15,7 +15,7 @@ app_title_en = '''
 
 app_title_fr = '''
       <h1 property="name" id="page-title">Données des satellites internationaux d'étude de l'ionosphère</h1>
-      <div class="text-right">
+      <div class="text-right" style="width: 97%;">
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/fra/satellites/alouette.asp" class="btn btn-primary">
           <span id="learn-more-button">En apprendre plus sur Alouette-ISIS</span>
         </a>
