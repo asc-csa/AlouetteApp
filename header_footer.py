@@ -6,10 +6,10 @@ app_config = Config()
 
 app_title_en = '''
       <div class='flex-display justify-space-between'>
-      <h1 property="name" id="page-title">Alouette I ionogram data</h1>
+      <h1 property="name" id="page-title">International Satellites for Ionospheric Studies ionogram data</h1>
       <div class="text-right">
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/eng/satellites/alouette.asp" class="btn btn-primary">
-          <span id="learn-more-button">Learn more about Alouette</span>
+          <span id="learn-more-button">Learn more about Alouette-ISIS</span>
         </a>
       </div>
   </div>
@@ -17,10 +17,10 @@ app_title_en = '''
 
 app_title_fr = '''
       <div class='flex-display justify-space-between'>
-      <h1 property="name" id="page-title">Données d'ionogrammes de l'Alouette I</h1>
+      <h1 property="name" id="page-title">Données d'ionogrammes des satellites internationaux d'étude de l'ionosphère</h1>
       <div class="text-right">
         <a id="learn-more-link" href="https://www.asc-csa.gc.ca/fra/satellites/alouette.asp" class="btn btn-primary">
-          <span id="learn-more-button">En apprendre plus sur Alouette</span>
+          <span id="learn-more-button">En apprendre plus sur Alouette-ISIS</span>
         </a>
       </div>
   </div>

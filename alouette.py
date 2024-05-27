@@ -215,7 +215,7 @@ if app_config.DEFAULT_LANGUAGE == 'en':
     app.set_footer(gc_footer_en)
     meta_html += generate_meta_tag(
         'description',
-        'Explore ionosphere data from Alouette I, Canada’s first satellite! Launched in 1962, ionograms from Alouette I’s have shaped the way that we understand the Earth’s upper atmosphere.'
+        'Explore ionosphere data from Alouette I, Canada’s first satellite! Launched in 1962, ionograms have shaped the way that we understand the Earth’s upper atmosphere.'
         )
     meta_html += generate_meta_tag('keywords', '')
 
@@ -233,7 +233,7 @@ else:
     app.set_footer(gc_footer_fr)
     meta_html += generate_meta_tag(
         'description',
-        "Explorer les données ionosphériques d’Alouette I, le premier satellite Canadien! Lancé en 1962, les ionogrammes d’Alouette I ont grandement influencé notre compréhension de la haute atmosphère terrestre."
+        "Explorer les données ionosphériques d’Alouette I, le premier satellite Canadien! Lancé en 1962, les ionogrammes ont grandement influencé notre compréhension de la haute atmosphère terrestre."
         )
     meta_html += generate_meta_tag('keywords', '')
 
@@ -2396,12 +2396,13 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     ],
         [Input('none', 'children')], # A placeholder to call the translations upon startup
 )
+
 def translate_static(x):
 
     return [
                 _("Ionograms selected") + " / " + _("Total number of ionograms"),
-                _("Launched in 1962, Alouette I sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized. These data were used to fuel hundreds of scientific papers at the time. Although ionosphere data derived from inversions and this dataset are readily available, the raw data from Alouette I’s ionograms allow for further studies due to scientific advancements since they were acquired. In the past, accessing this data was difficult, which limited its use, interpretation, and analysis on a larger scale."),
-                _("This application provides users the ability to select, download and visualize Alouette I's data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
+                _("Launched in 1962, Alouette I scientific satellite marked Canada's entry into the space age and was seen by many as initiating the most progressive space program of that era. International Satellites for Ionospheric Studies (ISIS) spacecrafts sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized. These data were used to fuel hundreds of scientific papers at the time. Although ionosphere data derived from inversions and this dataset are readily available, the raw data from ionograms allow for further studies due to scientific advancements since they were acquired. In the past, accessing this data was difficult, which limited its use, interpretation, and analysis on a larger scale."),
+                _("This application provides users the ability to select, download and visualize ionogram data. Please note that the metadata and parameters extracted from the ionogram images ([see more about the extraction process](https://github.com/asc-csa/Alouette_extract)) are provided primarily for demonstration purposes. These values are subject to error, and should not be directly used in a scientific context."),
                 _("Visit our GitHub page to learn more about the [code used to make this application](https://github.com/asc-csa/AlouetteApp) and the [code used to extract metadata and parameters from the ionogram images](https://github.com/asc-csa/Alouette_extract). The dataset can also be accessed in [CSA's Open Government Portal](https://data.asc-csa.gc.ca/en/dataset/221c1c75-4c42-4286-a4ce-ca6c3027b7fe)"),
                 _("Select data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
