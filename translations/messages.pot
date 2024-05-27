@@ -363,7 +363,12 @@ msgstr ""
 
 #: alouette.py:2501
 msgid ""
-"Launched in 1962, Alouette I sent radio waves of different frequencies "
+"Launched in 1962, Alouette I scientific satellite marked Canada's entry "
+"into the space age and was seen by many as initiating the most "
+"progressive space program of that era. Launched in 1969 and 1971, "
+"Canada's International Satellites for Ionospheric Studies (ISIS) "
+"satellites were used to study the ionosphere and the aurora borealis. "
+"ISIS satellites sent radio waves of different frequencies "
 "into the topmost layer of the atmosphere, known as the ionosphere, and "
 "collected data on the depth of penetration of these waves. The results of"
 " this were sent to ground stations around the world and stored on films, "
