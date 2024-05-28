@@ -617,23 +617,42 @@ def build_filtering():
                             id="map-options",
                             className="",
                         ),
+                        
                         html.Div(
                             [
-                                html.A(
-                                    html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
-                                    id='download-link-1',
-                                    # download='rawdata.csv',
-                                    href="",
-                                    target="_blank",
-                                    className="btn btn-primary"
-                                ),
-                                html.A(
-                                    html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
-                                    id='download-link-2',
-                                    style={"margin-left": "5px"},
-                                    className="btn btn-primary"
-                                ),
+                                html.Div ([html.P("[Alouette/ISIS - Label]")]),
+                                html.P("[Alouette/ISIS] - Dropdownlist")
+                            ],                       
+                        ),                        
+                        
+                        html.Div(
+                            [
+                            html.Div(
+                                [
+                                    html.A(
+                                        html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
+                                        id='download-link-1',
+                                        # download='rawdata.csv',
+                                        href="",
+                                        target="_blank",
+                                        className="btn btn-primary"
+                                    ),
+                                ],
+                                className="col-md-6"
+                            ),
+                            html.Div(
+                                [
+                                    html.A(
+                                        html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
+                                        id='download-link-2',
+                                        style={"margin-left": "5px"},
+                                        className="btn btn-primary"
+                                    ),
+                                ],
+                                className="col-md-6"
+                            ),
                             ],
+                            className='row'
                         ),
                         html.Div(children=html.P(id="download_selection"),className="wb-inv"),
                         html.Div ([html.P(id="Download_limit")]),
@@ -685,7 +704,6 @@ def build_filtering():
                             className="col-md-6",
                         ),
                     ],
-                    className="row"
                 ),
             ],
             className="pretty_container twelve columns",
