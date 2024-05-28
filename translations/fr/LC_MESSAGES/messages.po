@@ -509,6 +509,10 @@ msgstr "Filtrer par date :"
 msgid "Select ground stations:"
 msgstr "Sélectionner les stations :"
 
+#: alouette.py:2533
+msgid "Select spacecrafts:"
+msgstr "Sélectionner les satellites :"
+
 #: alouette.py:2522
 msgid "Download summary data as CSV"
 msgstr "Télécharger la synthèse CSV"

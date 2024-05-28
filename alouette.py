@@ -612,19 +612,16 @@ def build_filtering():
                                         **{'aria-label': 'Select plotted value'}
                                     ),
                                     html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
-
                             ],
                             id="map-options",
                             className="",
                         ),
-                        
                         html.Div(
                             [
-                                html.Div ([html.P("[Alouette/ISIS - Label]")]),
-                                html.P("[Alouette/ISIS] - Dropdownlist")
+                                html.Div ([html.P("_")]),
+                                html.P("_")
                             ],                       
                         ),                        
-                        
                         html.Div(
                             [
                             html.Div(

@@ -464,6 +464,10 @@ msgstr ""
 msgid "Select ground stations:"
 msgstr ""
 
+#: alouette.py:2533
+msgid "Select spacecrafts:"
+msgstr ""
+
 #: alouette.py:2522
 msgid "Download summary data as CSV"
 msgstr ""
