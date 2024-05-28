@@ -585,12 +585,17 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
+                                    html.P(
+                                        id="groundstations-text",
+                                        className="control_label",
+                                    ),
                                     html.Div(
                                         [
                                             html.Label(
-                                                id="groundstations-text",
+                                                id="groundstations-label-text",
                                                 htmlFor="ground_station_list_dropdown",
                                                 className="control_label",
+                                                hidden = True
                                             ),
                                             dcc.Dropdown(
                                                 id="ground_station_list",
@@ -628,10 +633,10 @@ def build_filtering():
                                     style={"margin-left": "5px"},
                                     className="btn btn-primary"
                                 ),
-                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
-                                html.Div ([html.B(id="Download_limit")]),
                             ],
                         ),
+                        html.Div(children=html.P(id="download_selection"),className="wb-inv"),
+                        html.Div ([html.P(id="Download_limit")]),
                     ],
                     className="map-filters"
                 ),
