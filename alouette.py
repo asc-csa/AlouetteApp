@@ -310,10 +310,21 @@ station_name_options = [
     {'label': _('Kauai, Hawaii'), 'value': 'Kauai, Hawaii'},
     {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}]
 
+# Getting satellites
+satellites_options = [
+    {'label': _('Alouette 1'), 'value': 'Alouette 1'},
+    {'label': _('ISIS 1'), 'value': 'ISIS 1'},
+    {'label': _('ISIS 2'), 'value': 'ISIS 2'}]
+
 # Getting only the values of the station names
 station_values = []
 for station in station_name_options:
     station_values.append(station['value'])
+
+# Getting only the values of the satellites
+satellites_values = []
+for satellite in satellites_options:
+    satellites_values.append(satellite['value'])
 
 x_axis_options = [
     {'label': _('Date'), 'value': ('timestamp')},
@@ -584,54 +595,99 @@ def build_filtering():
                         ),
                         html.Div(
                             [
-                                html.Div([
-                                    html.Div(
-                                        [
-                                            html.Label(
-                                                id="groundstations-text",
-                                                htmlFor="ground_station_list_dropdown",
-                                                className="control_label",
-                                            ),
-                                            dcc.Dropdown(
-                                                id="ground_station_list",
-                                                options=[],
-                                                placeholder=_("Sélectionner | Select"),
-                                                multi=True,
-                                                value=station_values,
-                                                className="dcc_control",
-                                                label = 'Label test'
-                                            ),
-                                        ],
-                                        className="drop_down col-md-6",
-                                        role="listbox",
-                                        **{'aria-label': 'Select plotted value'}
+                            html.Div(
+                                [
+                                    html.P(
+                                        id="groundstations-text",
+                                        className="control_label",
                                     ),
-                                    html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
-
+                                    html.Div([
+                                        html.Label(
+                                            id="groundstations-label-text",
+                                            htmlFor="ground_station_list_dropdown",
+                                            className="control_label",
+                                            hidden = True
+                                        ),
+                                        dcc.Dropdown(
+                                            id="ground_station_list",
+                                            options=[],
+                                            placeholder=_("Sélectionner | Select"),
+                                            multi=True,
+                                            value=station_values,
+                                            className="dcc_control",
+                                            label = 'Label test'
+                                        )
+                                    ]
+                                ),
+                                html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")
+                                ],
+                                className="drop_down col-md-6",
+                                role="listbox",
+                                **{'aria-label': 'Select plotted value'}
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        id="satellites-text",
+                                        className="control_label",
+                                    ),
+                                    html.Div([
+                                        html.Label(
+                                            id="satellites-label-text",
+                                            htmlFor="satellite_list_dropdown",
+                                            className="control_label",
+                                            hidden = True
+                                        ),
+                                        dcc.Dropdown(
+                                            id="satellite_list",
+                                            options=[],
+                                            placeholder=_("Sélectionner | Select"),
+                                            multi=True,
+                                            value=station_values,
+                                            className="dcc_control",
+                                            label = 'Label test'
+                                        )
+                                    ]),
+                                html.Div(children=html.P(id="satellite_selection"),className="wb-inv")
+								],
+                                className="drop_down col-md-6",
+                                role="listbox",
+                                **{'aria-label': 'Select plotted value'}
+                            ),
                             ],
-                            id="map-options",
-                            className="",
+                            className="row",
                         ),
                         html.Div(
                             [
-                                html.A(
-                                    html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
-                                    id='download-link-1',
-                                    # download='rawdata.csv',
-                                    href="",
-                                    target="_blank",
-                                    className="btn btn-primary"
-                                ),
-                                html.A(
-                                    html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
-                                    id='download-link-2',
-                                    style={"margin-left": "5px"},
-                                    className="btn btn-primary"
-                                ),
-                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
-                                html.Div ([html.B(id="Download_limit")]),
+                            html.Div(
+                                [
+                                    html.A(
+                                        html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
+                                        id='download-link-1',
+                                        # download='rawdata.csv',
+                                        href="",
+                                        target="_blank",
+                                        className="btn btn-primary"
+                                    ),
+                                ],
+                                className="col-md-6"
+                            ),
+                            html.Div(
+                                [
+                                    html.A(
+                                        html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
+                                        id='download-link-2',
+                                        style={"margin-left": "5px"},
+                                        className="btn btn-primary"
+                                    ),
+                                ],
+                                className="col-md-6"
+                            ),
                             ],
+                            className='row'
                         ),
+                        html.Div(children=html.P(id="download_selection"),className="wb-inv"),
+                        html.Div ([html.P(id="Download_limit")]),
                     ],
                     className="map-filters"
                 ),
@@ -680,7 +736,6 @@ def build_filtering():
                             className="col-md-6",
                         ),
                     ],
-                    className="row"
                 ),
             ],
             className="pretty_container twelve columns",
@@ -1077,7 +1132,7 @@ app.layout = html.Div(
 
 
 # Helper functions
-def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Filter the extracted ionogram dataframe on multiple parameters.
 
     Called for every component.
@@ -1107,6 +1162,9 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
 
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
     -------
@@ -1138,6 +1196,10 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         dff = dff[
             (dff["station_name"].isin(ground_stations))
             ]
+    #if (the_satellites is not None) and (the_satellites != []):
+        #dff = dff[
+            #(dff["satellite_name"].isin(the_satellites))
+            #]
     
     #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     return dff
@@ -1154,9 +1216,10 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Update the component that counts the number of ionograms selected.
 
     Parameters
@@ -1182,6 +1245,9 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     int
@@ -1191,7 +1257,7 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
     return "{:n}".format(dff.shape[0]) + " / " + "{:n}".format(699360)
 
 
@@ -1232,12 +1298,55 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     start_date = dt.datetime(year=1962, month=9, day=29)
     end_date = dt.datetime(year=1972, month=12, day=31)
 
-
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
     if len(dff['station_name'].unique()) < 32: # if we have selected a subset of ground stations, return the selected list
         return list(dff['station_name'].unique())
     else:
         return [] # if we have not selected any stations, keep the selection box empty
+
+# Selectors -> satellites
+@app.callback(
+    Output("satellite_list", "value"),
+    [
+        Input("lat_min", "value"),
+        Input("lat_max", "value"),
+        Input("lon_min", "value"),
+        Input("lon_max", "value"),
+    ],
+)
+def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
+    """Update the list of satellites selected based on the other user-selected parameters.
+
+    Parameters
+    ----------
+    lat_min : double
+        Minimum value of the latitude stored as a double.
+
+    lat_max : double
+        Maximum value of the latitude stored as a double.
+
+    lon_min : double
+        Minimum value of the longitude stored as a double.
+
+    lon_max : double
+        Maximum value of the longitude stored as a double.
+
+    Returns
+    -------
+    list
+        The number of satellites present in the current selection
+    """
+    
+    # Manually set the value for dates so that changing the date does not update the satellite list
+    start_date = dt.datetime(year=1962, month=9, day=29)
+    end_date = dt.datetime(year=1972, month=12, day=31)
+
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
+    #if len(dff['satellite_name'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
+        #return list(dff['satellite_name'].unique())
+    #else:
+        #return [] # if we have not selected any satellites, keep the selection box empty
+    return []
 
 @app.callback(
     Output("lat_alert", "hidden"),[
@@ -1377,9 +1486,10 @@ def date_validation(start_date, end_date):
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Updates the link to the Ionogram images download
 
     Returns
@@ -1397,7 +1507,8 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
         'lat_max': lat_max,
         'lon_min': lon_min,
         'lon_max': lon_max,
-        'ground_stations': ground_stations
+        'ground_stations': ground_stations,
+        'the_satellites': the_satellites
     }
 
     link = prefixe + '/dash/downloadImages?' + urllib.parse.urlencode(values)
@@ -1463,9 +1574,10 @@ def download_images():
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Updates the link to the CSV download
 
     Returns
@@ -1483,7 +1595,8 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         'lat_max': lat_max,
         'lon_min': lon_min,
         'lon_max': lon_max,
-        'ground_stations': ground_stations
+        'ground_stations': ground_stations,
+        'the_satellites': the_satellites
     }
 
     link = prefixe + '/dash/downloadCSV?' + urllib.parse.urlencode(values)
@@ -1602,9 +1715,10 @@ def download_csv():
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Create and update the histogram of selected iongograms over the given time range.
 
     Parameters
@@ -1630,6 +1744,9 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     dict
@@ -1641,7 +1758,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     layout_count = copy.deepcopy(layout)
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
     g = dff[["file_name", "timestamp"]]
     g.index = g["timestamp"]
     g = g.resample("M").count()
@@ -1697,9 +1814,10 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Create and update the map of ground stations for selected iongograms.
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
@@ -1727,6 +1845,9 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     dict
@@ -1736,7 +1857,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
 
     traces = []
     table_data = []
@@ -1901,9 +2022,10 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Create and update the chart for visualizing selected ionograms based on varying x and y-axis selection.
 
     Displays the mean value from the selected x-axis with a calculated 95% confidence interval, displaying the
@@ -1938,6 +2060,9 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     dict
@@ -1953,10 +2078,9 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
 
     confidence = 0.95
-
     estimated_means = []
     ci_upper_limits = []
     ci_lower_limits = []
@@ -2137,9 +2261,10 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         Input("lon_min", "value"),
         Input("lon_max", "value"),
         Input("ground_station_list", "value"),
+        Input("satellite_list", "value")
     ],
 )
-def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None):
+def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
     """Create and update a map visualizing the selected ionograms' values for the selected variable by ground station.
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
@@ -2174,6 +2299,9 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    the_satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     dict
@@ -2184,7 +2312,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
 
     traces = []
     table_data = []
@@ -2361,6 +2489,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("lon_alert", "children"),
         Output("date_alert", "children"),
         Output("ground_station_selection", "children"),
+        Output("satellite_selection", "children"),
         Output("lat_selection", "children"),
         Output("lon_selection", "children"),
         Output("date_selection", "children"),
@@ -2374,6 +2503,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("Map_description-1", "children"),
         Output("yearslider-text", "children"),
         Output("groundstations-text", "children"),
+        Output("satellites-text", "children"),
         Output("download-button-1", "children"),
         Output("download-button-2", "children"),
         Output("Graph_description-1", "children"),
@@ -2386,6 +2516,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Output("date_picker_range", "start_date_placeholder_text"),
         Output("date_picker_range", "end_date_placeholder_text"),
         Output("ground_station_list", "options"),
+        Output("satellite_list", "options"),
         Output("x_axis_selection_1", "options"),
         Output("y_axis_selection_1", "options"),
         Output("y_axis_selection_2", "options"),
@@ -2411,6 +2542,7 @@ def translate_static(x):
                 _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
                 _("Selection of the ground stations"),
+                _("Selection of the satellites"),
                 _("Selection of the range of latitude "),
                 _("Selection of the range of longitude"),
                 _("Date selection"),
@@ -2424,6 +2556,7 @@ def translate_static(x):
                 _("Map of the world showing ground stations. Each station is represented by a circle, the size of which depends on the number of ionograms at each station."),
                 _("Filter by date:"),
                 _("Select ground stations:"),
+                _("Select spacecrafts:"),
                 _('Download summary data as CSV'),
                 _('Download selected ionogram images'),
                 _("Graph showing the number of ionograms captured during each month. The X-axis indicates the date and the Y-axis indicates the number of ionograms."),
@@ -2468,6 +2601,11 @@ def translate_static(x):
                     {'label': _('Mojave, California'), 'value': 'Mojave, California'},
                     {'label': _('Kauai, Hawaii'), 'value': 'Kauai, Hawaii'},
                     {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}
+                ],
+                [  # Satellite_options
+                    {'label': _('Alouette 1'), 'value': 'Alouette 1'},
+                    {'label': _('ISIS 1'), 'value': 'ISIS 1'},
+                    {'label': _('ISIS 2'), 'value': 'ISIS 2'}
                 ],
                 [  # x_axis_options
                     {'label': _('Date'), 'value': 'timestamp'},
