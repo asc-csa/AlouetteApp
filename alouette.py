@@ -657,6 +657,7 @@ def build_filtering():
                             ],
                             className="row",
                         ),
+                        html.Div([html.Br()]),  
                         html.Div(
                             [
                             html.Div(
@@ -688,6 +689,7 @@ def build_filtering():
                         ),
                         html.Div(children=html.P(id="download_selection"),className="wb-inv"),
                         html.Div ([html.P(id="Download_limit")]),
+                        html.Div([html.Br()]), 
                     ],
                     className="map-filters"
                 ),
