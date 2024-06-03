@@ -585,17 +585,12 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div([
-                                    html.P(
-                                        id="groundstations-text",
-                                        className="control_label",
-                                    ),
                                     html.Div(
                                         [
                                             html.Label(
-                                                id="groundstations-label-text",
+                                                id="groundstations-text",
                                                 htmlFor="ground_station_list_dropdown",
                                                 className="control_label",
-                                                hidden = True
                                             ),
                                             dcc.Dropdown(
                                                 id="ground_station_list",
@@ -612,47 +607,31 @@ def build_filtering():
                                         **{'aria-label': 'Select plotted value'}
                                     ),
                                     html.Div(children=html.P(id="ground_station_selection"),className="wb-inv")]),
+
                             ],
                             id="map-options",
                             className="",
                         ),
                         html.Div(
                             [
-                                html.Div ([html.P("_")]),
-                                html.P("_")
-                            ],                       
-                        ),                        
-                        html.Div(
-                            [
-                            html.Div(
-                                [
-                                    html.A(
-                                        html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
-                                        id='download-link-1',
-                                        # download='rawdata.csv',
-                                        href="",
-                                        target="_blank",
-                                        className="btn btn-primary"
-                                    ),
-                                ],
-                                className="col-md-6"
-                            ),
-                            html.Div(
-                                [
-                                    html.A(
-                                        html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
-                                        id='download-link-2',
-                                        style={"margin-left": "5px"},
-                                        className="btn btn-primary"
-                                    ),
-                                ],
-                                className="col-md-6"
-                            ),
+                                html.A(
+                                    html.Span(id='download-button-1', n_clicks=0, style={'padding': '0px 10px'}),
+                                    id='download-link-1',
+                                    # download='rawdata.csv',
+                                    href="",
+                                    target="_blank",
+                                    className="btn btn-primary"
+                                ),
+                                html.A(
+                                    html.Span(id='download-button-2',  n_clicks=0, style={'padding': '0px 10px'}),
+                                    id='download-link-2',
+                                    style={"margin-left": "5px"},
+                                    className="btn btn-primary"
+                                ),
+                                html.Div(children=html.P(id="download_selection"),className="wb-inv"),
+                                html.Div ([html.B(id="Download_limit")]),
                             ],
-                            className='row'
                         ),
-                        html.Div(children=html.P(id="download_selection"),className="wb-inv"),
-                        html.Div ([html.P(id="Download_limit")]),
                     ],
                     className="map-filters"
                 ),
@@ -701,6 +680,7 @@ def build_filtering():
                             className="col-md-6",
                         ),
                     ],
+                    className="row"
                 ),
             ],
             className="pretty_container twelve columns",
