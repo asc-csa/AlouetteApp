@@ -1134,7 +1134,7 @@ app.layout = html.Div(
 
 
 # Helper functions
-def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Filter the extracted ionogram dataframe on multiple parameters.
 
     Called for every component.
@@ -1165,7 +1165,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -1174,7 +1174,9 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         The filtered DataFrame
     """
     
-    #print('\nDEBUG: entering filter_dataframe()')
+    print('\nDEBUG: entering filter_dataframe()')
+    print(ground_stations)
+    print(satellites)
     #start_time = dt.datetime.now()
 
     #print(f'DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
@@ -1198,10 +1200,10 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         dff = dff[
             (dff["station_name"].isin(ground_stations))
             ]
-    #if (the_satellites is not None) and (the_satellites != []):
-        #dff = dff[
-            #(dff["satellite_name"].isin(the_satellites))
-            #]
+    if (satellites is not None) and (satellites != []):
+        dff = dff[
+            (dff["satellite_name"].isin(satellites))
+            ]
     
     #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     return dff
@@ -1221,7 +1223,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         Input("satellite_list", "value")
     ],
 )
-def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Update the component that counts the number of ionograms selected.
 
     Parameters
@@ -1247,7 +1249,7 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -1259,7 +1261,7 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
     return "{:n}".format(dff.shape[0]) + " / " + "{:n}".format(699360)
 
 
@@ -1344,11 +1346,10 @@ def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
     end_date = dt.datetime(year=1972, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    #if len(dff['satellite_name'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
-        #return list(dff['satellite_name'].unique())
-    #else:
-        #return [] # if we have not selected any satellites, keep the selection box empty
-    return []
+    if len(dff['satellite_name'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
+        return list(dff['satellite_name'].unique())
+    else:
+        return [] # if we have not selected any satellites, keep the selection box empty
 
 @app.callback(
     Output("lat_alert", "hidden"),[
@@ -1491,7 +1492,7 @@ def date_validation(start_date, end_date):
         Input("satellite_list", "value")
     ],
 )
-def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Updates the link to the Ionogram images download
 
     Returns
@@ -1500,8 +1501,8 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    # link = prefixe+'/dash/downloadImages?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}'\
-    #     .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    # link = prefixe+'/dash/downloadImages?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}&satellites={}'\
+    #     .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
     values = {
         'start_date': start_date,
         'end_date': end_date,
@@ -1510,7 +1511,7 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
         'lon_min': lon_min,
         'lon_max': lon_max,
         'ground_stations': ground_stations,
-        'the_satellites': the_satellites
+        'satellites': satellites
     }
 
     link = prefixe + '/dash/downloadImages?' + urllib.parse.urlencode(values)
@@ -1533,7 +1534,10 @@ def download_images():
     ground_stations = flask.request.args.get('ground_stations') # parses a string representation of ground_stations
     ground_stations = literal_eval(ground_stations) # converts into a list representation
 
-    dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations)
+    satellites = flask.request.args.get('satellites') # parses a string representation of satellites
+    satellites = literal_eval(satellites) # converts into a list representation
+
+    dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations, satellites)
 
     dff['file_path'] = dff['file_name'].map(lambda x: os.path.join(IONOGRAM_PATH, x) + '.png')
 
@@ -1579,7 +1583,7 @@ def download_images():
         Input("satellite_list", "value")
     ],
 )
-def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Updates the link to the CSV download
 
     Returns
@@ -1588,8 +1592,8 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         Link that redirects to the Flask route to download the CSV based on selected filters
     """
 
-    # link = '/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}' \
-    #         .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations)
+    # link = '/dash/downloadCSV?start_date={}&end_date={}&lat_min={}&lat_max={}&lon_min={}&lon_max={}&ground_stations={}&satellites={}' \
+    #         .format(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
     values = {
         'start_date': start_date,
         'end_date': end_date,
@@ -1598,7 +1602,7 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
         'lon_min': lon_min,
         'lon_max': lon_max,
         'ground_stations': ground_stations,
-        'the_satellites': the_satellites
+        'satellites': satellites
     }
 
     link = prefixe + '/dash/downloadCSV?' + urllib.parse.urlencode(values)
@@ -1636,6 +1640,9 @@ def download_csv():
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
+    satellites : list
+        Satellites name strings stored in a list (e.g. ['Alouette 1'])
+
     Returns
     -------
     output : CSV
@@ -1655,7 +1662,10 @@ def download_csv():
     ground_stations = flask.request.args.get('ground_stations') # parses a string representation of ground_stations
     ground_stations = literal_eval(ground_stations) # converts into a list representation
 
-    dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations)
+    satellites = flask.request.args.get('satellites') # parses a string representation of satellites
+    satellites = literal_eval(satellites) # converts into a list representation
+
+    dff = filter_dataframe(df, start_date, end_date, int(lat_min), int(lat_max), int(lon_min), int(lon_max), ground_stations, satellites)
 
     if language == 'fr':
         dff.columns = [
@@ -1720,7 +1730,7 @@ def download_csv():
         Input("satellite_list", "value")
     ],
 )
-def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Create and update the histogram of selected iongograms over the given time range.
 
     Parameters
@@ -1746,7 +1756,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -1760,7 +1770,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
 
     layout_count = copy.deepcopy(layout)
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
     g = dff[["file_name", "timestamp"]]
     g.index = g["timestamp"]
     g = g.resample("M").count()
@@ -1819,7 +1829,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
         Input("satellite_list", "value")
     ],
 )
-def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Create and update the map of ground stations for selected iongograms.
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
@@ -1847,7 +1857,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -1859,22 +1869,24 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
+    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
 
     traces = []
     table_data = []
-    grouped_data = filtered_data.groupby(["station_name", "lat", "lon"])
+    grouped_data = filtered_data.groupby(["station_name", "satellite_name", "lat", "lon"])
     for station_details, dfff in grouped_data:
-        template = {"station":"","lat":"","long":"","count":""}
+        template = {"station":"","satellite":"","lat":"","long":"","count":""}
         template["station"] = station_details[0]
-        template["lat"] = station_details[1]
-        template["long"] = station_details[2]
+        template["satellite"] = station_details[1]
+        template["lat"] = station_details[2]
+        template["long"] = station_details[3]
         template["count"] = len(dfff)
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
-            lat=station_details[1],
-            lon=station_details[2],
+            satellite_name=station_details[1],
+            lat=station_details[2],
+            lon=station_details[3],
             count=len(dfff),
         )
         traces.append(trace)
@@ -1887,6 +1899,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         lon = df_stations["lon"].tolist()
         counts = df_stations["count"].tolist()
         station_names = df_stations["station_name"].tolist()
+        satellite_names = df_stations["satellite_name"].tolist()
 
         # Count mapping from aggregated data
         count_metric_data = {}
@@ -1903,7 +1916,9 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         for i in range(len(df_stations)):
             val = counts[i]
             station_name = station_names[i]
+            satellite_name = satellite_names[i]
 
+            # TODO: To change the color according to the satellite number (1263A8)
             station = go.Scattermapbox(
                 lat=[lat[i]],
                 lon=[lon[i]],
@@ -1940,6 +1955,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
+                     + _("<br>Satellite: ") + str(satellite_name)
                      + _("<br>No. of Ionograms: ")
                      + str(val)
                      + _("<br>Latitude: ") + str(lat[i]) + "°"
@@ -2027,7 +2043,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         Input("satellite_list", "value")
     ],
 )
-def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Create and update the chart for visualizing selected ionograms based on varying x and y-axis selection.
 
     Displays the mean value from the selected x-axis with a calculated 95% confidence interval, displaying the
@@ -2062,7 +2078,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -2080,7 +2096,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
+    dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
 
     confidence = 0.95
     estimated_means = []
@@ -2266,7 +2282,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         Input("satellite_list", "value")
     ],
 )
-def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, the_satellites=None):
+def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Create and update a map visualizing the selected ionograms' values for the selected variable by ground station.
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
@@ -2301,7 +2317,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     ground_stations : list
         Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
 
-    the_satellites : list
+    satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
 
     Returns
@@ -2314,27 +2330,29 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     start_date = dt.datetime.strptime(start_date.split('T')[0], '%Y-%m-%d')  # Convert strings to datetime objects
     end_date = dt.datetime.strptime(end_date.split('T')[0], '%Y-%m-%d')
 
-    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, the_satellites)
+    filtered_data = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
 
     traces = []
     table_data = []
     
-    grouped_data = filtered_data.groupby(["station_name", "lat", "lon"])
+    grouped_data = filtered_data.groupby(["station_name", "satellite_name", "lat", "lon"])
     means = grouped_data[var_selection].mean()
     medians = grouped_data[var_selection].median()
     for station_details, dfff in grouped_data:
-        template = {"station":"","lat":"","long":"","count":"", "mean":"", "median":""}
+        template = {"station":"","satellite":"","lat":"","long":"","count":"", "mean":"", "median":""}
         template["station"] = station_details[0]
-        template["lat"] = station_details[1]
-        template["long"] = station_details[2]
+        template["satellite"] = station_details[1]
+        template["lat"] = station_details[2]
+        template["long"] = station_details[3]
         template["count"] = len(dfff)
         template["mean"] =   "%.2f" % means[station_details[0]][0]
         template["median"] = "%.2f" % medians[station_details[0]][0]
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
-            lat=station_details[1],
-            lon=station_details[2],
+            satellite_name=station_details[1],
+            lat=station_details[2],
+            lon=station_details[3],
             count=len(dfff),
             mean=means[station_details[0]][0],
             median=medians[station_details[0]][0]
@@ -2349,6 +2367,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         lat = df_stations["lat"].tolist()
         lon = df_stations["lon"].tolist()
         station_names = df_stations["station_name"].tolist()
+        satellite_names = df_stations["satellite_name"].tolist()
+        
         if stat_selection == 'mean':
             stat_values = df_stations["mean"].tolist()
             stat_label = _("Mean")
@@ -2378,6 +2398,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         for i in range(len(df_stations)):
             val = stat_values[i]
             station_name = station_names[i]
+            satellite_name = satellite_names[i]
 
             station = go.Scattermapbox(
                 lat=[lat[i]],
@@ -2416,6 +2437,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
+                + _("<br>Satellite: ") + str(satellite_name)
                 + "<br>" + stat_label + ", " + var_label + ": "
                 + str(round(val, 2)) + " " + var_unit + " "
                 + _("<br>Latitude: ") + str(lat[i]) + "°"
