@@ -403,6 +403,20 @@ layout = dict(
     transition={'duration': 500},
 )
 
+# Converts the satellite number to its name
+# 1: Alouette 1
+# 2: Alouette 2
+# 3: ISIS 1
+# 4: ISIS 2
+def get_satellite_name(sat_number):
+
+    if sat_number == '2':
+        return "Alouette II"
+    if sat_number == '3':
+        return "ISIS I"
+    if sat_number == '4':
+        return "ISIS II"
+    return "Alouette I"
 
 # Builds the layout and components for the inputs to filter the data, as well as the ionograms/month graph and the ground stations map
 def build_filtering():
@@ -1955,7 +1969,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                     + _("<br>Satellite: ") + str(satellite_name)
+                     + _("<br>Satellite: ") + get_satellite_name(str(satellite_name))
                      + _("<br>No. of Ionograms: ")
                      + str(val)
                      + _("<br>Latitude: ") + str(lat[i]) + "°"
@@ -2437,7 +2451,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                + _("<br>Satellite: ") + str(satellite_name)
+                + _("<br>Satellite: ") + get_satellite_name(str(satellite_name))
                 + "<br>" + stat_label + ", " + var_label + ": "
                 + str(round(val, 2)) + " " + var_unit + " "
                 + _("<br>Latitude: ") + str(lat[i]) + "°"
