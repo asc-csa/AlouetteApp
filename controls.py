@@ -38,7 +38,7 @@ station_name_options = [
     {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}]
 
 # Getting satellites
-satellites_options = [
+satellite_name_options = [
     {'label': _('Alouette 1'), 'value': 'Alouette 1'},
     {'label': _('ISIS 1'), 'value': 'ISIS 1'},
     {'label': _('ISIS 2'), 'value': 'ISIS 2'}]
@@ -50,7 +50,7 @@ for station in station_name_options:
 
 # Getting only the values of the satellites
 satellites_values = []
-for satellite in satellites_options:
+for satellite in satellite_name_options:
     satellites_values.append(satellite['value'])
 
 x_axis_options = [

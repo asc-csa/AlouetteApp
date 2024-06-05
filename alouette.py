@@ -311,7 +311,7 @@ station_name_options = [
     {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}]
 
 # Getting satellites
-satellites_options = [
+satellite_name_options = [
     {'label': _('Alouette 1'), 'value': 'Alouette 1'},
     {'label': _('ISIS 1'), 'value': 'ISIS 1'},
     {'label': _('ISIS 2'), 'value': 'ISIS 2'}]
@@ -323,7 +323,7 @@ for station in station_name_options:
 
 # Getting only the values of the satellites
 satellites_values = []
-for satellite in satellites_options:
+for satellite in satellite_name_options:
     satellites_values.append(satellite['value'])
 
 x_axis_options = [
@@ -643,7 +643,7 @@ def build_filtering():
                                             options=[],
                                             placeholder=_("Sélectionner | Select"),
                                             multi=True,
-                                            value=station_values,
+                                            value=satellites_values,
                                             className="dcc_control",
                                             label = 'Label test'
                                         )
@@ -1175,7 +1175,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
     """
     
     print('\nDEBUG: entering filter_dataframe()')
-    print(ground_stations)
+    print('List of satellites')
     print(satellites)
     #start_time = dt.datetime.now()
 
@@ -1202,7 +1202,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
             ]
     if (satellites is not None) and (satellites != []):
         dff = dff[
-            (dff["satellite_name"].isin(satellites))
+            (dff["satellite_number"].isin(satellites))
             ]
     
     #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
@@ -1346,8 +1346,8 @@ def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
     end_date = dt.datetime(year=1972, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    if len(dff['satellite_name'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
-        return list(dff['satellite_name'].unique())
+    if len(dff['satellite_number'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
+        return list(dff['satellite_number'].unique())
     else:
         return [] # if we have not selected any satellites, keep the selection box empty
 
@@ -1873,7 +1873,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
 
     traces = []
     table_data = []
-    grouped_data = filtered_data.groupby(["station_name", "satellite_name", "lat", "lon"])
+    grouped_data = filtered_data.groupby(["station_name", "satellite_number", "lat", "lon"])
     for station_details, dfff in grouped_data:
         template = {"station":"","satellite":"","lat":"","long":"","count":""}
         template["station"] = station_details[0]
@@ -1884,7 +1884,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
-            satellite_name=station_details[1],
+            satellite_number=station_details[1],
             lat=station_details[2],
             lon=station_details[3],
             count=len(dfff),
@@ -1899,7 +1899,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         lon = df_stations["lon"].tolist()
         counts = df_stations["count"].tolist()
         station_names = df_stations["station_name"].tolist()
-        satellite_names = df_stations["satellite_name"].tolist()
+        satellite_names = df_stations["satellite_number"].tolist()
 
         # Count mapping from aggregated data
         count_metric_data = {}
@@ -2335,7 +2335,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     traces = []
     table_data = []
     
-    grouped_data = filtered_data.groupby(["station_name", "satellite_name", "lat", "lon"])
+    grouped_data = filtered_data.groupby(["station_name", "satellite_number", "lat", "lon"])
     means = grouped_data[var_selection].mean()
     medians = grouped_data[var_selection].median()
     for station_details, dfff in grouped_data:
@@ -2350,7 +2350,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
-            satellite_name=station_details[1],
+            satellite_number=station_details[1],
             lat=station_details[2],
             lon=station_details[3],
             count=len(dfff),
@@ -2367,7 +2367,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         lat = df_stations["lat"].tolist()
         lon = df_stations["lon"].tolist()
         station_names = df_stations["station_name"].tolist()
-        satellite_names = df_stations["satellite_name"].tolist()
+        satellite_names = df_stations["satellite_number"].tolist()
         
         if stat_selection == 'mean':
             stat_values = df_stations["mean"].tolist()
