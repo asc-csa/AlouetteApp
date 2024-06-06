@@ -27,6 +27,21 @@ from flask_babel import _ ,Babel
 from flask import session, redirect, url_for
 
 
+#======================================================================================
+# Constants
+
+TIME_PERIOD_START_YEAR = 1962
+TIME_PERIOD_END_YEAR = 1990
+IONOGRAM_PATH = '/storage/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
+MAX_IONOGRAM = 100
+SATELLITE_1_STR = "Alouette I"
+SATELLITE_2_STR = "Alouette II"
+SATELLITE_3_STR = "ISIS I"
+SATELLITE_4_STR = "ISIS II"
+
+
+#======================================================================================
+# Dash class, which represents the micro application.
 class CustomDash(dash.Dash):
 
     analytics_code = ''
@@ -116,6 +131,8 @@ class CustomDash(dash.Dash):
             app_footer = self.app_footer
             )
 
+
+#======================================================================================
 # get relative data folder
 PTH = '/home/ckanportal/App-Launcher/'
 PATH = pathlib.Path(__file__).parent.absolute()
@@ -145,6 +162,9 @@ external_scripts = [
     'assets/scripts.js'
 ]
 
+
+#======================================================================================
+# Configuration
 def get_config_dict():
     config = configparser.RawConfigParser()
     config.read(PTH+'config.cfg')
@@ -158,6 +178,9 @@ def generate_meta_tag(name, content):
 def generate_meta_tag_with_title(name, content, title):
     return "<meta name=\"" + name + "\" title=\"" + title + "\" content=\"" + content + "\">"
 
+
+#======================================================================================
+# Main
 if __name__ == '__main__':
     print ('DEBUG: Alouette Main Block used')
     prefixe=""
@@ -256,24 +279,7 @@ server = app.server
 server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
 babel = Babel(server)  # Hook flask-babel to the app
 
-# try:
-#     language = session['language']
-# except KeyError:
-#     language = 'en'
 
-
-
-#IONOGRAM_PATH = 'U:/Storage'  # Directory to Ionogram images for testing
-IONOGRAM_PATH = '/storage/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images for testing
-MAX_IONOGRAM = 100
-# IONOGRAM_PATH = '/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'  # Directory to Ionogram images on server
-
-# load data and transform as needed
-#dtypes = {'': 'int', 'file_name': 'str', 'max_depth': 'float', 'decimal_value': 'str'}
-
-# print(session['language'])
-
-# Dropdown options
 #======================================================================================
 # Controls for webapp
 station_name_options = [
@@ -335,20 +341,8 @@ y_axis_options = [
     {'label': _('Minimum frequency'), 'value': ('fmin')},
     {'label': _('Maximum depth'), 'value': ('max_depth')}]
 
-year_dict = {}
-for year in range(1962,1974):
-    year_dict[year] = str(year)
-
-lat_dict = {}
-for lat in range(-90, 90+1, 15):
-    lat_dict[lat] = str(lat)
-
-lon_dict = {}
-for lon in range(-180, 180+1, 30):
-    lon_dict[lon] = str(lon)
-
 #======================================================================================
-
+# Conversion functions
 def coords_to_float(coord):
     """Convert a latitude or longitude coordinate from a string to a float, taking into account N, E, S, W.
 
@@ -411,13 +405,39 @@ layout = dict(
 def get_satellite_name(sat_number):
 
     if sat_number == '2':
-        return "Alouette II"
+        return SATELLITE_2_STR
     if sat_number == '3':
-        return "ISIS I"
+        return SATELLITE_3_STR
     if sat_number == '4':
-        return "ISIS II"
-    return "Alouette I"
+        return SATELLITE_4_STR
+    return SATELLITE_1_STR
+    
+# Converts an array of satellite names to satellite numbers
+# Returns an array of satellite numbers
+# 1: Alouette 1
+# 2: Alouette 2
+# 3: ISIS 1
+# 4: ISIS 2
+def convert_array_satellite_names_to_numbers(array_satellite_names):
+ 
+    array_satellite_numbers = []
+    for tmp_satellite_name in array_satellite_names:
+    
+        tmp_satellite_number = 1
+        if tmp_satellite_name == SATELLITE_1_STR:
+            tmp_satellite_number = 1
+        if tmp_satellite_name == SATELLITE_2_STR:
+            tmp_satellite_number = 2
+        if tmp_satellite_name == SATELLITE_3_STR:
+            tmp_satellite_number = 3
+        if tmp_satellite_name == SATELLITE_4_STR:
+            tmp_satellite_number = 4
+        array_satellite_numbers.append(tmp_satellite_number)
+        
+    return array_satellite_numbers
+    
 
+#======================================================================================
 # Builds the layout and components for the inputs to filter the data, as well as the ionograms/month graph and the ground stations map
 def build_filtering():
     return html.Div([
@@ -591,11 +611,10 @@ def build_filtering():
                                 html.Div([
                                     dcc.DatePickerRange(
                                         id='date_picker_range',
-                                        min_date_allowed=dt.datetime(1962, 9, 29),
-                                        max_date_allowed=dt.datetime(1972, 12, 31),
-                                        #initial_visible_month=dt.datetime(1962, 9, 29),
-                                        start_date=dt.datetime(1962, 9, 29),
-                                        end_date=dt.datetime(1972, 12, 31),
+                                        min_date_allowed=dt.datetime(TIME_PERIOD_START_YEAR, 9, 29),
+                                        max_date_allowed=dt.datetime(TIME_PERIOD_END_YEAR, 12, 31),
+                                        start_date=dt.datetime(TIME_PERIOD_START_YEAR, 9, 29),
+                                        end_date=dt.datetime(TIME_PERIOD_END_YEAR, 12, 31),
                                         start_date_placeholder_text='Select start date',
                                         end_date_placeholder_text='Select end date',
                                         display_format="Y-MM-DD",
@@ -1122,6 +1141,7 @@ def build_stats():
         html.Div(id='none', children=[], style={'display': 'none'}), # Placeholder element to trigger translations upon page load
     ])
 
+#======================================================================================
 #     '''
 # Create app layout
 app.layout = html.Div(
@@ -1145,8 +1165,7 @@ app.layout = html.Div(
     ],
 )
 
-
-
+#======================================================================================
 # Helper functions
 def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     """Filter the extracted ionogram dataframe on multiple parameters.
@@ -1188,9 +1207,7 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
         The filtered DataFrame
     """
     
-    print('\nDEBUG: entering filter_dataframe()')
-    print('List of satellites')
-    print(satellites)
+    #print('\nDEBUG: entering filter_dataframe()')
     #start_time = dt.datetime.now()
 
     #print(f'DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
@@ -1216,13 +1233,14 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
             ]
     if (satellites is not None) and (satellites != []):
         dff = dff[
-            (dff["satellite_number"].isin(satellites))
+            (dff["satellite_number"].isin(convert_array_satellite_names_to_numbers(satellites)))
             ]
     
     #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     return dff
 
-
+#======================================================================================
+# Callback functions
 # Selectors -> ionogram count
 @app.callback(
     Output("ionograms_text", "children"),
@@ -1313,8 +1331,8 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     """
     
     # Manually set the value for dates so that changing the date does not update the ground station list
-    start_date = dt.datetime(year=1962, month=9, day=29)
-    end_date = dt.datetime(year=1972, month=12, day=31)
+    start_date = dt.datetime(year=TIME_PERIOD_START_YEAR, month=9, day=29)
+    end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
     if len(dff['station_name'].unique()) < 32: # if we have selected a subset of ground stations, return the selected list
@@ -1356,8 +1374,8 @@ def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
     """
     
     # Manually set the value for dates so that changing the date does not update the satellite list
-    start_date = dt.datetime(year=1962, month=9, day=29)
-    end_date = dt.datetime(year=1972, month=12, day=31)
+    start_date = dt.datetime(year=TIME_PERIOD_START_YEAR, month=9, day=29)
+    end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
     if len(dff['satellite_number'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
@@ -1440,7 +1458,7 @@ def update_error_list(lat_min,lat_max,lon_min,lon_max, start_date, end_date):
             errors.append(
                 html.Li(
                     html.A(
-                        _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                        _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1990 (Dec. 31st 1990)."),
                         href="#date_alert"
                     )
                 )
@@ -1488,8 +1506,8 @@ def date_validation(start_date, end_date):
     except ValueError:
         start = dt.datetime.strptime(start_date, '%Y-%m-%d')
         end = dt.datetime.strptime(end_date, '%Y-%m-%d')
-    MIN_DATE=dt.datetime(1962, 9, 29)
-    MAX_DATE=dt.datetime(1972, 12, 31)
+    MIN_DATE=dt.datetime(TIME_PERIOD_START_YEAR, 9, 29)
+    MAX_DATE=dt.datetime(TIME_PERIOD_END_YEAR, 12, 31)
     return ((start>=MIN_DATE) and (start <= end) and (start <= MAX_DATE) and (end >= MIN_DATE) and (end <= MAX_DATE))
 
 # Selectors -> Image download link
@@ -2568,6 +2586,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         [Input('none', 'children')], # A placeholder to call the translations upon startup
 )
 
+#======================================================================================
+# Definition of translation strings
 def translate_static(x):
 
     return [
@@ -2578,7 +2598,7 @@ def translate_static(x):
                 _("Select data"),
                 _("Invalid values provided. Latitude values must be between -90 and 90. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
                 _("Invalid values provided. Longitude values must be between -180 and 180. Minimum values must be smaller than maximum values. All values must be round numbers that are multiples of 5."),
-                _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1972 (Dec. 31st 1972)."),
+                _("Invalid dates provided. Dates must be between 29/09/1962 (Sep. 29th 1962) and 31/12/1990 (Dec. 31st 1990)."),
                 _("Selection of the ground stations"),
                 _("Selection of the satellites"),
                 _("Selection of the range of latitude "),
@@ -2667,25 +2687,6 @@ def translate_static(x):
                 _("Text version - Data visualization (95 percent confidence interval)"),
                 _("Text version - Geographical visualization"),
     ]
-# # Translate the header and the footer by injecting raw HTML
-# @app.callback(
-#     [
-#         Output('gc-header', 'children'),
-#         Output('gc-footer', 'children')
-#     ],
-#     [Input('none2', 'children')]
-# )
-# def translate_header_footer(x):
-#     """ Translates the government header and footer
-#     """
-#     try: # On the first load of the webpage, there is a bug where the header won't load due to the session not being established yet. This try/except defaults the header/footer to english
-#         if session['language'] == 'fr':
-#             return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_fr), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_fr)]
-#         else:
-#             return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
-#     except:
-#         return [dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_header_en), dash_dangerously_set_inner_html.DangerouslySetInnerHTML(gc_footer_en)]
-
 
 @app.callback(
     [
@@ -2703,7 +2704,8 @@ def update_language_button(x):
     else:
         return 'FR', prefixe+'/language/fr'
 
-
+#======================================================================================
+# Languages
 @babel.localeselector
 def get_locale():
     # if the user has set up the language manually it will be stored in the session,

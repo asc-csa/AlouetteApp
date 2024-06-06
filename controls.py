@@ -61,15 +61,3 @@ x_axis_options = [
 y_axis_options = [
     {'label': _('Minimum Frequency'), 'value': ('fmin')},
     {'label': _('Maximum Depth'), 'value': ('max_depth')}]
-
-year_dict = {}
-for year in range(1962,1974):
-    year_dict[year] = str(year)
-
-lat_dict = {}
-for lat in range(-90, 90+1, 15):
-    lat_dict[lat] = str(lat)
-
-lon_dict = {}
-for lon in range(-180, 180+1, 30):
-    lon_dict[lon] = str(lon)
