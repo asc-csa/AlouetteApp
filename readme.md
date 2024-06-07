@@ -10,8 +10,7 @@
 
 ## Contexte
 
-Le satellite [Alouette-I](https://www.asc-csa.gc.ca/fra/satellites/alouette.asp) a été le premier satellite canadien lancé dans l'espace. L'objectif 
-de son expérience principale était de comprendre la structure de la haute ionosphère. Les données de l'Alouette I sont constitués de centaines de milliers d'ionogrammes dont une proportion sont maintenant stockés numériquement sous forme de fichiers d'images.
+Le satellite [Alouette-I](https://www.asc-csa.gc.ca/fra/satellites/alouette.asp) a été le premier satellite canadien lancé dans l'espace en 1962.  Lancés en 1969 et 1971, les satellites canadiens ISIS ont servi à l'étude de l'ionosphère et des aurores boréales. Les satellites du programme canadien ISIS ont envoyé des ondes radio de différentes fréquences dans la couche supérieure de l'atmosphère, connue sous le nom d'ionosphère, et a recueilli des données sur la profondeur de pénétration de ces ondes. Les résultats de ces expériences ont été envoyés à des stations terrestres dans le monde entier et stockés sous la forme de films, dont une portion est maintenant numérisée. 
 
 ![ionogram](ionogram.png)
 
@@ -36,7 +35,7 @@ Pour démarrer l'application :
         pip install -r requirements.txt
         python alouette.py
 
-Lors de l'exécution, l'[application](http://127.0.0.1:8888/alouette/) se trouve à cet endroit. Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
+Lors de l'exécution, l'[application locale](http://127.0.0.1:8888/alouette/) se trouve à cet endroit. Des instructions d'installation distinctes pour la version de production de l'application sont fournies dans le "Guide d'installation de l'application Alouette Production.docx".
 
 ## Construit avec
 
@@ -64,13 +63,12 @@ Lors de l'exécution, l'[application](http://127.0.0.1:8888/alouette/) se trouve
  - config.py précise les langues disponibles pour la traduction
 
 
+## Téléchargements
 
-## En-tête/pied de page
-
-- Le code de l'en-tête/du pied de page du gouvernement est enregistré dans un fichier séparé (header_footer.py), et est directement injecté dans l'application du tiret.
+- Le nombre maximum d’ionogrammes pouvant être téléchargés est limité à 100. Ces ionogrammes sont actuellement stockés en mémoire avant d'être envoyés à l'utilisateur sous forme d’un fichier ZIP. Cette méthode peut échouer pour un téléchargement plus volumineux.
 
 ## Version
-Ceci est la v0.1 de l'application Alouette. 
+Ceci est la version 1.0. 
 
 ## Traductions
 
@@ -79,14 +77,26 @@ Ceci est la v0.1 de l'application Alouette.
 Traduit avec www.DeepL.com/Translator (version gratuite)
 
 
+## Auteurs
+ - Emiline Filion
+ - Hansen Liu
+ - Wasiq Mohammmad
+ - Cole DeMan
+
+
+## Remerciements
+ - Etienne Low-Decarie
+ - Jenisha Patel
+ - Cooper Ang
+
+
 
 # Application to filter, download and visualize Alouette-I data
 
 
 ## Background
 
-The [Alouette-I satellite](https://www.asc-csa.gc.ca/eng/satellites/alouette.asp) was the first Canadian satellite launched into space. The goal of its main experiment was to understand the structure of the upper ionosphere. The data from the Alouette I 
-satellite consists of hundreds of thousands of ionograms with a proportion now stored digitally as image files.
+The [Alouette-I satellite](https://www.asc-csa.gc.ca/eng/satellites/alouette.asp) was the first Canadian satellite launched into space in 1962. Launched in 1969 and 1971, Canada's International Satellites for Ionospheric Studies (ISIS) satellites were used to study the ionosphere and the aurora borealis. ISIS satellites sent radio waves of different frequencies into the topmost layer of the atmosphere, known as the ionosphere, and collected data on the depth of penetration of these waves. The results of this were sent to ground stations around the world and stored on films, a portion of which have now been digitized.
 
 ![ionogramme](ionogram.png)
 
@@ -111,7 +121,7 @@ For starting the application:
         pip install -r requirements.txt
         python alouette.py
 
-The URL is [http://127.0.0.1:8888/scisat/)](http://127.0.0.1:8888/alouette/). Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
+This is the [local instance of the application](http://127.0.0.1:8888/alouette/). Separate installation instructions for the production version of the app are provided in "Alouette Production Installation Guide.docx".
 
 This application also requires a customized version of dash-core-components, without it the application will not meet Accessibility guidelines and may encounter errors when you attempt to run it.
 
@@ -119,53 +129,6 @@ The customized version of dash-core-components can be found here: https://github
 
 Once you have downloaded the repository, enter the directory. From there copy `dash_core_components` to your `site-packages` directory within your python installation and replace the existing dash-core-components directory. If you followed the directions above and used conda you will find `site-packages` in this location:
 `/home/<your_username>/anaconda3/lib/python3.8/site-packages`
-
-## Production Installation
-This document details the installation procedure for the Alouette explorer app. The app requires Python 3.
-
-Clone the repo from the shared documents in the M://transfer drive (temporary, due to issues with gccode).
-
-Install python 3.7:
-```
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.7
-```
-Set python 3.7 as the default python3 interpreter (in case other versions were installed previously):
-
-```
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
-```
-Check the version of python3. It should be on version 3.7.6:
-```
-python3 -V
-```
-Install venv:
-```
-sudo apt-get install python3-venv
-```
-Make a python 3 virtual environment and activate it:
-```
-python3 -m venv --without-pip PATH_TO_APP_FOLDER/alouette_app/alouette_venv
-source PATH_TO_APP_FOLDER/alouette_app/alouette_venv/bin/activate
-```
-Install the required packages:
-```
-cd alouette_app
-pip install –r requirements.txt
-```
-Set environment variable for the ionogram images:
-```
-IONOGRAM_PATH='/storage_slow/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
-export IONOGRAM_PATH
-source /etc/bash.bashrc
-```
-Run the app:
-```
-python3 app.py
-```
-By default the Alouette app will be running at the following port. To change the configured port, modify the last line of code in app.py
 
 ## Built with
 
@@ -196,23 +159,20 @@ By default the Alouette app will be running at the following port. To change the
 
 ## Downloads
 
-- The max number of ionograms that can be downloaded at once is 100 as of now. These ionograms are currently stored in memory before being sent to the user as a zip; this method may fail for a larger download.
-
-## Roadmap
-
-The current and previous roadmaps can be found on livelink for reference:
-[http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader]([http://livelink/livelink/llisapi.dll?func=ll&objId=39628342&objAction=viewheader])
+- The maximum number of ionograms that can be downloaded at once is 100 as of now. These ionograms are currently stored in memory before being sent to the user as a zip; this method may fail for a larger download.
 
 ## Version
-This is v0.1 of the Alouette app. 
+This is version 1.0. 
 
-## Authors | Auteurs
+
+## Authors
+ - Emiline Filion
  - Hansen Liu
  - Wasiq Mohammmad
  - Cole DeMan
 
 
-## Acknowledgments | Remerciments
+## Acknowledgments
  - Etienne Low-Decarie
  - Jenisha Patel
  - Cooper Ang
