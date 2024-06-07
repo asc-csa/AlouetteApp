@@ -1823,6 +1823,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
             val = counts[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
+            color_code = get_color(satellite_name)
 
             # TODO: To change the color according to the satellite number (1263A8)
             station = go.Scattermapbox(
@@ -1830,7 +1831,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 lon=[lon[i]],
                 mode="markers",
                 marker=dict(
-                    color='#1263A8',
+                    color=color_code,
                     showscale=False,
                     cmin=count_metric_data["min"],
                     cmax=count_metric_data["max"],
@@ -2305,13 +2306,14 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
             val = stat_values[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
+            color_code = get_color(satellite_name)
 
             station = go.Scattermapbox(
                 lat=[lat[i]],
                 lon=[lon[i]],
                 mode="markers",
                 marker=dict(
-                    color='white',
+                    color=color_code,
                     showscale=False,
                     cmin=stat_metric_data["min"],
                     cmax=stat_metric_data["max"],

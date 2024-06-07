@@ -66,6 +66,21 @@ def convert_array_satellite_names_to_numbers(array_satellite_names):
     return array_satellite_numbers
 
 
+# Returns the color code that corresponds to the satellite.
+# @param sat_number Satellite number.
+# @return HTML color code that corresponds to the satellite.
+def get_color(sat_number):
+
+    print('\nDEBUG: entering get_color() ' + str(sat_number))
+    if sat_number == 2:
+        return '#46E2F3' # cyan
+    if sat_number == 3:
+        return '#BDFFBD' # pale green
+    if sat_number == 4:
+        return '#F0E68C' # khaki
+    return '#1263A8' # blue
+
+
 # Converts a latitude or longitude coordinate from a string to a float, taking into account N, E, S, W.
 # For example, '48.2S' to -48.2
 # @param coord The string form of the coordinate.
