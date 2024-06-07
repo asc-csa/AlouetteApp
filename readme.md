@@ -65,7 +65,7 @@ Lors de l'exécution, l'[application locale](http://127.0.0.1:8888/alouette/) se
 
 ## Téléchargements
 
-- Le nombre maximum d’ionogrammes pouvant être téléchargés est limité à 100. Ces ionogrammes sont actuellement stockés en mémoire avant d'être envoyés à l'utilisateur sous forme d’un fichier ZIP. Cette méthode peut échouer pour un téléchargement plus volumineux.
+Le nombre maximum d’ionogrammes pouvant être téléchargés est limité à 100. Ces ionogrammes sont actuellement stockés en mémoire avant d'être envoyés à l'utilisateur sous forme d’un fichier ZIP. Cette méthode peut échouer pour un téléchargement plus volumineux.
 
 ## Version
 Ceci est la version 1.0. 
@@ -159,7 +159,7 @@ Once you have downloaded the repository, enter the directory. From there copy `d
 
 ## Downloads
 
-- The maximum number of ionograms that can be downloaded at once is 100 as of now. These ionograms are currently stored in memory before being sent to the user as a zip; this method may fail for a larger download.
+The maximum number of ionograms that can be downloaded at once is 100 as of now. These ionograms are currently stored in memory before being sent to the user as a zip; this method may fail for a larger download.
 
 ## Version
 This is version 1.0. 
