@@ -8,10 +8,6 @@
  
 There will need to be changes in app.py to change colours and styles of the interactive visualizations as well as the HTML layout of the page. Most other changes will just be CSS.
 
-## Header/Footer
-
-- The government header/footer code is saved in a separate file (header_footer.py), and is directly injected into the dash app.
-
 ## Translations
 
  - Translations are tricky with Dash due to the way it renders the page. To learn how to make new translations, consult [https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-i18n-and-l10n]([https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-i18n-and-l10n])

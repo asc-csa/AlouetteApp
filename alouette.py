@@ -1,4 +1,21 @@
-# -*- coding: utf-8 -*-
+#
+# alouette.py
+# Micro-application to visualize Alouette & ISIS data.
+#
+# Alouette-I was the first Canadian satellite launched into space in 1962. 
+# Launched in 1969 and 1971, Canada's International Satellites for Ionospheric Studies (ISIS) satellites were used to study the ionosphere and the aurora borealis. 
+# The goal of its main experiment was to understand the structure of the upper ionosphere. 
+# The data from the Alouette I satellite consists of hundreds of thousands of ionograms with a proportion now stored digitally as image files.
+# This application provides users the ability to select, download and visualize ionogram data.
+#
+# @url https://donnees-data.asc-csa.gc.ca/alouette/
+# @source https://github.com/asc-csa/AlouetteApp
+# @author Emiline Filion - Canadian Space Agency
+#
+# Modification History:
+# June 2024: Addition of ISIS 1&2 data.
+#
+
 import dash
 import pathlib
 import copy
@@ -17,7 +34,6 @@ import dash_table as dst
 #from dash_table.Format import Format, Scheme
 #import locale
 import urllib.parse
-
 from zipfile import ZipFile
 import os
 from os import path
@@ -25,6 +41,12 @@ import flask
 from io import StringIO
 from flask_babel import _ ,Babel
 from flask import session, redirect, url_for
+from io import BytesIO
+from flask import make_response
+from ast import literal_eval
+import sys
+sys.path.append('/home/ckanportal/App-Launcher/applications/alouette-fr')
+from controls import *
 
 
 #======================================================================================
@@ -34,10 +56,6 @@ TIME_PERIOD_START_YEAR = 1962
 TIME_PERIOD_END_YEAR = 1990
 IONOGRAM_PATH = '/storage/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
 MAX_IONOGRAM = 100
-SATELLITE_1_STR = "Alouette I"
-SATELLITE_2_STR = "Alouette II"
-SATELLITE_3_STR = "ISIS I"
-SATELLITE_4_STR = "ISIS II"
 
 
 #======================================================================================
@@ -342,34 +360,6 @@ y_axis_options = [
     {'label': _('Maximum depth'), 'value': ('max_depth')}]
 
 #======================================================================================
-# Conversion functions
-def coords_to_float(coord):
-    """Convert a latitude or longitude coordinate from a string to a float, taking into account N, E, S, W.
-
-    For example, '48.2S' to -48.2
-
-    Parameters
-    ----------
-    coord : str
-        The string form of the coordinate
-
-    Returns
-    -------
-    float
-        The coordinate in float form
-    """
-    
-    if coord != None:
-        if str(coord)[-1] == 'N' or str(coord)[-1] == 'E':
-            return float(str(coord)[:-1])
-        elif str(coord)[-1] == 'S' or str(coord)[-1] == 'W': # removes the letter from '48.2S' and puts a negative
-            return float(str(coord)[:-1]) * -1
-        else:
-            return coord
-    else:
-        return coord
-
-
 # converts the timestamp to date_time objects
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 
@@ -396,45 +386,6 @@ layout = dict(
     ),
     transition={'duration': 500},
 )
-
-# Converts the satellite number to its name
-# 1: Alouette 1
-# 2: Alouette 2
-# 3: ISIS 1
-# 4: ISIS 2
-def get_satellite_name(sat_number):
-
-    if sat_number == '2':
-        return SATELLITE_2_STR
-    if sat_number == '3':
-        return SATELLITE_3_STR
-    if sat_number == '4':
-        return SATELLITE_4_STR
-    return SATELLITE_1_STR
-    
-# Converts an array of satellite names to satellite numbers
-# Returns an array of satellite numbers
-# 1: Alouette 1
-# 2: Alouette 2
-# 3: ISIS 1
-# 4: ISIS 2
-def convert_array_satellite_names_to_numbers(array_satellite_names):
- 
-    array_satellite_numbers = []
-    for tmp_satellite_name in array_satellite_names:
-    
-        tmp_satellite_number = 1
-        if tmp_satellite_name == SATELLITE_1_STR:
-            tmp_satellite_number = 1
-        if tmp_satellite_name == SATELLITE_2_STR:
-            tmp_satellite_number = 2
-        if tmp_satellite_name == SATELLITE_3_STR:
-            tmp_satellite_number = 3
-        if tmp_satellite_name == SATELLITE_4_STR:
-            tmp_satellite_number = 4
-        array_satellite_numbers.append(tmp_satellite_number)
-        
-    return array_satellite_numbers
     
 
 #======================================================================================
@@ -1166,80 +1117,6 @@ app.layout = html.Div(
 )
 
 #======================================================================================
-# Helper functions
-def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
-    """Filter the extracted ionogram dataframe on multiple parameters.
-
-    Called for every component.
-
-    Parameters
-    ----------
-    df : DataFrame (note: SciPy/NumPy documentation usually refers to this as array_like)
-        The DataFrame with ionogram data to be filtered.
-
-    start_date_dt : datetime object
-        Starting date stored as a datetime object
-
-    end_date_dt : datetime object
-        Ending date stored as a datetime object
-
-    lat_min : double
-        Minimum value of the latitude stored as a double.
-
-    lat_max : double
-        Maximum value of the latitude stored as a double.
-
-    lon_min : double
-        Minimum value of the longitude stored as a double.
-
-    lon_max : double
-        Maximum value of the longitude stored as a double.
-
-    ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
-
-    satellites : list
-        Satellites name strings stored in a list (e.g. ['Alouette 1'])
-
-    Returns
-    -------
-    DataFrame
-        The filtered DataFrame
-    """
-    
-    #print('\nDEBUG: entering filter_dataframe()')
-    #start_time = dt.datetime.now()
-
-    #print(f'DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
-    #TODO: the next line takes time (1.5 second)
-    dff = df[
-        (df["timestamp"].dt.date >= dt.date(start_date_dt.year, start_date_dt.month, start_date_dt.day))
-        & (df["timestamp"].dt.date <= dt.date(end_date_dt.year, end_date_dt.month, end_date_dt.day))
-            ]
-    #print(f'DEBUG: filter_dataframe(), point #2 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
-    if (lat_min != -90) or (lat_max != 90):
-        dff = dff[
-            (dff["lat"] >= lat_min)
-            & (dff["lat"] <= lat_max)
-               ]
-    if (lon_min != -180) or (lon_max != 180):
-        dff = dff[
-            (dff["lon"] >= lon_min)
-            & (dff["lon"] <= lon_max)
-                ]
-    if (ground_stations is not None) and (ground_stations != []):
-        dff = dff[
-            (dff["station_name"].isin(ground_stations))
-            ]
-    if (satellites is not None) and (satellites != []):
-        dff = dff[
-            (dff["satellite_number"].isin(convert_array_satellite_names_to_numbers(satellites)))
-            ]
-    
-    #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
-    return dff
-
-#======================================================================================
 # Callback functions
 # Selectors -> ionogram count
 @app.callback(
@@ -1335,7 +1212,7 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    if len(dff['station_name'].unique()) < 32: # if we have selected a subset of ground stations, return the selected list
+    if len(dff['station_name'].unique()) < 64: # if we have selected a subset of ground stations, return the selected list
         return list(dff['station_name'].unique())
     else:
         return [] # if we have not selected any stations, keep the selection box empty
@@ -1374,11 +1251,12 @@ def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
     """
     
     # Manually set the value for dates so that changing the date does not update the satellite list
+    print('\nDEBUG: entering update_satellite_list()')
     start_date = dt.datetime(year=TIME_PERIOD_START_YEAR, month=9, day=29)
     end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    if len(dff['satellite_number'].unique()) < 3: # if we have selected a subset of satellites, return the selected list
+    if len(dff['satellite_number'].unique()) < 4: # if we have selected a subset of satellites, return the selected list
         return list(dff['satellite_number'].unique())
     else:
         return [] # if we have not selected any satellites, keep the selection box empty
@@ -1550,8 +1428,6 @@ def update_images_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max,
     return link
 
 
-from io import BytesIO
-
 @app.server.route('/dash/downloadImages')
 def download_images():
     
@@ -1640,8 +1516,6 @@ def update_csv_link(start_date, end_date, lat_min, lat_max, lon_min, lon_max, gr
     link = prefixe + '/dash/downloadCSV?' + urllib.parse.urlencode(values)
     return link
 
-from flask import make_response
-from ast import literal_eval
 
 # Flask route that handles the CSV downloads. This allows for larger files to be passed,
 # as well as avoiding generating the CSV until the download is desired
@@ -1862,7 +1736,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     ],
 )
 def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
-    """Create and update the map of ground stations for selected iongograms.
+    """Create and update the map of ground stations for selected iongograms. (upper map)
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
 
@@ -2315,7 +2189,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
     ],
 )
 def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
-    """Create and update a map visualizing the selected ionograms' values for the selected variable by ground station.
+    """Create and update a map visualizing the selected ionograms' values for the selected variable by ground station. (bottom map)
 
     The size of the ground station marker indicates the number of ionograms from that ground station.
 
