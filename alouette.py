@@ -45,7 +45,7 @@ from io import BytesIO
 from flask import make_response
 from ast import literal_eval
 import sys
-sys.path.append('/home/ckanportal/App-Launcher/applications/alouette-fr')
+sys.path.append('/home/ckanportal/App-Launcher/applications/alouette')
 from controls import *
 
 
