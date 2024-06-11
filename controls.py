@@ -71,7 +71,7 @@ def convert_array_satellite_names_to_numbers(array_satellite_names):
 # @return HTML color code that corresponds to the satellite.
 def get_color(sat_number):
 
-    print('\nDEBUG: entering get_color() ' + str(sat_number))
+    #print('\nDEBUG: entering get_color() ' + str(sat_number))
     if sat_number == 2:
         return '#46E2F3' # cyan
     if sat_number == 3:
@@ -79,6 +79,16 @@ def get_color(sat_number):
     if sat_number == 4:
         return '#F0E68C' # khaki
     return '#1263A8' # blue
+
+
+# Returns the size of the circle to show on the map.
+# @param nb_ionograms Number of ionograms.
+# @min_value Minimum value.
+# @max_value Maximum value.
+# @return Size of the circle (integer).
+def get_size(nb_ionograms, min_value, max_value):
+
+    return 10 * (1 + 2 * (nb_ionograms + min_value) / max_value)
 
 
 # Converts a latitude or longitude coordinate from a string to a float, taking into account N, E, S, W.

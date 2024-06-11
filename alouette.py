@@ -1812,20 +1812,16 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         count_metric_data["min"] = df_stations["count"].min()
         count_metric_data["max"] = df_stations["count"].max()
         count_metric_data["mid"] = (count_metric_data["min"] + count_metric_data["max"]) / 2
-        count_metric_data["low_mid"] = (
-                                               count_metric_data["min"] + count_metric_data["mid"]
-                                       ) / 2
-        count_metric_data["high_mid"] = (
-                                                count_metric_data["mid"] + count_metric_data["max"]
-                                        ) / 2
+        count_metric_data["low_mid"] = (count_metric_data["min"] + count_metric_data["mid"]) / 2
+        count_metric_data["high_mid"] = (count_metric_data["mid"] + count_metric_data["max"]) / 2
 
         for i in range(len(df_stations)):
             val = counts[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
             color_code = get_color(satellite_name)
+            #print('ISIS_DEBUG: Station name: ' + station_name + ' Satellite name: ' + get_satellite_name(satellite_name) + ' val: ' + str(val))
 
-            # TODO: To change the color according to the satellite number (1263A8)
             station = go.Scattermapbox(
                 lat=[lat[i]],
                 lon=[lon[i]],
@@ -1835,8 +1831,8 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                     showscale=False,
                     cmin=count_metric_data["min"],
                     cmax=count_metric_data["max"],
-                    size=10
-                         * (1 + 2 * (val + count_metric_data["min"]) / count_metric_data["mid"]),
+                    #size=10 * (1 + 2 * (val + count_metric_data["min"]) / count_metric_data["mid"]),
+                    size=get_size(val, 1, 75000),
                     colorbar=dict(
                         x=0.9,
                         len=0.7,
@@ -2487,7 +2483,7 @@ def translate_static(x):
                 _("Filter by ground station longitude:"),
                 _("Minimum longitude"),
                 _("Maximum longitude"),
-                _("Map of the world showing ground stations. Each station is represented by a circle, the size of which depends on the number of ionograms at each station."),
+                _("Map of the world showing ground stations. Each station is represented by a circle, the size of which depends on the number of ionograms at each station. Each satellite is represented by a different color (Alouette 1: blue, ISIS 1: green, ISIS 2: yellow)."),
                 _("Filter by date:"),
                 _("Select ground stations:"),
                 _("Select spacecrafts:"),
@@ -2497,7 +2493,7 @@ def translate_static(x):
                 _("The ionogram images download is currently limited to ")+str(MAX_IONOGRAM)+_(" images at a time."),
                 _("Select x-axis:"),
                 _("Select y-axis:"),
-                _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Explore the data by selecting different variables in the drop-down menu on the right."),
+                _("Map showing either minimum frequency or maximum depth values at each ground station. Each station is represented by a circle, the size of which depends on either the mean or median values of the variables selected. Each satellite is represented by a different color (Alouette 1: blue, ISIS 1: green, ISIS 2: yellow). Explore the data by selecting different variables in the drop-down menu on the right."),
                 _("Select statistic:"),
                 _("Select plotted value:"),
                 _("Select start date"),

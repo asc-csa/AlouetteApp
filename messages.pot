@@ -453,7 +453,8 @@ msgstr ""
 msgid ""
 "Map of the world showing ground stations. Each station is represented by "
 "a circle, the size of which depends on the number of ionograms at each "
-"station."
+"station. Each satellite is represented by a different color (Alouette 1: "
+"blue, ISIS 1: green, ISIS 2: yellow)."
 msgstr ""
 
 #: alouette.py:2520
@@ -504,8 +505,9 @@ msgid ""
 "Map showing either minimum frequency or maximum depth values at each "
 "ground station. Each station is represented by a circle, the size of "
 "which depends on either the mean or median values of the variables "
-"selected. Explore the data by selecting different variables in the drop-"
-"down menu on the right."
+"selected. Each satellite is represented by a different color "
+"(Alouette 1: blue, ISIS 1: green, ISIS 2: yellow). Explore the data "
+"by selecting different variables in the drop- down menu on the right."
 msgstr ""
 
 #: alouette.py:2529
