@@ -1815,13 +1815,18 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         count_metric_data["low_mid"] = (count_metric_data["min"] + count_metric_data["mid"]) / 2
         count_metric_data["high_mid"] = (count_metric_data["mid"] + count_metric_data["max"]) / 2
 
+        previous_station_name = ""
         for i in range(len(df_stations)):
             val = counts[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
-            color_code = get_color(satellite_name)
             #print('ISIS_DEBUG: Station name: ' + station_name + ' Satellite name: ' + get_satellite_name(satellite_name) + ' val: ' + str(val))
-
+            if previous_station_name == station_name:
+                # Merge reception facilities
+                val = counts[i] + counts[i-1]
+                satellite_name = satellite_names[i-1]
+                
+            color_code = get_color(satellite_name)
             station = go.Scattermapbox(
                 lat=[lat[i]],
                 lon=[lon[i]],
@@ -1865,6 +1870,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                      + _("<br>Longitude: ") + str(lon[i]) + "°"
             )
             stations.append(station)
+            previous_station_name = station_name
 
     else:
         station = go.Scattermapbox(
