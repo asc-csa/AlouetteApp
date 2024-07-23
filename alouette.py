@@ -301,38 +301,38 @@ babel = Babel(server)  # Hook flask-babel to the app
 #======================================================================================
 # Controls for webapp
 station_name_options = [
-    {'label': _('Resolute Bay, No. W. Territories'), 'value': 'Resolute Bay, No. W. Territories'},
-    {'label': _('Blossom Point, Maryland'), 'value': 'Blossom Point, Maryland'},
-    {'label': _('South Atlantic, Falkland Islands'), 'value': 'South Atlantic, Falkland Islands'},
-    {'label': _("St. John's, Newfoundland"), 'value': "St. John's, Newfoundland"},
-    {'label': _('Orroral Valley, Australia'), 'value': 'Orroral Valley, Australia'},
-    {'label': _('Prince Albert, Canada'), 'value': 'Prince Albert, Canada'},
-    {'label': _('Ottawa, Canada'), 'value': 'Ottawa, Canada'},
-    {'label': _('Byrd Station, Antartica'), 'value': 'Byrd Station, Antartica'},
-    {'label': _('Las Palmas, Canary Island'), 'value': 'Las Palmas, Canary Island'},
-    {'label': _('Winkfield, England'), 'value': 'Winkfield, England'},
-    {'label': _('Fort Myers, Florida'), 'value': 'Fort Myers, Florida'},
     {'label': _('Antofagasta, Chile'), 'value': 'Antofagasta, Chile'},
-    {'label': _('East Grand Forks, Minnesota'), 'value': 'East Grand Forks, Minnesota'},
-    {'label': _('Rosman, No. Carolina'), 'value': 'Rosman, No. Carolina'},
-    {'label': _('College, Fairbanks, Alaska'), 'value': 'College, Fairbanks, Alaska'},
-    {'label': _('Woomera, Australia'), 'value': 'Woomera, Australia'},
-    {'label': _('Gilmore Creek, Fairbanks, Alaska'), 'value': 'Gilmore Creek, Fairbanks, Alaska'},
-    {'label': _('Tromso, Norway'), 'value': 'Tromso, Norway'},
-    {'label': _('University of Alaska, Fairbanks, Alaska'), 'value': 'University of Alaska, Fairbanks, Alaska'},
-    {'label': _('Darwin, Australia'), 'value': 'Darwin, Australia'},
-    {'label': _('Quito, Ecuador'), 'value': 'Quito, Ecuador'},
-    {'label': _('South Point, Hawaiian Islands'), 'value': 'South Point, Hawaiian Islands'},
-    {'label': _('Lima, Peru'), 'value': 'Lima, Peru'},
-    {'label': _('Johannesburg, South Africa'), 'value': 'Johannesburg, South Africa'},
-    {'label': _('Kano, Nigeria'), 'value': 'Kano, Nigeria'},
-    {'label': _('Tananarive, Madagascar'), 'value': 'Tananarive, Madagascar'},
+    {'label': _('Blossom Point, MD, USA'), 'value': 'Blossom Point, MD, USA'},
+    {'label': _('Boulder, CO, USA'), 'value': 'Boulder, CO, USA'},
     {'label': _('Bretigny, France'), 'value': 'Bretigny, France'},
+    {'label': _('Byrd Station, Antarctica'), 'value': 'Byrd Station, Antarctica'},
+    {'label': _('College, Fairbanks, AK, USA'), 'value': 'College, Fairbanks, AK, USA'},
+    {'label': _('Darwin, Australia'), 'value': 'Darwin, Australia'},
+    {'label': _('East Grant Forks, MN, USA'), 'value': 'East Grant Forks, MN, USA'},
+    {'label': _('Falkland Islands (Islas Malvinas)'), 'value': 'Falkland Islands (Islas Malvinas)'},
+    {'label': _('Fort Myers, FL, USA'), 'value': 'Fort Myers, FL, USA'},
+    {'label': _('Gilmore Creek, Fairbanks, AK, USA'), 'value': 'Gilmore Creek, Fairbanks, AK, USA'},
+    {'label': _('Kano, Nigeria'), 'value': 'Kano, Nigeria'},
+    {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'},
+    {'label': _('Kauai, HI, USA'), 'value': 'Kauai, HI, USA'},
+    {'label': _('Johannesburg, South Africa'), 'value': 'Johannesburg, South Africa'},
+    {'label': _('Las Palmas, Canary Islands, Spain'), 'value': 'Las Palmas, Canary Islands, Spain'},
+    {'label': _('Lima, Peru'), 'value': 'Lima, Peru'},
+    {'label': _('Mojave, CA, USA'), 'value': 'Mojave, CA, USA'},
+    {'label': _('Orroral Valley, Australia'), 'value': 'Orroral Valley, Australia'},
+    {'label': _('Ottawa, Canada'), 'value': 'Ottawa, Canada'},
+    {'label': _('Prince Albert, SK, Canada'), 'value': 'Prince Albert, SK, Canada'},
+    {'label': _('Quito, Ecuador'), 'value': 'Quito, Ecuador'},
     {'label': _('Singapore, Malaysia'), 'value': 'Singapore, Malaysia'},
-    {'label': _('Boulder, Colorado'), 'value': 'Boulder, Colorado'},
-    {'label': _('Mojave, California'), 'value': 'Mojave, California'},
-    {'label': _('Kauai, Hawaii'), 'value': 'Kauai, Hawaii'},
-    {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}]
+    {'label': _('South Point, HI, USA'), 'value': 'South Point, HI, USA'},
+    {'label': _("St. John's, NL, Canada"), 'value': "St. John's, NL, Canada"},
+    {'label': _('Resolute Bay, NT, Canada'), 'value': 'Resolute Bay, NT, Canada'},
+    {'label': _('Rosman, NC, USA'), 'value': 'Rosman, NC, USA'},
+    {'label': _('Tananarive, Madagascar'), 'value': 'Tananarive, Madagascar'},
+    {'label': _('Tromso, Norway'), 'value': 'Tromso, Norway'},
+    {'label': _('University of Alaska, Fairbanks, AK, USA'), 'value': 'University of Alaska, Fairbanks, AK, USA'},
+    {'label': _('Winkfield, England, UK'), 'value': 'Winkfield, England, UK'},
+    {'label': _('Woomera, Australia'), 'value': 'Woomera, Australia'}]
 
 # Getting satellites
 satellite_name_options = [
@@ -1156,7 +1156,7 @@ def update_ionograms_text(start_date, end_date, lat_min, lat_max, lon_min, lon_m
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -1544,7 +1544,7 @@ def download_csv():
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -1660,7 +1660,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -1761,7 +1761,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -1985,7 +1985,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -2224,7 +2224,7 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         Maximum value of the longitude stored as a double.
 
     ground_stations : list
-        Ground station name strings stored in a list (e.g. ['Resolute Bay, No. W. Territories'])
+        Ground station name strings stored in a list (e.g. ['Resolute Bay, NT, Canada'])
 
     satellites : list
         Satellites name strings stored in a list (e.g. ['Alouette 1'])
@@ -2505,38 +2505,38 @@ def translate_static(x):
                 _("Select start date"),
                 _("Select end date"),
                 [  # Ground_station_options
-                    {'label': _('Resolute Bay, No. W. Territories'), 'value': 'Resolute Bay, No. W. Territories'},
-                    {'label': _('Blossom Point, Maryland'), 'value': 'Blossom Point, Maryland'},
-                    {'label': _('South Atlantic, Falkland Islands'), 'value': 'South Atlantic, Falkland Islands'},
-                    {'label': _("St. John's, Newfoundland"), 'value': "St. John's, Newfoundland"},
-                    {'label': _('Orroral Valley, Australia'), 'value': 'Orroral Valley, Australia'},
-                    {'label': _('Prince Albert, Canada'), 'value': 'Prince Albert, Canada'},
-                    {'label': _('Ottawa, Canada'), 'value': 'Ottawa, Canada'},
-                    {'label': _('Byrd Station, Antartica'), 'value': 'Byrd Station, Antartica'},
-                    {'label': _('Las Palmas, Canary Island'), 'value': 'Las Palmas, Canary Island'},
-                    {'label': _('Winkfield, England'), 'value': 'Winkfield, England'},
-                    {'label': _('Fort Myers, Florida'), 'value': 'Fort Myers, Florida'},
                     {'label': _('Antofagasta, Chile'), 'value': 'Antofagasta, Chile'},
-                    {'label': _('East Grand Forks, Minnesota'), 'value': 'East Grand Forks, Minnesota'},
-                    {'label': _('Rosman, No. Carolina'), 'value': 'Rosman, No. Carolina'},
-                    {'label': _('College, Fairbanks, Alaska'), 'value': 'College, Fairbanks, Alaska'},
-                    {'label': _('Woomera, Australia'), 'value': 'Woomera, Australia'},
-                    {'label': _('Gilmore Creek, Fairbanks, Alaska'), 'value': 'Gilmore Creek, Fairbanks, Alaska'},
-                    {'label': _('Tromso, Norway'), 'value': 'Tromso, Norway'},
-                    {'label': _('University of Alaska, Fairbanks, Alaska'), 'value': 'University of Alaska, Fairbanks, Alaska'},
-                    {'label': _('Darwin, Australia'), 'value': 'Darwin, Australia'},
-                    {'label': _('Quito, Ecuador'), 'value': 'Quito, Ecuador'},
-                    {'label': _('South Point, Hawaiian Islands'), 'value': 'South Point, Hawaiian Islands'},
-                    {'label': _('Lima, Peru'), 'value': 'Lima, Peru'},
-                    {'label': _('Johannesburg, South Africa'), 'value': 'Johannesburg, South Africa'},
-                    {'label': _('Kano, Nigeria'), 'value': 'Kano, Nigeria'},
-                    {'label': _('Tananarive, Madagascar'), 'value': 'Tananarive, Madagascar'},
+                    {'label': _('Blossom Point, MD, USA'), 'value': 'Blossom Point, MD, USA'},
+                    {'label': _('Boulder, CO, USA'), 'value': 'Boulder, CO, USA'},
                     {'label': _('Bretigny, France'), 'value': 'Bretigny, France'},
+                    {'label': _('Byrd Station, Antarctica'), 'value': 'Byrd Station, Antarctica'},
+                    {'label': _('College, Fairbanks, AK, USA'), 'value': 'College, Fairbanks, AK, USA'},
+                    {'label': _('Darwin, Australia'), 'value': 'Darwin, Australia'},
+                    {'label': _('East Grant Forks, MN, USA'), 'value': 'East Grant Forks, MN, USA'},
+                    {'label': _('Falkland Islands (Islas Malvinas)'), 'value': 'Falkland Islands (Islas Malvinas)'},
+                    {'label': _('Fort Myers, FL, USA'), 'value': 'Fort Myers, FL, USA'},
+                    {'label': _('Gilmore Creek, Fairbanks, AK, USA'), 'value': 'Gilmore Creek, Fairbanks, AK, USA'},
+                    {'label': _('Kano, Nigeria'), 'value': 'Kano, Nigeria'},
+                    {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'},
+                    {'label': _('Kauai, HI, USA'), 'value': 'Kauai, HI, USA'},
+                    {'label': _('Johannesburg, South Africa'), 'value': 'Johannesburg, South Africa'},
+                    {'label': _('Las Palmas, Canary Islands, Spain'), 'value': 'Las Palmas, Canary Islands, Spain'},
+                    {'label': _('Lima, Peru'), 'value': 'Lima, Peru'},
+                    {'label': _('Mojave, CA, USA'), 'value': 'Mojave, CA, USA'},
+                    {'label': _('Orroral Valley, Australia'), 'value': 'Orroral Valley, Australia'},
+                    {'label': _('Ottawa, Canada'), 'value': 'Ottawa, Canada'},
+                    {'label': _('Prince Albert, SK, Canada'), 'value': 'Prince Albert, SK, Canada'},
+                    {'label': _('Quito, Ecuador'), 'value': 'Quito, Ecuador'},
                     {'label': _('Singapore, Malaysia'), 'value': 'Singapore, Malaysia'},
-                    {'label': _('Boulder, Colorado'), 'value': 'Boulder, Colorado'},
-                    {'label': _('Mojave, California'), 'value': 'Mojave, California'},
-                    {'label': _('Kauai, Hawaii'), 'value': 'Kauai, Hawaii'},
-                    {'label': _('Kashima, Japan'), 'value': 'Kashima, Japan'}
+                    {'label': _('South Point, HI, USA'), 'value': 'South Point, HI, USA'},
+                    {'label': _("St. John's, NL, Canada"), 'value': "St. John's, NL, Canada"},
+                    {'label': _('Resolute Bay, NT, Canada'), 'value': 'Resolute Bay, NT, Canada'},
+                    {'label': _('Rosman, NC, USA'), 'value': 'Rosman, NC, USA'},
+                    {'label': _('Tananarive, Madagascar'), 'value': 'Tananarive, Madagascar'},
+                    {'label': _('Tromso, Norway'), 'value': 'Tromso, Norway'},
+                    {'label': _('University of Alaska, Fairbanks, AK, USA'), 'value': 'University of Alaska, Fairbanks, AK, USA'},
+                    {'label': _('Winkfield, England, UK'), 'value': 'Winkfield, England, UK'},
+                    {'label': _('Woomera, Australia'), 'value': 'Woomera, Australia'}
                 ],
                 [  # Satellite_options
                     {'label': _('Alouette 1'), 'value': 'Alouette 1'},

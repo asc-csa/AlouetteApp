@@ -18,19 +18,19 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 #: alouette.py:284 alouette.py:2534 controls.py:7
-msgid "Resolute Bay, No. W. Territories"
+msgid "Resolute Bay, NT, Canada"
 msgstr ""
 
 #: alouette.py:285 alouette.py:2535 controls.py:8
-msgid "Blossom Point, Maryland"
+msgid "Blossom Point, MD, USA"
 msgstr ""
 
 #: alouette.py:286 alouette.py:2536 controls.py:9
-msgid "South Atlantic, Falkland Islands"
+msgid "Falkland Islands (Islas Malvinas)"
 msgstr ""
 
 #: alouette.py:287 alouette.py:2537 controls.py:10
-msgid "St. John's, Newfoundland"
+msgid "St. John's, NL, Canada"
 msgstr ""
 
 #: alouette.py:288 alouette.py:2538 controls.py:11
@@ -38,7 +38,7 @@ msgid "Orroral Valley, Australia"
 msgstr ""
 
 #: alouette.py:289 alouette.py:2539 controls.py:12
-msgid "Prince Albert, Canada"
+msgid "Prince Albert, SK, Canada"
 msgstr ""
 
 #: alouette.py:290 alouette.py:2540 controls.py:13
@@ -46,19 +46,19 @@ msgid "Ottawa, Canada"
 msgstr ""
 
 #: alouette.py:291 alouette.py:2541 controls.py:14
-msgid "Byrd Station, Antartica"
+msgid "Byrd Station, Antarctica"
 msgstr ""
 
 #: alouette.py:292 alouette.py:2542 controls.py:15
-msgid "Las Palmas, Canary Island"
+msgid "Las Palmas, Canary Islands, Spain"
 msgstr ""
 
 #: alouette.py:293 alouette.py:2543 controls.py:16
-msgid "Winkfield, England"
+msgid "Winkfield, England, UK"
 msgstr ""
 
 #: alouette.py:294 alouette.py:2544 controls.py:17
-msgid "Fort Myers, Florida"
+msgid "Fort Myers, FL, USA"
 msgstr ""
 
 #: alouette.py:295 alouette.py:2545 controls.py:18
@@ -66,15 +66,15 @@ msgid "Antofagasta, Chile"
 msgstr ""
 
 #: alouette.py:296 alouette.py:2546 controls.py:19
-msgid "East Grand Forks, Minnesota"
+msgid "East Grant Forks, MN, USA"
 msgstr ""
 
 #: alouette.py:297 alouette.py:2547 controls.py:20
-msgid "Rosman, No. Carolina"
+msgid "Rosman, NC, USA"
 msgstr ""
 
 #: alouette.py:298 alouette.py:2548 controls.py:21
-msgid "College, Fairbanks, Alaska"
+msgid "College, Fairbanks, AK, USA"
 msgstr ""
 
 #: alouette.py:299 alouette.py:2549 controls.py:22
@@ -82,7 +82,7 @@ msgid "Woomera, Australia"
 msgstr ""
 
 #: alouette.py:300 alouette.py:2550 controls.py:23
-msgid "Gilmore Creek, Fairbanks, Alaska"
+msgid "Gilmore Creek, Fairbanks, AK, USA"
 msgstr ""
 
 #: alouette.py:301 alouette.py:2551 controls.py:24
@@ -90,7 +90,7 @@ msgid "Tromso, Norway"
 msgstr ""
 
 #: alouette.py:302 alouette.py:2552 controls.py:25
-msgid "University of Alaska, Fairbanks, Alaska"
+msgid "University of Alaska, Fairbanks, AK, USA"
 msgstr ""
 
 #: alouette.py:303 alouette.py:2553 controls.py:26
@@ -102,7 +102,7 @@ msgid "Quito, Ecuador"
 msgstr ""
 
 #: alouette.py:305 alouette.py:2555 controls.py:28
-msgid "South Point, Hawaiian Islands"
+msgid "South Point, HI, USA"
 msgstr ""
 
 #: alouette.py:306 alouette.py:2556 controls.py:29
@@ -130,15 +130,15 @@ msgid "Singapore, Malaysia"
 msgstr ""
 
 #: alouette.py:312 alouette.py:2562 controls.py:35
-msgid "Boulder, Colorado"
+msgid "Boulder, CO, USA"
 msgstr ""
 
 #: alouette.py:313 alouette.py:2563 controls.py:36
-msgid "Mojave, California"
+msgid "Mojave, CA, USA"
 msgstr ""
 
 #: alouette.py:314 alouette.py:2564 controls.py:37
-msgid "Kauai, Hawaii"
+msgid "Kauai, HI, USA"
 msgstr ""
 
 #: alouette.py:315 alouette.py:2565 controls.py:38
@@ -507,7 +507,7 @@ msgid ""
 "which depends on either the mean or median values of the variables "
 "selected. Each satellite is represented by a different color "
 "(Alouette 1: blue, ISIS 1: green, ISIS 2: yellow). Explore the data "
-"by selecting different variables in the drop- down menu on the right."
+"by selecting different variables in the drop-down menu on the right."
 msgstr ""
 
 #: alouette.py:2529
