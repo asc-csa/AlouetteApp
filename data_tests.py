@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 
 # Constants
-INPUT_DATA = "data/final_alouette_data.csv"
+INPUT_DATA = "data/updated_result_master_ISIS1_no_empty_values_new.csv"
 NB_EXPECTED_COLUMNS = 11
 NB_TESTS = (2 * NB_EXPECTED_COLUMNS) + 1
 FALSE_ARRAY_EXPECTED = [False]
