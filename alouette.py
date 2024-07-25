@@ -1816,13 +1816,22 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         count_metric_data["high_mid"] = (count_metric_data["mid"] + count_metric_data["max"]) / 2
 
         previous_station_name = ""
+        previous_previous_station_name = ""
         for i in range(len(df_stations)):
             val = counts[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
-            #print('ISIS_DEBUG: Station name: ' + station_name + ' Satellite name: ' + get_satellite_name(satellite_name) + ' val: ' + str(val))
-            if previous_station_name == station_name:
+            #print('ISIS_DEBUG: Station name: ' + station_name + ' Satellite name: ' + str(satellite_name) + ' count: ' + str(val))
+            if previous_station_name == station_name == previous_previous_station_name:
                 # Merge reception facilities
+                #print('ISIS_DEBUG: Merging reception facilities (3 together)')
+                val = counts[i] + counts[i-1] +  + counts[i-2]
+                satellite_name = satellite_names[i-2]
+                previous_previous_station_name = ""
+            elif previous_station_name == station_name:
+                # Merge reception facilities
+                #print('ISIS_DEBUG: Merging reception facilities')
+                previous_previous_station_name = station_name
                 val = counts[i] + counts[i-1]
                 satellite_name = satellite_names[i-1]
                 
