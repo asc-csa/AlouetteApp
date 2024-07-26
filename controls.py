@@ -75,9 +75,9 @@ def get_color(sat_number):
     if sat_number == 2:
         return '#46E2F3' # cyan
     if sat_number == 3:
-        return '#BDFFBD' # pale green
+        return '#A0522D' # brown
     if sat_number == 4:
-        return '#F0E68C' # khaki
+        return '#D2B48C' # tan
     return '#1263A8' # blue
 
 

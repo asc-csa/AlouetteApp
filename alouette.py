@@ -1815,17 +1815,20 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
         count_metric_data["low_mid"] = (count_metric_data["min"] + count_metric_data["mid"]) / 2
         count_metric_data["high_mid"] = (count_metric_data["mid"] + count_metric_data["max"]) / 2
 
+        satellite_names_label = ""
         previous_station_name = ""
         previous_previous_station_name = ""
         for i in range(len(df_stations)):
             val = counts[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
+            satellite_names_label = get_satellite_name(str(satellite_name))
             #print('ISIS_DEBUG: Station name: ' + station_name + ' Satellite name: ' + str(satellite_name) + ' count: ' + str(val))
             if previous_station_name == station_name == previous_previous_station_name:
                 # Merge reception facilities
                 #print('ISIS_DEBUG: Merging reception facilities (3 together)')
                 val = counts[i] + counts[i-1] +  + counts[i-2]
+                satellite_names_label = get_satellite_name(str(satellite_names[i-2])) + ', ' + get_satellite_name(str(satellite_names[i-1])) + ' & ' + satellite_names_label
                 satellite_name = satellite_names[i-2]
                 previous_previous_station_name = ""
             elif previous_station_name == station_name:
@@ -1833,6 +1836,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 #print('ISIS_DEBUG: Merging reception facilities')
                 previous_previous_station_name = station_name
                 val = counts[i] + counts[i-1]
+                satellite_names_label = get_satellite_name(str(satellite_names[i-1])) + ' & ' + satellite_names_label
                 satellite_name = satellite_names[i-1]
                 
             color_code = get_color(satellite_name)
@@ -1872,7 +1876,7 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                     + _("<br>Satellite: ") + get_satellite_name(str(satellite_name))
+                     + _("<br>Satellite(s): ") + satellite_names_label
                      + _("<br>No. of Ionograms: ")
                      + str(val)
                      + _("<br>Latitude: ") + str(lat[i]) + "°"
@@ -2313,10 +2317,30 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         stat_metric_data["low_mid"] = (stat_metric_data["min"] + stat_metric_data["mid"]) / 2
         stat_metric_data["high_mid"] = (stat_metric_data["mid"] + stat_metric_data["max"]) / 2
 
+        satellite_names_label = ""
+        previous_station_name = ""
+        previous_previous_station_name = ""
         for i in range(len(df_stations)):
             val = stat_values[i]
             station_name = station_names[i]
             satellite_name = satellite_names[i]
+            satellite_names_label = get_satellite_name(str(satellite_name))
+            print('ISIS_DEBUG: __make_viz_map__ Station name: ' + station_name + ' Satellite name: ' + str(satellite_name) + ' count: ' + str(val))
+            if previous_station_name == station_name == previous_previous_station_name:
+                # Merge reception facilities
+                print('ISIS_DEBUG: __make_viz_map__ Merging reception facilities (3 together)')
+                val = stat_values[i-2]
+                satellite_names_label = get_satellite_name(str(satellite_names[i-2])) + ', ' + get_satellite_name(str(satellite_names[i-1])) + ' & ' + satellite_names_label
+                satellite_name = satellite_names[i-2]
+                previous_previous_station_name = ""
+            elif previous_station_name == station_name:
+                # Merge reception facilities
+                print('ISIS_DEBUG: __make_viz_map__ Merging reception facilities')
+                previous_previous_station_name = station_name
+                val = stat_values[i-1]
+                satellite_names_label = get_satellite_name(str(satellite_names[i-1])) + ' & ' + satellite_names_label
+                satellite_name = satellite_names[i-1]
+                
             color_code = get_color(satellite_name)
 
             station = go.Scattermapbox(
@@ -2356,13 +2380,14 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                 customdata=[(station_name)],
                 hoverinfo="text",
                 text=station_name
-                + _("<br>Satellite: ") + get_satellite_name(str(satellite_name))
+                + _("<br>Satellite(s): ") + satellite_names_label
                 + "<br>" + stat_label + ", " + var_label + ": "
                 + str(round(val, 2)) + " " + var_unit + " "
                 + _("<br>Latitude: ") + str(lat[i]) + "°"
                 + _("<br>Longitude: ") + str(lon[i]) + "°"
             )
             stations.append(station)
+            previous_station_name = station_name
 
     else:
         columns = []
