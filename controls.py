@@ -73,12 +73,12 @@ def get_color(sat_number):
 
     #print('\nDEBUG: entering get_color() ' + str(sat_number))
     if sat_number == 2:
-        return '#46E2F3' # cyan
+        return '#1263A8' # blue
     if sat_number == 3:
-        return '#A0522D' # brown
+        return '#FAD714' # yellow
     if sat_number == 4:
-        return '#D2B48C' # tan
-    return '#1263A8' # blue
+        return '#E60F2D' # red
+    return '#C8C8C8' # light grey
 
 
 # Returns the size of the circle to show on the map.

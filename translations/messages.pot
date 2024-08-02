@@ -454,7 +454,7 @@ msgid ""
 "Map of the world showing ground stations. Each station is represented by "
 "a circle, the size of which depends on the number of ionograms at each "
 "station. Each satellite is represented by a different color (Alouette 1: "
-"blue, ISIS 1: brown, ISIS 2: khaki)."
+"grey, ISIS 1: yellow, ISIS 2: red)."
 msgstr ""
 
 #: alouette.py:2520
@@ -506,7 +506,7 @@ msgid ""
 "ground station. Each station is represented by a circle, the size of "
 "which depends on either the mean or median values of the variables "
 "selected. Each satellite is represented by a different color "
-"(Alouette 1: blue, ISIS 1: brown, ISIS 2: khaki). Explore the data "
+"(Alouette 1: grey, ISIS 1: yellow, ISIS 2: red). Explore the data "
 "by selecting different variables in the drop-down menu on the right."
 msgstr ""
 
