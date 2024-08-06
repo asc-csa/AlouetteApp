@@ -30,12 +30,12 @@ SATELLITE_4_STR = "ISIS 2"
 def get_satellite_name(sat_number):
 
     if sat_number == '2':
-        return SATELLITE_2_STR
+        return SATELLITE_2_STR + ' [2]'
     if sat_number == '3':
-        return SATELLITE_3_STR
+        return SATELLITE_3_STR + ' [2]'
     if sat_number == '4':
-        return SATELLITE_4_STR
-    return SATELLITE_1_STR
+        return SATELLITE_4_STR + ' [3]'
+    return SATELLITE_1_STR + ' [1]'
 
 
 # Converts an array of satellite names to satellite numbers
