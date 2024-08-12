@@ -14,7 +14,7 @@ import pandas as pd
 
 # Constants
 ALOUETTE_CSV_FILE = "final_alouette_data.csv"
-ISIS_CSV_FILE = "updated_result_master_ISIS_no_empty_values_new2.csv"
+ISIS_CSV_FILE = "updated_result_master_ISIS_no_empty_values_new.csv"
 
 
 # Removes rows when either max_depth or fmin are empty.

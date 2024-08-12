@@ -83,7 +83,7 @@ def format_data(df_ddata):
 # Main part
 
 # Debut
-print("\nThis script adjusts the name of the stations if the CSV file, which is used by the Alouette micro application.")
+print("\nThis script adjusts the name of the stations in the CSV file, which is used by the Alouette micro application.")
 print("Input Data file: " + INPUT_DATA)
 print("Matching matrix: " + INPUT_RECEPTION_FACILITIES)
 

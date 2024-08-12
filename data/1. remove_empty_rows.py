@@ -43,7 +43,7 @@ df_new_data = remove_empty_row(INPUT_DATA)
 
 # Save the new data file
 new_data_filename = INPUT_DATA.replace(".csv", "_no_empty_values.csv")
-print(df_new_data)
+#print(df_new_data)
 df_new_data.to_csv(new_data_filename, index=False)
 
 # The End
