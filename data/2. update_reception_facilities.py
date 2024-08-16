@@ -34,6 +34,8 @@ def apply_matching_matrix(input_csv_file):
         # Open data file
         df_data = pd.read_csv(input_csv_file)
         df_matching_matrix = load_matching_reception_facilities()
+        print('Number of ionograms loaded: ' + str(len(df_data)))
+        print('Number of elements loaded from the matching matrix: ' + str(len(df_matching_matrix)))
         
         # Loop through all reception facilities from the matching matrix
         for matching_case in df_matching_matrix.index:
@@ -41,6 +43,7 @@ def apply_matching_matrix(input_csv_file):
             # Make sure the reception facility has the appropriate station name for each ionogram
             tmp_reception_facility_alouette = df_matching_matrix['Alouette 1 Reception Facility'][matching_case]
             tmp_reception_facility_isis = df_matching_matrix['ISIS Reception Facility'][matching_case]
+            print('Replacing the name of the reception facility. Alouette: ' + tmp_reception_facility_alouette + ' - ISIS: ' + tmp_reception_facility_isis)
             df_data.replace(tmp_reception_facility_isis, tmp_reception_facility_alouette, inplace=True)
     except Exception as e:
         print('Cannot open or process the input CSV file :' + str(e))
@@ -56,10 +59,17 @@ def format_data(df_ddata):
     try:
         # Iterate for all ionogram
         nb_ionograms = len(df_ddata)
+        print('Number of ionograms to work with: ' + str(nb_ionograms))
         for i in range(0, nb_ionograms, 1):
             
             # Format the timestamp (replace . by -)
             df_ddata.at[i, 'timestamp'] = str(df_ddata.at[i, 'timestamp']).replace('.', '-')
+            
+            # Remove '.png'
+            df_ddata.at[i, 'file_name'] = str(df_ddata.at[i, 'file_name']).replace('.png', '')
+            
+            # Clear 'Unnamed: 0'
+            df_ddata.at[i, 'Unnamed: 0'] = ''
             
             if '-00' in str(df_ddata.at[i, 'timestamp']):
                 print('Invalid time found for image L:/DATA/ISIS/ISIS_101300030772/' + str(df_ddata.at[i, 'file_name']) + '.png , timestamp: ' + str(df_ddata.at[i, 'timestamp']))
