@@ -20,21 +20,20 @@ import dash
 import pathlib
 import copy
 import configparser
-import dash_core_components as dcc
-#import dash_bootstrap_components as dbc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import plotly.graph_objs as go
 import pandas as pd
 import datetime as dt
 from scipy.stats import sem, t
-from scipy import mean
+#from scipy import mean
 from dateutil.relativedelta import relativedelta
 from dash.dependencies import Input, Output, State
-import dash_table as dst
-#from dash_table.Format import Format, Scheme
+from dash import dash_table as dst
 #import locale
 import urllib.parse
 from zipfile import ZipFile
+import numpy as np
 import os
 from os import path
 import flask
@@ -598,8 +597,7 @@ def build_filtering():
                                             placeholder=_("Sélectionner | Select"),
                                             multi=True,
                                             value=station_values,
-                                            className="dcc_control",
-                                            label = 'Label test'
+                                            className="dcc_control"
                                         )
                                     ]
                                 ),
@@ -628,8 +626,7 @@ def build_filtering():
                                             placeholder=_("Sélectionner | Select"),
                                             multi=True,
                                             value=satellites_values,
-                                            className="dcc_control",
-                                            label = 'Label test'
+                                            className="dcc_control"
                                         )
                                     ]),
                                 html.Div(children=html.P(id="satellite_selection"),className="wb-inv")
@@ -948,8 +945,7 @@ def build_stats():
                                             options=x_axis_options,
                                             multi=False,
                                             value='timestamp',
-                                            className="dcc_control",
-                                            label = 'Label test'
+                                            className="dcc_control"
                                         ),
                                     ],
                                     className="drop_down col-md-6",
@@ -969,8 +965,7 @@ def build_stats():
                                         options=y_axis_options,
                                         multi=False,
                                         value='max_depth',
-                                        className="dcc_control",
-                                        label = 'Label test'
+                                        className="dcc_control"
                                     ),
                                     ],
                                     className="drop_down col-md-6",
@@ -1030,8 +1025,7 @@ def build_stats():
                                             ],
                                             multi=False,
                                             value='mean',
-                                            className="dcc_control",
-                                            label = 'Label test'
+                                            className="dcc_control"
                                         ),
                                     ],
                                     className="drop_down col-md-6",
@@ -1051,8 +1045,7 @@ def build_stats():
                                             options=y_axis_options,
                                             multi=False,
                                             value='max_depth',
-                                            className="dcc_control",
-                                            label = 'Label test'
+                                            className="dcc_control"
                                         ),
                                     ],
                                     className="drop_down col-md-6",
@@ -1679,7 +1672,7 @@ def make_count_figure(start_date, end_date, lat_min, lat_max, lon_min, lon_max, 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max, ground_stations, satellites)
     g = dff[["file_name", "timestamp"]]
     g.index = g["timestamp"]
-    g = g.resample("M").count()
+    g = g.resample("ME").count()
 
     data = [
         dict(
@@ -1856,9 +1849,9 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                         len=0.7,
                         title=dict(
                             text="Ground Station Overview",
+                            side="top",
                             font={"color": "#737a8d", "family": "Open Sans"},
                         ),
-                        titleside="top",
                         tickmode="array",
                         tickvals=[count_metric_data["min"], count_metric_data["max"]],
                         ticktext=[
@@ -1899,9 +1892,9 @@ def generate_geo_map(start_date, end_date, lat_min, lat_max, lon_min, lon_max, g
                     len=0.7,
                     title=dict(
                         text="No Ground Stations Selected",
+                        side="top",
                         font={"color": "#737a8d", "family": "Open Sans"},
                     ),
-                    titleside="top",
                     tickmode="array",
                     ticks="outside",
                     thickness=15,
@@ -2045,7 +2038,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 ci_upper_limits.append(None)
                 ci_lower_limits.append(None)
             else:
-                bin_mean = mean(index_month_data[y_axis_selection])
+                bin_mean = np.mean(index_month_data[y_axis_selection])
                 std_err = sem(index_month_data[y_axis_selection])
                 error_range = std_err * t.ppf((1 + confidence) / 2, n - 1)  # t.ppf should be 1.96 given big enough n value
 
@@ -2078,7 +2071,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
                 ci_upper_limits.append(None)
                 ci_lower_limits.append(None)
             else:
-                bin_mean = mean(bin_data[y_axis_selection])
+                bin_mean = np.mean(bin_data[y_axis_selection])
                 std_err = sem(bin_data[y_axis_selection])
                 error_range = std_err * t.ppf((1 + confidence) / 2, n - 1)  # t.ppf should be 1.96 given big enough n value
 
@@ -2257,9 +2250,34 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     traces = []
     table_data = []
     
+    print('DEBUG: make_viz_map --> Input params')
+    print('start_date: ' + str(start_date))
+    print('end_date: ' + str(end_date))
+    print('stat_selection: ' + str(stat_selection))
+    print('var_selection: ' + str(var_selection))
+    print('lat_min: ' + str(lat_min))
+    print('lat_max: ' + str(lat_max))
+    print('lon_min: ' + str(lon_min))
+    print('lon_max: ' + str(lon_max))
+    print('ground_stations: ' + str(ground_stations))
+    print('satellites: ' + str(satellites))
+    print('DEBUG: make_viz_map --> Input params (end)')
+    
     grouped_data = filtered_data.groupby(["station_name", "satellite_number", "lat", "lon"])
+    print(type(grouped_data))
+    print(grouped_data.head())
     means = grouped_data[var_selection].mean()
     medians = grouped_data[var_selection].median()
+    print(type(means))
+    print(type(medians))
+    #means.name = ["0"]
+    #medians.name = ["0"]
+    print('\n')
+    print('DEBUG: make_viz_map --> means: ' + str(means))
+    print('\n')
+    print('DEBUG: make_viz_map --> medians: ' + str(medians))
+    print('\n')
+    print('\n')
     for station_details, dfff in grouped_data:
         template = {"station":"","satellite":"","lat":"","long":"","count":"", "mean":"", "median":""}
         template["station"] = station_details[0]
@@ -2267,8 +2285,33 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         template["lat"] = station_details[2]
         template["long"] = station_details[3]
         template["count"] = len(dfff)
-        template["mean"] =   "%.2f" % means[station_details[0]][0]
-        template["median"] = "%.2f" % medians[station_details[0]][0]
+        print('DEBUG: make_viz_map --> current station: ' + str(template["station"]))
+        print('DEBUG: make_viz_map --> current satellite: ' + str(template["satellite"]))
+        print('DEBUG: make_viz_map --> current latitude: ' + str(template["lat"]))
+        print('DEBUG: make_viz_map --> current longitude: ' + str(template["long"]))
+        print('DEBUG: make_viz_map --> current count: ' + str(template["count"]))
+        print('DEBUG: make_viz_map --> current count2: ' + str(len(station_details)))
+        print('DEBUG: make_viz_map --> current station_details(full): ')
+        print(station_details)
+        print('DEBUG: make_viz_map --> current grouped_data(full): ')
+        print(grouped_data)
+        print('DEBUG: make_viz_map --> current dfff(full): ' + str(dfff))
+        print('DEBUG: make_viz_map --> current mean: ' + str(means[station_details[0]]))
+        print(type(means[station_details[0]]))
+        df_means = means[station_details[0]].to_frame()
+        df_medians = medians[station_details[0]].to_frame()
+        print(type(df_means))
+        #print(type(df_means["max_depth"]))
+        print("DEBUG: Renaming to missing column name...")
+        df_means.rename(columns={None: "max_depth"}, inplace=True)
+        print('df_means: ')
+        print(df_means)
+        print('DEBUG: test before')
+        #print(df_means.at["max_depth", 0])
+        print(df_means.iloc[0, 0])
+        print("YES---------------------------------")
+        template["mean"] =   "%.2f" % df_means.iloc[0, 0]
+        template["median"] = "%.2f" % df_medians.iloc[0, 0]
         table_data.append(template)
         trace = dict(
             station_name=station_details[0],
@@ -2276,8 +2319,8 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
             lat=station_details[2],
             lon=station_details[3],
             count=len(dfff),
-            mean=means[station_details[0]][0],
-            median=medians[station_details[0]][0]
+            mean=df_means.iloc[0, 0],
+            median=df_medians.iloc[0, 0]
         )
         traces.append(trace)
 
@@ -2360,9 +2403,9 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                         len=0.7,
                         title=dict(
                             text="Ground Station Overview",
+                            side="top",
                             font={"color": "#737a8d", "family": "Open Sans"},
                         ),
-                        titleside="top",
                         tickmode="array",
                         tickvals=[stat_metric_data["min"], stat_metric_data["max"]],
                         ticktext=[
@@ -2404,9 +2447,9 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
                     len=0.7,
                     title=dict(
                         text="No Ground Stations Selected",
+                        side="top",
                         font={"color": "#737a8d", "family": "Open Sans"},
                     ),
-                    titleside="top",
                     tickmode="array",
                     ticks="outside",
                     thickness=15,
@@ -2618,7 +2661,7 @@ def update_language_button(x):
 
 #======================================================================================
 # Languages
-@babel.localeselector
+#@babel.localeselector
 def get_locale():
     # if the user has set up the language manually it will be stored in the session,
     # so we use the locale from the user settings
