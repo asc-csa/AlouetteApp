@@ -26,7 +26,6 @@ import plotly.graph_objs as go
 import pandas as pd
 import datetime as dt
 from scipy.stats import sem, t
-#from scipy import mean
 from dateutil.relativedelta import relativedelta
 from dash.dependencies import Input, Output, State
 from dash import dash_table as dst
@@ -2250,34 +2249,9 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
     traces = []
     table_data = []
     
-    print('DEBUG: make_viz_map --> Input params')
-    print('start_date: ' + str(start_date))
-    print('end_date: ' + str(end_date))
-    print('stat_selection: ' + str(stat_selection))
-    print('var_selection: ' + str(var_selection))
-    print('lat_min: ' + str(lat_min))
-    print('lat_max: ' + str(lat_max))
-    print('lon_min: ' + str(lon_min))
-    print('lon_max: ' + str(lon_max))
-    print('ground_stations: ' + str(ground_stations))
-    print('satellites: ' + str(satellites))
-    print('DEBUG: make_viz_map --> Input params (end)')
-    
     grouped_data = filtered_data.groupby(["station_name", "satellite_number", "lat", "lon"])
-    print(type(grouped_data))
-    print(grouped_data.head())
     means = grouped_data[var_selection].mean()
     medians = grouped_data[var_selection].median()
-    print(type(means))
-    print(type(medians))
-    #means.name = ["0"]
-    #medians.name = ["0"]
-    print('\n')
-    print('DEBUG: make_viz_map --> means: ' + str(means))
-    print('\n')
-    print('DEBUG: make_viz_map --> medians: ' + str(medians))
-    print('\n')
-    print('\n')
     for station_details, dfff in grouped_data:
         template = {"station":"","satellite":"","lat":"","long":"","count":"", "mean":"", "median":""}
         template["station"] = station_details[0]
@@ -2285,31 +2259,9 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         template["lat"] = station_details[2]
         template["long"] = station_details[3]
         template["count"] = len(dfff)
-        print('DEBUG: make_viz_map --> current station: ' + str(template["station"]))
-        print('DEBUG: make_viz_map --> current satellite: ' + str(template["satellite"]))
-        print('DEBUG: make_viz_map --> current latitude: ' + str(template["lat"]))
-        print('DEBUG: make_viz_map --> current longitude: ' + str(template["long"]))
-        print('DEBUG: make_viz_map --> current count: ' + str(template["count"]))
-        print('DEBUG: make_viz_map --> current count2: ' + str(len(station_details)))
-        print('DEBUG: make_viz_map --> current station_details(full): ')
-        print(station_details)
-        print('DEBUG: make_viz_map --> current grouped_data(full): ')
-        print(grouped_data)
-        print('DEBUG: make_viz_map --> current dfff(full): ' + str(dfff))
-        print('DEBUG: make_viz_map --> current mean: ' + str(means[station_details[0]]))
-        print(type(means[station_details[0]]))
         df_means = means[station_details[0]].to_frame()
         df_medians = medians[station_details[0]].to_frame()
-        print(type(df_means))
-        #print(type(df_means["max_depth"]))
-        print("DEBUG: Renaming to missing column name...")
         df_means.rename(columns={None: "max_depth"}, inplace=True)
-        print('df_means: ')
-        print(df_means)
-        print('DEBUG: test before')
-        #print(df_means.at["max_depth", 0])
-        print(df_means.iloc[0, 0])
-        print("YES---------------------------------")
         template["mean"] =   "%.2f" % df_means.iloc[0, 0]
         template["median"] = "%.2f" % df_medians.iloc[0, 0]
         table_data.append(template)
