@@ -540,10 +540,10 @@ app_footer_en = '''
 
 gc_footer_en = '''
 
-        <div class="landscape">
+        <div class="gc-main-footer">
         <nav class="container wb-navcurr" aria-label="Footer navigation">
 				<h3 class="text-white">Government of Canada</h3>
-				<ul class="list-col-xs-1 list-col-sm-2 list-col-md-3">
+				<ul class="list-unstyled colcount-sm-2 colcount-md-3">
 					<li><a href="https://www.canada.ca/en/contact.html">All contacts</a></li>
 					<li><a href="https://www.canada.ca/en/government/dept.html">Departments and agencies</a></li>
 					<li><a href="https://www.canada.ca/en/government/system.html">About government</a></li>
@@ -571,10 +571,10 @@ gc_footer_en = '''
 				</ul>
 			</nav>
         </div>
-        <div class="brand">
+        <div class="gc-sub-footer">
             <div class="container">
                 <div class="row">
-                    <nav class="col-md-10 ftr-urlt-lnk">
+                    <nav class="col-md-9 col-lg-10 ftr-urlt-lnk">
                         <h2 class="wb-inv">About this site</h2>
                         <ul>
                             <li><a href="https://www.canada.ca/en/social.html" style="color: #223677">Social media</a></li>
@@ -1107,7 +1107,7 @@ app_footer_fr = '''
 
 gc_footer_fr = '''
 
-        <div class="landscape">
+        <div class="gc-main-footer">
         <nav class="container wb-navcurr" aria-label="Navigation en bas de page">
 				<h3 class="text-white">Gouvernement du Canada</h3>
 				<ul class="list-col-xs-1 list-col-sm-2 list-col-md-3">
@@ -1136,7 +1136,7 @@ gc_footer_fr = '''
 					<li><a href="https://www.canada.ca/fr/services/jeunesse.html">Jeunesse</a></li></ul>
 			</nav>
         </div>
-        <div class="brand">
+        <div class="gc-sub-footer">
             <div class="container">
                 <div class="row">
                     <nav class="col-md-10 ftr-urlt-lnk">
