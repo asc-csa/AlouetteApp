@@ -178,6 +178,14 @@ external_scripts = [
     'assets/scripts.js'
 ]
 
+#======================================================================================
+# Languages
+#@babel.localeselector
+def get_app_locale():
+    # if the user has set up the language manually it will be stored in the session,
+    # so we use the locale from the user settings
+    return 'en'
+
 
 #======================================================================================
 # Configuration
@@ -249,6 +257,7 @@ else :
     )
 
 meta_html = ''
+print('DEBUG: Alouette: Language: ' + str(app_config.DEFAULT_LANGUAGE))
 if app_config.DEFAULT_LANGUAGE == 'en':
     app.set_header(gc_header_en)
     app.set_footer(gc_footer_en)
@@ -293,6 +302,8 @@ app.set_lang(app_config.DEFAULT_LANGUAGE)
 app.title="Alouette: application d’exploration des données d’ionogrammes historiques | data exploration application for historic ionograms"
 server = app.server
 server.config['SECRET_KEY'] = tokens['secret_key']  # Setting up secret key to access flask session
+server.config["BABEL_DEFAULT_LOCALE"] = app_config.DEFAULT_LANGUAGE
+server.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
 babel = Babel(server)  # Hook flask-babel to the app
 
 
@@ -2002,7 +2013,7 @@ def make_viz_chart(start_date, end_date, x_axis_selection, y_axis_selection, lat
         as a Plotly layout graph object.
     """
 
-    language = get_locale()
+    language = get_app_locale()
     if language == 'en':
         confidence_interval = "95\u0025 confidence interval"
     else:
@@ -2610,15 +2621,6 @@ def update_language_button(x):
         return 'EN', prefixe+'/language/en'
     else:
         return 'FR', prefixe+'/language/fr'
-
-#======================================================================================
-# Languages
-#@babel.localeselector
-def get_locale():
-    # if the user has set up the language manually it will be stored in the session,
-    # so we use the locale from the user settings
-    language = app_config.DEFAULT_LANGUAGE
-    return language
 
 
 @app.server.route('/language/<language>')
