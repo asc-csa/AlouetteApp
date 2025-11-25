@@ -47,7 +47,7 @@ def get_satellite_name(sat_number):
 # @return Array of satellite numbers
 def convert_array_satellite_names_to_numbers(array_satellite_names):
  
-    print('\nDEBUG: entering convert_array_satellite_names_to_numbers() ' + str(array_satellite_names))
+    print('\nISIS_DEBUG: entering convert_array_satellite_names_to_numbers() ' + str(array_satellite_names))
     array_satellite_numbers = []
     for tmp_satellite_name in array_satellite_names:
     
@@ -62,7 +62,7 @@ def convert_array_satellite_names_to_numbers(array_satellite_names):
         else:
             array_satellite_numbers.append(tmp_satellite_name)
     
-    print('\nDEBUG: end of convert_array_satellite_names_to_numbers() ' + str(array_satellite_numbers))
+    print('ISIS_DEBUG: end of convert_array_satellite_names_to_numbers() ' + str(array_satellite_numbers))
     return array_satellite_numbers
 
 
@@ -71,7 +71,7 @@ def convert_array_satellite_names_to_numbers(array_satellite_names):
 # @return HTML color code that corresponds to the satellite.
 def get_color(sat_number):
 
-    #print('\nDEBUG: entering get_color() ' + str(sat_number))
+    #print('\nISIS_DEBUG: entering get_color() ' + str(sat_number))
     if sat_number == 2:
         return '#1263A8' # blue
     if sat_number == 3:
@@ -130,17 +130,17 @@ def coords_to_float(coord):
 # @return The filtered DataFrame
 def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, lon_max, ground_stations=None, satellites=None):
     
-    #print('\nDEBUG: entering filter_dataframe()')
-    print('Satellites selected: ' + str(satellites))
+    #print('\nISIS_DEBUG: entering filter_dataframe()')
+    print('ISIS_DEBUG: filter_dataframe(), Satellites selected: ' + str(satellites))
     #start_time = dt.datetime.now()
 
-    #print(f'DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
+    #print(f'ISIS_DEBUG: filter_dataframe(), point #1 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     #TODO: the next line takes time (1.5 second)
     dff = df[
         (df["timestamp"].dt.date >= dt.date(start_date_dt.year, start_date_dt.month, start_date_dt.day))
         & (df["timestamp"].dt.date <= dt.date(end_date_dt.year, end_date_dt.month, end_date_dt.day))
             ]
-    #print(f'DEBUG: filter_dataframe(), point #2 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
+    #print(f'ISIS_DEBUG: filter_dataframe(), point #2 - Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     if (lat_min != -90) or (lat_max != 90):
         dff = dff[
             (dff["lat"] >= lat_min)
@@ -160,5 +160,5 @@ def filter_dataframe(df, start_date_dt, end_date_dt, lat_min, lat_max, lon_min, 
             (dff["satellite_number"].isin(convert_array_satellite_names_to_numbers(satellites)))
             ]
     
-    #print(f'DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
+    #print(f'ISIS_DEBUG: end of filter_dataframe() - TOTAL Time spent (s): {(dt.datetime.now()-start_time).total_seconds()}')
     return dff

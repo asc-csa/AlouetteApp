@@ -55,7 +55,8 @@ TIME_PERIOD_START_YEAR = 1962
 TIME_PERIOD_END_YEAR = 1990
 IONOGRAM_PATH = '/storage/ftp_root/users/OpenData_DonneesOuvertes/pub/AlouetteData/Alouette Data'
 MAX_IONOGRAM = 100
-
+MAX_NB_STATIONS = 33
+MAX_NB_SATELLITES = 4
 
 #======================================================================================
 # Dash class, which represents the micro application.
@@ -354,11 +355,16 @@ satellite_name_options = [
 station_values = []
 for station in station_name_options:
     station_values.append(station['value'])
+print('ISIS_DEBUG: Number of ground stations found in the configuration: ' + str(len(station_values)))
+MAX_NB_STATIONS = len(station_values)
 
 # Getting only the values of the satellites
 satellites_values = []
 for satellite in satellite_name_options:
     satellites_values.append(satellite['value'])
+print('ISIS_DEBUG: Number of satellites found in the configuration: ' + str(len(satellites_values)))
+MAX_NB_SATELLITES = len(satellites_values)
+MAX_NB_SATELLITES = 4
 
 x_axis_options = [
     {'label': _('Date'), 'value': ('timestamp')},
@@ -1218,7 +1224,8 @@ def update_ground_station_list(lat_min, lat_max, lon_min, lon_max):
     end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    if len(dff['station_name'].unique()) < 64: # if we have selected a subset of ground stations, return the selected list
+    print('ISIS_DEBUG: update_ground_station_list, Number of ground stations selected: ' + str(len(dff['station_name'].unique())))
+    if len(dff['station_name'].unique()) < MAX_NB_SATELLITES: # if we have selected a subset of ground stations, return the selected list
         return list(dff['station_name'].unique())
     else:
         return [] # if we have not selected any stations, keep the selection box empty
@@ -1257,12 +1264,12 @@ def update_satellite_list(lat_min, lat_max, lon_min, lon_max):
     """
     
     # Manually set the value for dates so that changing the date does not update the satellite list
-    print('\nDEBUG: entering update_satellite_list()')
+    print('\nISIS_DEBUG: entering update_satellite_list()')
     start_date = dt.datetime(year=TIME_PERIOD_START_YEAR, month=9, day=29)
     end_date = dt.datetime(year=TIME_PERIOD_END_YEAR, month=12, day=31)
 
     dff = filter_dataframe(df, start_date, end_date, lat_min, lat_max, lon_min, lon_max)
-    if len(dff['satellite_number'].unique()) < 4: # if we have selected a subset of satellites, return the selected list
+    if len(dff['satellite_number'].unique()) < MAX_NB_SATELLITES: # if we have selected a subset of satellites, return the selected list
         return list(dff['satellite_number'].unique())
     else:
         return [] # if we have not selected any satellites, keep the selection box empty
