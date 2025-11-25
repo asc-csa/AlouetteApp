@@ -14,6 +14,7 @@
 #
 # Modification History:
 # June 2024: Addition of ISIS 1&2 data.
+# November 2025: Migration to Python 3.12 and to the latest Python modules and dependencies.
 #
 
 import dash
@@ -689,27 +690,6 @@ def build_filtering():
                         html.Div(
                             [
                                 html.Div(
-                                    [dcc.Graph(
-                                        id="selector_map",
-                                        className="csa-graph",
-                                        config={
-                                            "scrollZoom": True,
-                                            "displaylogo": False,
-                                            "displayModeBar" : False
-                                        },
-                                    ),
-                                    detail_table("geo_table","geo_table_text")],
-                                ),
-                            html.P(id="Map_description-1"),
-                            ],
-
-                            id="left-column-1",
-                            style={"flex-grow": 1},
-                            className="col-md-6",
-                        ),
-                        html.Div(
-                            [
-                                html.Div(
                                     [
                                         dcc.Graph(
                                             id="count_graph",
@@ -726,6 +706,27 @@ def build_filtering():
                             html.Div ([html.P(id="Graph_description-1")]),
                             ],
                             id="right-column-1",
+                            style={"flex-grow": 1},
+                            className="col-md-6",
+                        ),
+                        html.Div(
+                            [
+                                html.Div(
+                                    [dcc.Graph(
+                                        id="selector_map",
+                                        className="csa-graph",
+                                        config={
+                                            "scrollZoom": True,
+                                            "displaylogo": False,
+                                            "displayModeBar" : False
+                                        },
+                                    ),
+                                    detail_table("geo_table","geo_table_text")],
+                                ),
+                            html.P(id="Map_description-1"),
+                            ],
+
+                            id="left-column-1",
                             style={"flex-grow": 1},
                             className="col-md-6",
                         ),
