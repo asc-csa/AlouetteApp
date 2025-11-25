@@ -693,6 +693,7 @@ def build_filtering():
                                         id="selector_map",
                                         className="csa-graph",
                                         config={
+                                            "scrollZoom": True,
                                             "displaylogo": False,
                                             "displayModeBar" : False
                                         },
@@ -1077,6 +1078,7 @@ def build_stats():
                         html.Div(
                             [dcc.Graph(id="viz_map",
                                        config={
+                                           "scrollZoom": True,
                                            "displaylogo": False,
                                            "displayModeBar": False
                                        }
@@ -2435,11 +2437,6 @@ def make_viz_map(start_date, end_date, stat_selection, var_selection, lat_min, l
         showlegend=False,
         mapbox=go.layout.Mapbox(
             accesstoken=mapbox_access_token,
-            #bearing=10,
-            #center=go.layout.mapbox.Center(
-            #    lat=df_stations.lat.mean(), lon=df_stations.lon.mean()
-            #),
-            #pitch=5,
             zoom=1,
             style="mapbox://styles/plotlymapbox/cjvppq1jl1ips1co3j12b9hex",
         ),
